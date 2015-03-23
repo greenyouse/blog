@@ -158,7 +158,7 @@ OK, let's get started!
   [[https://github.com/WebComponents/webcomponentsjs][webcomponents polyfill]] that should help. I spent about a day and a
   half trying to get ShadowDOMs to cooperate with React and the polyfill
   and this is how far I've gotten so far. If it looks interesting, you
-  should [[https://github.com/greenyouse/blog/src/dapps/core.cljx][take a peek]] at my work and try giving it a good thumping :D.
+  should [[https://github.com/greenyouse/blog/blob/master/src/dapps/core.cljx#L57][take a peek]] at my work and try giving it a good thumping :D.
 
   #+HTML: <br>
 

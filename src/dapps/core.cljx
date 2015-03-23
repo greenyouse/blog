@@ -54,7 +54,7 @@
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; example three (feature expressions + styling)
+;;; example three (styling)
 
 ;;;; ShadowDOM mixin
 
