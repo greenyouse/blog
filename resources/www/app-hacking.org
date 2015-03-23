@@ -1,0 +1,332 @@
+#+HTML: <div class="container-fluid"><div class="row"><div class="col-md-7 col-md-offset-3 col-xs-12 col-sm-10 col-sm-offset-1 col-lg-6 col-lg-offset-3">
+#+TITLE: App Hacking
+#+HTML: <br><br>
+
+There's been a lot of mobile + desktop app development work coming from
+the JavaScript community in the last few years. Projects like [[https://nodejs.org/][NodeJS]] and
+[[http://nwjs.io/][NW.js]] are great for desktop and there are too many mobile frameworks
+to even try to name.  Unfortunately, ClojureScript has felt like a
+second-class citizen during this, being shoehorned into whatever JS
+frameworks get built. This has been OK but it leaves a lot to be desired. How can
+we share code across platforms without running into UI/UX problems? Why
+can't my mobile code be packaged for desktop too? Do we really have to
+write a brand new set of UI components for every app we do? Why do we
+have to deal with all those convoluted JS build tool configurations?
+
+With the upcoming [[https://github.com/greenyouse/browserific][Browserific]] project we can start addressing some of
+these questions and begin building apps without all the JS interop
+craziness.
+
+We'll start by looking at how to build component-based UIs and take a
+quick trip through a few of the other major features. By the end you
+should have a pretty good feel for how to use everything and the general
+direction that the project is headed.
+
+OK, let's get started!
+
+#+HTML: <br>
+
+* Component UIs
+
+  For the last year or so, ClojureScript people have had great success
+  using React components in their UI work. With Browserific, we'll now
+  get a couple more advantages: platform-specific feature expressions
+  and reusable components.
+
+#+HTML: <br>
+#+HTML: <h4>Basic<small> (what we're currently using)</small></h4>
+
+  For an example, take a look at this code for rendering a list:
+  #+BEGIN_SRC clojure
+    (defn list-c%1 [{:keys [data]}]
+      [:section
+       (reduce (fn [ul title]
+                 (conj ul ^{:key (gensym)}
+                       [:dt  {:on-click #(println title)}
+                        [:p [:strong title]]]))
+               [:dl] data)])
+
+    ;; let's give it some stuff to render so we can see how it looks
+    (list-c%1 {:data ["some" "stuff" "to" "render"]})
+  #+END_SRC
+
+  #+HTML: <br>
+  #+HTML: <div id="list-example1"></div>
+  #+HTML: <br>
+
+  This is a basic HTML list without any feature expressions or
+  styling. Using this is great for webapps but, as we'll see, it doesn't
+  work well when trying to publish an app for multiple platforms.
+
+  One other thing to note is how ~list-c~ is a component that renders
+  lists of data, independent of the app's code. Components are abstract
+  functions for rendering UI elements, they don't know what the data
+  they're rendering is and they don't wanna know. For that reason, the
+  only part that's really unique to this UI is the last line of code
+  that calls the component.
+
+#+HTML: <br>
+#+HTML: <h4>Feature Expressions</h4>
+
+  Now what if we want to render this in a mobile platform like
+  FirefoxOS? For that we'd use a FirefoxOS feature expression!
+
+  #+BEGIN_SRC clojure
+    (defn list-c%2
+      "A list of the items"
+      [{:keys [data]}]
+      (chenex/in-case!
+       [:firefoxos] [:section {:data-type "list"}
+                     (reduce (fn [ul title]
+                               (conj ul ^{:key (gensym)}
+                                     [:li [:a {:on-click #(println title)}
+                                           [:aside {:class "pack-end"
+                                                    :data-icon "forward"}]
+                                           [:p [:strong title]]]]))
+                             [:ul] data)]
+       [:else] [:section
+                (reduce (fn [ul title]
+                          (conj ul ^{:key (gensym)}
+                                [:dt  {:on-click #(println title)}
+                                 [:p [:strong title]]]))
+                        [:dl] data)]))
+
+    (list-c%2 {:data ["some" "stuff" "to" "render"]})
+  #+END_SRC
+
+  #+HTML: <br>
+  #+HTML: <div id="list-example2"></div>
+  #+HTML: <br>
+
+  This used the FirefoxOS markup but we didn't add the FirefoxOS CSS
+  so it looks pretty much the same as our last list.
+
+
+#+HTML: <br>
+#+HTML: <h4>Resuable Components<small> (through ShadowDOMs)</small></h4>
+
+  Now for the good stuff!
+
+  If we create component libraries, two important requirements are that
+  each component has proper styling and that all styles are
+  encapsulated. This way we'll be able to write apps with components
+  that "/just work/"^{TM} (i.e. the CSS will be packaged with the
+  component). We'll talk more about styling later, for now check out
+  this neat ShadowDOM example (you'll need *Chrome/Opera* or *Firefox* with
+  the ~dom.webcomponents.enabled~ flag set to true):
+
+  #+BEGIN_SRC clojure
+    (defn header-c%3 [{:keys [title]}]
+      [:section {:role "region"}
+       [:header
+        [:menu
+         [:button {:data-icon "search"} ;data icons don't render yet
+          [:span {:class "icon icon-search"}]]
+         [:button
+          [:span {:class "icon icon-compose"}]]]
+        [:h1 title]]])
+
+    (defn list-c%3 [{:keys [data]}]
+      [:section {:data-type "list"}
+       (reduce (fn [ul item]
+                 (conj ul
+                       [:li {:key (gensym)}
+                        [:a {:on-click #(js/console.log item)} ;events not handled yet
+                         [:aside {:class "pack-end"
+                                  :data-icon "forward"}]
+                         [:p [:strong item]]]]))
+               [:ul] data)])
+
+    (rum/defc example-list%3 < (shadow-dom ["css/dapps/index.css"]) []
+      [:div
+       (header-c%3 {:title "Hello Style!"})
+       (list-c%3 {:data ["some" "stuff" "to" "render"]})])
+  #+END_SRC
+  #+HTML: <br>
+  #+HTML: <div id="list-example3"></div>
+  #+HTML: <br>
+
+  OK, I admit that this is slightly underwhelming because it only half
+  works, but hey it's *React + ShadowDOMs*! The idea with this is that you
+  can write some components in ClojureScript, style them with a little
+  CSS, and package them all in ShadowDOMs for anybody to use. With that
+  we could create component libraries for common UI elements. Then when
+  you want write an app, you'll be able to consume component libraries
+  similar to how you might use a JS library like jQuery or Dojo.
+
+  The [[http://caniuse.com/#feat=shadowdom][support for ShadowDOMs]] still isn't great but there's a
+  [[https://github.com/WebComponents/webcomponentsjs][webcomponents polyfill]] that should help. I spent about a day and a
+  half trying to get ShadowDOMs to cooperate with React and the polyfill
+  and this is how far I've gotten so far. If it looks interesting, you
+  should [[https://github.com/greenyouse/blog/src/dapps/core.cljx][take a peek]] at my work and try giving it a good thumping :D.
+
+  #+HTML: <br>
+
+* Styling
+
+  If you're familiar with some of the JS app building frameworks, you'll
+  notice that many of them come with blanket CSS you can use. There are
+  also popular JS libraries that come with similar "/work everywhere/"
+  CSS. The issue with these styling tools is that they work everywhere
+  by not being "/native/" anywhere. These looks nice but they're
+  definitely not iOS or Android or Windows Phone or anything else. You
+  also have to be careful not to completely rely on these styles either
+  or you app might end up looking too generic.
+
+  Styling is slightly different with Browserific because we can tailor CSS
+  directly to the platform through feature expressions. That means that
+  there's no excuse not to follow all of the "native" UI guidelines!
+  Each component should have its own default CSS so people can use it
+  without having to worry about how do the styling. Customizing the
+  app's style is still a good idea though and we'll be able to change
+  the default CSS for components through [[http://www.w3.org/TR/css-scoping-1/#selectors][ShadowDOM CSS selectors]]
+  (specifically ~::shadow~ and ~/deep/~ aka ~>>>~).
+
+  Using components that come with pre-packaged CSS is a great
+  productivity boost, just don't forget to add a little of your own
+  style too. We can skip most of the CSS writing by coupling styles
+  with our components but your app will still look too generic if you
+  rely completely on the default styles.
+
+#+HTML: <br>
+
+* Databases
+
+  Using client-side databases in apps can be great when building offline
+  compatible apps, caching local data from a server, etc. However, I
+  haven't seen very many persistent, client-side database projects in
+  ClojureScript, although there are lots of great datalog/logic
+  libraries. Things also get a little hairy when we try to publish an
+  app that works across all platforms because there are lots of browsers
+  with varying levels support for IndexedDB, WebSQL, localStorage, and
+  others storage types. To get around all of this, I think it would be
+  best to glue a ClojureScript database to a JS, storage polyfill.
+
+  With [[https://github.com/greenyouse/pldb-cache][pldb-cache]] I combined core.logic's pldb database with
+  [[http://dev.yathit.com/ydn-db/index.html][YDN-DB]]. Through this, an app can use a pldb database in memory but any
+  changes to that in-memory database will be saved to client-side
+  storage. When the app is loaded, it will automatically retrieve the
+  previous state of the pldb database and load it into memory.
+
+  The architecture of this library is similar to Datomic, in that it has
+  hot storage (in-memory db), cold storage (client-side db), and a
+  transactor to update the cold storage. The cool part about choosing
+  this approach is that you can swap out the hot and cold storage to
+  meet your own needs.
+
+  If you'd rather use datascript, bacwn, or some other library, there
+  are only a few CRUD operations you need to implement to complete the
+  switch. The same goes for cold storage too.
+
+  For example, I wanted to use YDN-DB for pldb-cache but I ran into some
+  troubles along the way. Right now it's temporarily using localStorage
+  for the cold storage part instead of YDN-DB. Making the switch to
+  localStorage was pretty easy and only took ~1 hour.
+
+#+HTML: <br>
+
+
+#+HTML: <h2>Silly App Schema<small> (optional reading)</small></h2>
+
+  If you've been following so far, you may be wondering why the list
+  component from the UI section was labeled ~list-c~. This is part of my
+  (potentially hairbrained) app schema. It has been useful for me so I
+  though it would be good to share but it's not very thorough.
+
+  Right now it has six elements: components, templates, pages, screens,
+  views, and state machines (automata). Each element also has a special
+  suffix that is appended to function names to denote what the function
+  does (to make code reading a little easier). Check out the
+  [[https://github.com/greenyouse/browserific/tree/master/lein-browserific/src/cljs/browserific/config][ClojureScript side]] of lein-browserific or the [[https://github.com/greenyouse/browserific/tree/master/examples/notes][minimal example app]] to
+  see this in action.
+
+  #+HTML: <br>
+
+*** Components
+
+    By this point I think you've probably read enough about
+    components. They're basically just an abstract method for rendering
+    one UI element.
+
+    name: *-c
+
+*** Template
+
+    These either act as a factory for generating components or as a
+    container that can hold any number of components. An example of the
+    later use might be a page template for mobile that always has a
+    header and a footer element. A factory-type use would be something
+    similar to ~browserific.config.macros.multi-input-template~.
+
+    name: *-template
+
+*** Pages
+
+    A page is comprised of the whole UI that gets rendered on the
+    screen. For example an app turns on and starts out on the home page,
+    then the user clicks on preferences and it goes to the preferences
+    page, etc.
+
+    name: *-page
+
+*** Screens
+
+    Screens are like the "modes" of your app. For example, if you made a
+    video game it would start out with the menu-screen which could have
+    a top scores page and a preferences page. When a user switches to
+    playing the game, the app would go into the game screen (game
+    mode).
+
+    This is a good place to put an app's page router.
+
+    name: *-screen
+
+*** Views
+
+    The views do databinding between the database and the UI. Some app
+    code can subscribe to a view so that any updates on the data get
+    propagated to the UI automatically through React.
+
+    name: *-view
+
+*** State Machines
+
+   This is a wip but basically we could use state machines with CSP and
+   React. Automata stuff is probably for another blog post in the
+   future but it's pretty great for games and other things.
+
+   name: *-fsm
+
+#+HTML: <br>
+
+* Back to Reality
+
+  So now you're going to go make ShadowDOM components, write apps
+  with 200 LOC, and get perfect, native styling. Opps, wait a
+  minute... ShadowDOMs don't work yet, neither do styled
+  components, and the awesome JS polyfill for databases doesn't work
+  either. Crap!
+
+  These would be great to have but will require a little more work to
+  complete. I've tried my best but any contributions are more than
+  welcome!
+
+  All is not lost however, the feature expressions for components still
+  work and we have a great leiningen plugin for managing builds. If you
+  want  to style your app, just include the relevant CSS like normal
+  (nothing fancy). You can always get a head start writing component
+  libraries too, they'll just lack the styling part.
+
+  I didn't really mention it here but I would also like to write a
+  Browserific library to close over the NodeJS and Cordova APIs. Browser
+  extensions are also (sort of) on the radar but my focus is doing
+  mobile and desktop first.
+
+  Good luck, I hope this was helpful!
+
+  #+HTML: <br>
+  #+HTML: </div></div></div>
+
+
+#+HTML: <script type="text/javascript" src="js/dapps/ReactShadow.js"></script>
+#+HTML: <script type="text/javascript" src="js/dapps/dapps.js"></script>

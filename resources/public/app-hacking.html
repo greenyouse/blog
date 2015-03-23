@@ -1,0 +1,627 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>App Hacking</title>
+<!-- 2015-03-23 Mon 00:09 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<meta  name="author" content="Ed Babcock (greenyouse)" />
+<meta  name="description" content="Hacks, projects, and general butt-kicking with Ed (greenyouse)"
+ />
+<meta  name="keywords" content="Clojure, ClojureScript, greenyouse, LISP" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.right  { text-align: center;  }
+  th.left   { text-align: center;   }
+  th.center { text-align: center; }
+  td.right  { text-align: right;  }
+  td.left   { text-align: left;   }
+  td.center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara:nth-child(2) { display: inline; }
+  .footpara { display: block; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  /*]]>*/-->
+</style>
+<link rel='stylesheet' href='/css/bootstrap.min.css' type='text/css'/>
+                     <link rel='stylesheet' href='/css/blog.css' type='text/css'/>
+                      <script type='text/javascript' src='MathJax/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="preamble" class="status">
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/index.html">EDBABCOCK</a>
+      </div>
+      <div class="collapse navbar-collapse" id="main-navbar">
+        <ul class="nav navbar-nav">
+          <li><a href="/about.html">About</a></li>
+          <li><a href="categories.html">Categories</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</div>
+<div id="content">
+<h1 class="title">App Hacking</h1>
+<div class="container-fluid"><div class="row"><div class="col-md-7 col-md-offset-3 col-xs-12 col-sm-10 col-sm-offset-1 col-lg-6 col-lg-offset-3">
+<br><br>
+
+<p>
+There's been a lot of mobile + desktop app development work coming from
+the JavaScript community in the last few years. Projects like <a href="https://nodejs.org/">NodeJS</a> and
+<a href="http://nwjs.io/">NW.js</a> are great for desktop and there are too many mobile frameworks
+to even try to name.  Unfortunately, ClojureScript has felt like a
+second-class citizen during this, being shoehorned into whatever JS
+frameworks get built. This has been OK but it leaves a lot to be desired. How can
+we share code across platforms without running into UI/UX problems? Why
+can't my mobile code be packaged for desktop too? Do we really have to
+write a brand new set of UI components for every app we do? Why do we
+have to deal with all those convoluted JS build tool configurations?
+</p>
+
+<p>
+With the upcoming <a href="https://github.com/greenyouse/browserific">Browserific</a> project we can start addressing some of
+these questions and begin building apps without all the JS interop
+craziness.
+</p>
+
+<p>
+We'll start by looking at how to build component-based UIs and take a
+quick trip through a few of the other major features. By the end you
+should have a pretty good feel for how to use everything and the general
+direction that the project is headed.
+</p>
+
+<p>
+OK, let's get started!
+</p>
+
+<br>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1">Component UIs</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+For the last year or so, ClojureScript people have had great success
+using React components in their UI work. With Browserific, we'll now
+get a couple more advantages: platform-specific feature expressions
+and reusable components.
+</p>
+
+<br>
+<h4>Basic<small> (what we're currently using)</small></h4>
+
+<p>
+For an example, take a look at this code for rendering a list:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-clojure">(<span style="color: #FBDE2D;">defn</span> <span style="color: #ff1493;">list-c%1</span> [{<span style="color: #4c83ff;">:keys</span> [data]}]
+  [<span style="color: #4c83ff;">:section</span>
+   (reduce (<span style="color: #FBDE2D;">fn</span> [ul title]
+             (conj ul ^{<span style="color: #4c83ff;">:key</span> (gensym)}
+                   [<span style="color: #4c83ff;">:dt</span>  {<span style="color: #4c83ff;">:on-click</span> #(println title)}
+                    [<span style="color: #4c83ff;">:p</span> [<span style="color: #4c83ff;">:strong</span> title]]]))
+           [<span style="color: #4c83ff;">:dl</span>] data)])
+
+<span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">let's give it some stuff to render so we can see how it looks</span>
+(list-c%1 {<span style="color: #4c83ff;">:data</span> [<span style="color: #61CE3C;">"some"</span> <span style="color: #61CE3C;">"stuff"</span> <span style="color: #61CE3C;">"to"</span> <span style="color: #61CE3C;">"render"</span>]})
+</pre>
+</div>
+
+<br>
+<div id="list-example1"></div>
+<br>
+
+<p>
+This is a basic HTML list without any feature expressions or
+styling. Using this is great for webapps but, as we'll see, it doesn't
+work well when trying to publish an app for multiple platforms.
+</p>
+
+<p>
+One other thing to note is how <code>list-c</code> is a component that renders
+lists of data, independent of the app's code. Components are abstract
+functions for rendering UI elements, they don't know what the data
+they're rendering is and they don't wanna know. For that reason, the
+only part that's really unique to this UI is the last line of code
+that calls the component.
+</p>
+
+<br>
+<h4>Feature Expressions</h4>
+
+<p>
+Now what if we want to render this in a mobile platform like
+FirefoxOS? For that we'd use a FirefoxOS feature expression!
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-clojure">(<span style="color: #FBDE2D;">defn</span> <span style="color: #ff1493;">list-c%2</span>
+  <span style="color: #61CE3C;">"A list of the items"</span>
+  [{<span style="color: #4c83ff;">:keys</span> [data]}]
+  (<span style="color: #D8FA3C;">chenex</span>/in-case!
+   [<span style="color: #4c83ff;">:firefoxos</span>] [<span style="color: #4c83ff;">:section</span> {<span style="color: #4c83ff;">:data-type</span> <span style="color: #61CE3C;">"list"</span>}
+                 (reduce (<span style="color: #FBDE2D;">fn</span> [ul title]
+                           (conj ul ^{<span style="color: #4c83ff;">:key</span> (gensym)}
+                                 [<span style="color: #4c83ff;">:li</span> [<span style="color: #4c83ff;">:a</span> {<span style="color: #4c83ff;">:on-click</span> #(println title)}
+                                       [<span style="color: #4c83ff;">:aside</span> {<span style="color: #4c83ff;">:class</span> <span style="color: #61CE3C;">"pack-end"</span>
+                                                <span style="color: #4c83ff;">:data-icon</span> <span style="color: #61CE3C;">"forward"</span>}]
+                                       [<span style="color: #4c83ff;">:p</span> [<span style="color: #4c83ff;">:strong</span> title]]]]))
+                         [<span style="color: #4c83ff;">:ul</span>] data)]
+   [<span style="color: #4c83ff;">:else</span>] [<span style="color: #4c83ff;">:section</span>
+            (reduce (<span style="color: #FBDE2D;">fn</span> [ul title]
+                      (conj ul ^{<span style="color: #4c83ff;">:key</span> (gensym)}
+                            [<span style="color: #4c83ff;">:dt</span>  {<span style="color: #4c83ff;">:on-click</span> #(println title)}
+                             [<span style="color: #4c83ff;">:p</span> [<span style="color: #4c83ff;">:strong</span> title]]]))
+                    [<span style="color: #4c83ff;">:dl</span>] data)]))
+
+(list-c%2 {<span style="color: #4c83ff;">:data</span> [<span style="color: #61CE3C;">"some"</span> <span style="color: #61CE3C;">"stuff"</span> <span style="color: #61CE3C;">"to"</span> <span style="color: #61CE3C;">"render"</span>]})
+</pre>
+</div>
+
+<br>
+<div id="list-example2"></div>
+<br>
+
+<p>
+This used the FirefoxOS markup but we didn't add the FirefoxOS CSS
+so it looks pretty much the same as our last list.
+</p>
+
+
+<br>
+<h4>Resuable Components<small> (through ShadowDOMs)</small></h4>
+
+<p>
+Now for the good stuff!
+</p>
+
+<p>
+If we create component libraries, two important requirements are that
+each component has proper styling and that all styles are
+encapsulated. This way we'll be able to write apps with components
+that "<i>just work</i>"<sup>TM</sup> (i.e. the CSS will be packaged with the
+component). We'll talk more about styling later, for now check out
+this neat ShadowDOM example (you'll need <b>Chrome/Opera</b> or <b>Firefox</b> with
+the <code>dom.webcomponents.enabled</code> flag set to true):
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-clojure">(<span style="color: #FBDE2D;">defn</span> <span style="color: #ff1493;">header-c%3</span> [{<span style="color: #4c83ff;">:keys</span> [title]}]
+  [<span style="color: #4c83ff;">:section</span> {<span style="color: #4c83ff;">:role</span> <span style="color: #61CE3C;">"region"</span>}
+   [<span style="color: #4c83ff;">:header</span>
+    [<span style="color: #4c83ff;">:menu</span>
+     [<span style="color: #4c83ff;">:button</span> {<span style="color: #4c83ff;">:data-icon</span> <span style="color: #61CE3C;">"search"</span>} <span style="color: #8B8989; font-style: italic;">;data icons don't render yet</span>
+      [<span style="color: #4c83ff;">:span</span> {<span style="color: #4c83ff;">:class</span> <span style="color: #61CE3C;">"icon icon-search"</span>}]]
+     [<span style="color: #4c83ff;">:button</span>
+      [<span style="color: #4c83ff;">:span</span> {<span style="color: #4c83ff;">:class</span> <span style="color: #61CE3C;">"icon icon-compose"</span>}]]]
+    [<span style="color: #4c83ff;">:h1</span> title]]])
+
+(<span style="color: #FBDE2D;">defn</span> <span style="color: #ff1493;">list-c%3</span> [{<span style="color: #4c83ff;">:keys</span> [data]}]
+  [<span style="color: #4c83ff;">:section</span> {<span style="color: #4c83ff;">:data-type</span> <span style="color: #61CE3C;">"list"</span>}
+   (reduce (<span style="color: #FBDE2D;">fn</span> [ul item]
+             (conj ul
+                   [<span style="color: #4c83ff;">:li</span> {<span style="color: #4c83ff;">:key</span> (gensym)}
+                    [<span style="color: #4c83ff;">:a</span> {<span style="color: #4c83ff;">:on-click</span> #(<span style="color: #D8FA3C;">js</span>/console.log item)} <span style="color: #8B8989; font-style: italic;">;events not handled yet</span>
+                     [<span style="color: #4c83ff;">:aside</span> {<span style="color: #4c83ff;">:class</span> <span style="color: #61CE3C;">"pack-end"</span>
+                              <span style="color: #4c83ff;">:data-icon</span> <span style="color: #61CE3C;">"forward"</span>}]
+                     [<span style="color: #4c83ff;">:p</span> [<span style="color: #4c83ff;">:strong</span> item]]]]))
+           [<span style="color: #4c83ff;">:ul</span>] data)])
+
+(<span style="color: #D8FA3C;">rum</span>/<span style="color: #FBDE2D;">defc</span> <span style="color: #ff1493;">example-list%3</span> &lt; (shadow-dom [<span style="color: #61CE3C;">"css/dapps/index.css"</span>]) []
+  [<span style="color: #4c83ff;">:div</span>
+   (header-c%3 {<span style="color: #4c83ff;">:title</span> <span style="color: #61CE3C;">"Hello Style!"</span>})
+   (list-c%3 {<span style="color: #4c83ff;">:data</span> [<span style="color: #61CE3C;">"some"</span> <span style="color: #61CE3C;">"stuff"</span> <span style="color: #61CE3C;">"to"</span> <span style="color: #61CE3C;">"render"</span>]})])
+</pre>
+</div>
+<br>
+<div id="list-example3"></div>
+<br>
+
+<p>
+OK, I admit that this is slightly underwhelming because it only half
+works, but hey it's <b>React + ShadowDOMs</b>! The idea with this is that you
+can write some components in ClojureScript, style them with a little
+CSS, and package them all in ShadowDOMs for anybody to use. With that
+we could create component libraries for common UI elements. Then when
+you want write an app, you'll be able to consume component libraries
+similar to how you might use a JS library like jQuery or Dojo.
+</p>
+
+<p>
+The <a href="http://caniuse.com/#feat=shadowdom">support for ShadowDOMs</a> still isn't great but there's a
+<a href="https://github.com/WebComponents/webcomponentsjs">webcomponents polyfill</a> that should help. I spent about a day and a
+half trying to get ShadowDOMs to cooperate with React and the polyfill
+and this is how far I've gotten so far. If it looks interesting, you
+should <a href="https://github.com/greenyouse/blog/src/dapps/core.cljx">take a peek</a> at my work and try giving it a good thumping :D.
+</p>
+
+<br>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2">Styling</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+If you're familiar with some of the JS app building frameworks, you'll
+notice that many of them come with blanket CSS you can use. There are
+also popular JS libraries that come with similar "<i>work everywhere</i>"
+CSS. The issue with these styling tools is that they work everywhere
+by not being "<i>native</i>" anywhere. These looks nice but they're
+definitely not iOS or Android or Windows Phone or anything else. You
+also have to be careful not to completely rely on these styles either
+or you app might end up looking too generic.
+</p>
+
+<p>
+Styling is slightly different with Browserific because we can tailor CSS
+directly to the platform through feature expressions. That means that
+there's no excuse not to follow all of the "native" UI guidelines!
+Each component should have its own default CSS so people can use it
+without having to worry about how do the styling. Customizing the
+app's style is still a good idea though and we'll be able to change
+the default CSS for components through <a href="http://www.w3.org/TR/css-scoping-1/#selectors">ShadowDOM CSS selectors</a>
+(specifically <code>::shadow</code> and <code>/deep/</code> aka <code>&gt;&gt;&gt;</code>).
+</p>
+
+<p>
+Using components that come with pre-packaged CSS is a great
+productivity boost, just don't forget to add a little of your own
+style too. We can skip most of the CSS writing by coupling styles
+with our components but your app will still look too generic if you
+rely completely on the default styles.
+</p>
+
+<br>
+</div>
+</div>
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3">Databases</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+Using client-side databases in apps can be great when building offline
+compatible apps, caching local data from a server, etc. However, I
+haven't seen very many persistent, client-side database projects in
+ClojureScript, although there are lots of great datalog/logic
+libraries. Things also get a little hairy when we try to publish an
+app that works across all platforms because there are lots of browsers
+with varying levels support for IndexedDB, WebSQL, localStorage, and
+others storage types. To get around all of this, I think it would be
+best to glue a ClojureScript database to a JS, storage polyfill.
+</p>
+
+<p>
+With <a href="https://github.com/greenyouse/pldb-cache">pldb-cache</a> I combined core.logic's pldb database with
+<a href="http://dev.yathit.com/ydn-db/index.html">YDN-DB</a>. Through this, an app can use a pldb database in memory but any
+changes to that in-memory database will be saved to client-side
+storage. When the app is loaded, it will automatically retrieve the
+previous state of the pldb database and load it into memory.
+</p>
+
+<p>
+The architecture of this library is similar to Datomic, in that it has
+hot storage (in-memory db), cold storage (client-side db), and a
+transactor to update the cold storage. The cool part about choosing
+this approach is that you can swap out the hot and cold storage to
+meet your own needs.
+</p>
+
+<p>
+If you'd rather use datascript, bacwn, or some other library, there
+are only a few CRUD operations you need to implement to complete the
+switch. The same goes for cold storage too.
+</p>
+
+<p>
+For example, I wanted to use YDN-DB for pldb-cache but I ran into some
+troubles along the way. Right now it's temporarily using localStorage
+for the cold storage part instead of YDN-DB. Making the switch to
+localStorage was pretty easy and only took ~1 hour.
+</p>
+
+<br>
+
+
+<h2>Silly App Schema<small> (optional reading)</small></h2>
+
+<p>
+If you've been following so far, you may be wondering why the list
+component from the UI section was labeled <code>list-c</code>. This is part of my
+(potentially hairbrained) app schema. It has been useful for me so I
+though it would be good to share but it's not very thorough.
+</p>
+
+<p>
+Right now it has six elements: components, templates, pages, screens,
+views, and state machines (automata). Each element also has a special
+suffix that is appended to function names to denote what the function
+does (to make code reading a little easier). Check out the
+<a href="https://github.com/greenyouse/browserific/tree/master/lein-browserific/src/cljs/browserific/config">ClojureScript side</a> of lein-browserific or the <a href="https://github.com/greenyouse/browserific/tree/master/examples/notes">minimal example app</a> to
+see this in action.
+</p>
+
+<br>
+</div>
+
+<div id="outline-container-sec-3-0-1" class="outline-4">
+<h4 id="sec-3-0-1">Components</h4>
+<div class="outline-text-4" id="text-3-0-1">
+<p>
+By this point I think you've probably read enough about
+components. They're basically just an abstract method for rendering
+one UI element.
+</p>
+
+<p>
+name: *-c
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-3-0-2" class="outline-4">
+<h4 id="sec-3-0-2">Template</h4>
+<div class="outline-text-4" id="text-3-0-2">
+<p>
+These either act as a factory for generating components or as a
+container that can hold any number of components. An example of the
+later use might be a page template for mobile that always has a
+header and a footer element. A factory-type use would be something
+similar to <code>browserific.config.macros.multi-input-template</code>.
+</p>
+
+<p>
+name: *-template
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-3-0-3" class="outline-4">
+<h4 id="sec-3-0-3">Pages</h4>
+<div class="outline-text-4" id="text-3-0-3">
+<p>
+A page is comprised of the whole UI that gets rendered on the
+screen. For example an app turns on and starts out on the home page,
+then the user clicks on preferences and it goes to the preferences
+page, etc.
+</p>
+
+<p>
+name: *-page
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-3-0-4" class="outline-4">
+<h4 id="sec-3-0-4">Screens</h4>
+<div class="outline-text-4" id="text-3-0-4">
+<p>
+Screens are like the "modes" of your app. For example, if you made a
+video game it would start out with the menu-screen which could have
+a top scores page and a preferences page. When a user switches to
+playing the game, the app would go into the game screen (game
+mode).
+</p>
+
+<p>
+This is a good place to put an app's page router.
+</p>
+
+<p>
+name: *-screen
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-3-0-5" class="outline-4">
+<h4 id="sec-3-0-5">Views</h4>
+<div class="outline-text-4" id="text-3-0-5">
+<p>
+The views do databinding between the database and the UI. Some app
+code can subscribe to a view so that any updates on the data get
+propagated to the UI automatically through React.
+</p>
+
+<p>
+name: *-view
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-3-0-6" class="outline-4">
+<h4 id="sec-3-0-6">State Machines</h4>
+<div class="outline-text-4" id="text-3-0-6">
+<p>
+This is a wip but basically we could use state machines with CSP and
+React. Automata stuff is probably for another blog post in the
+future but it's pretty great for games and other things.
+</p>
+
+<p>
+name: *-fsm
+</p>
+
+<br>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4">Back to Reality</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+So now you're going to go make ShadowDOM components, write apps
+with 200 LOC, and get perfect, native styling. Opps, wait a
+minute&#x2026; ShadowDOMs don't work yet, neither do styled
+components, and the awesome JS polyfill for databases doesn't work
+either. Crap!
+</p>
+
+<p>
+These would be great to have but will require a little more work to
+complete. I've tried my best but any contributions are more than
+welcome!
+</p>
+
+<p>
+All is not lost however, the feature expressions for components still
+work and we have a great leiningen plugin for managing builds. If you
+want  to style your app, just include the relevant CSS like normal
+(nothing fancy). You can always get a head start writing component
+libraries too, they'll just lack the styling part.
+</p>
+
+<p>
+I didn't really mention it here but I would also like to write a
+Browserific library to close over the NodeJS and Cordova APIs. Browser
+extensions are also (sort of) on the radar but my focus is doing
+mobile and desktop first.
+</p>
+
+<p>
+Good luck, I hope this was helpful!
+</p>
+
+<br>
+</div></div></div>
+
+
+<script type="text/javascript" src="js/dapps/ReactShadow.js"></script>
+<script type="text/javascript" src="js/dapps/dapps.js"></script>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<hr />
+                         <p class='footer'><a href='http://creativecommons.org/licenses/by-nc-sa/3.0/' target='_blank'>©copyright 2015</a>, by <a href='/about.html'>Ed Babcock</a> (^_^)v</p>
+                         <script type='text/javascript' src='js/jquery.min.js'></script>
+                         <script type='text/javascript' src='js/bootstrap.min.js'></script>
+</div>
+</body>
+</html>

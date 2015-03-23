@@ -1,0 +1,30 @@
+#+HTML: <div class="container-fluid"><div class="row"><div class="col-md-7 col-md-offset-3 col-xs-12 col-sm-10 col-sm-offset-1 col-lg-6 col-lg-offset-3">
+#+TITLE: About
+#+HTML: <br><br>
+
+#+HTML: <h2>About Me <small>(in goofy 3rd person speak)</small></h2>
+
+Ed is a chemist turned programmer that loves to work on tricky
+problems and hack in LISPs. In late 2011 he started R programming for
+a university course and enjoyed it so much that he dove into learning
+AppleScript, HTML, CSS, and JavaScript in his free time. A few months
+later he happened across some [[http://www.paulgraham.com/avg.html][infamous]] [[http://www.paulgraham.com/iflisp.html][Paul]] [[http://ep.yimg.com/ty/cdn/paulgraham/bbnexcerpts.txt][Graham]] [[http://www.paulgraham.com/rootsoflisp.html][essays]] and has been
+hooked on Clojure (and other LISPs) ever since.
+
+When not programming he likes to ski, cook, geek out on video games, and
+go rock climbing.
+
+** Resume
+    Here's my resume too (I'm currently looking for a job, ~hire me!~):
+
+    [[file:resume][Resume]]
+
+** Contact Me
+Email: [[mailto:Ed@EdBabcock.com][Ed@EdBabcock.com]]
+#+ATTR_HTML: :target _blank
+LinkedIn: [[https://LinkedIn.com/in/EdBabcock][LinkedIn.com/in/EdBabcock]]
+#+ATTR_HTML: :target _blank
+GitHub: [[https://github.com/greenyouse][github.com/greenyouse]]
+
+
+#+HTML: </div></div></div>

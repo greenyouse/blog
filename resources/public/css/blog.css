@@ -1,0 +1,73 @@
+body {
+  background-color: #1F1f1f;
+  color: #F8F8F8;
+}
+
+::selection {
+	background: #7F073F;
+        color: white;
+}
+
+::-moz-selection {
+	background: #7F073F;
+        color: white;
+}
+
+pre {
+    background-color: black;
+    color: white;
+    white-space: pre-wrap;
+}
+
+.footer a {
+  color: royalblue;
+}
+
+a {
+    color: #FBDE2D;
+}
+
+#main-navbar a {
+  color: white;
+}
+
+h1,h2,h3,h4,h5 {
+    color: peru;
+}
+
+a:hover, .footer a:hover, #main-navbar a:hover {
+  color: cornflowerblue;
+  text-decoration: none;
+}
+
+.navbar {
+  background-color: black;
+  border-color: black;
+}
+
+code {
+    background-color: darkcyan;
+    color: #F8F8F8;
+}
+
+/* blog post text */
+#content p {
+    font: medium Helvetica,Arial,sans-serif
+}
+
+#content blockquote p {
+    font: large "Goudy Bookletter 1911", serif;
+}
+
+blockquote {
+  background-color: #111;
+  color: peru;
+}
+
+/* not using tags but just in-case, looks like code blocks */
+.tag {
+  border-color: black;
+  border-radius: 10em;
+  background-color: darkcyan;
+  color: #F8F8F8;
+}

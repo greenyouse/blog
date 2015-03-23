@@ -1,0 +1,10 @@
+#+HTML: <div id="index" class="container-fluid" style="font-size: 2rem;"><div class="row"><div class="col-md-10 col-md-offset-1 col-xs-12 col-sm-12 col-lg-8 col-lg-offset-2">
+#+TITLE: EDBABCOCK
+#+HTML: <br><br>
+
+- 3/22/2014 [[file:app-hacking.org][App Hacking]]
+  #+HTML: <br><p>How to use Browserific to build apps.</p>
+
+
+
+   #+HTML: </div></div></div>

@@ -1,0 +1,24 @@
+If you're going to use this for your blog here are some org-mode tips:
+
+[[http://orgmode.org/manual][required reading (yes, the whole thing :p)]]
+
+[[https://emacsclub.github.io/html/org_tutorial.html][good tutorial]]
+
+|                | Github Flavored Markdown | Org-Mode           |
+| Headings       | #head                    | *head              |
+| Blockquotes    | <                        | <q (tab)           |
+| Italics        | *something*              | /something/        |
+| Bold           | **stuff**                | *stuff*            |
+| Underline      |                          | _moar_             |
+| Verbatim       | `stuff`                  | ~stuff~ or =stuff= |
+| Strike-through |                          | +cancel+           |
+| Code           | ```                      | <s (tab)           |
+
+Here's a code block with line numbers (via the -n option), use ~(C-c ')~ for
+editing:
+
+#+BEGIN_SRC clojure -n
+
+  (defn woot [] (+ 2 2))
+
+#+END_SRC
