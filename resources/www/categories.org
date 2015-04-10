@@ -3,7 +3,7 @@
 #+OPTIONS: H:1
 #+HTML: <br><br>
 
-* browserific
+* Browserific
 ** 3/22/2014 [[file:app-hacking.org][App Hacking]]
 
 #+HTML: </div></div></div>

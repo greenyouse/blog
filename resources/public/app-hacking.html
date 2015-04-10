@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 <title>App Hacking</title>
-<!-- 2015-03-23 Mon 00:29 -->
+<!-- 2015-04-10 Fri 14:39 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="generator" content="Org-mode" />
 <meta  name="author" content="Ed Babcock (greenyouse)" />
@@ -220,9 +220,9 @@ For an example, take a look at this code for rendering a list:
 
 <pre class="src src-clojure">(<span style="color: #FBDE2D;">defn</span> <span style="color: #ff1493;">list-c%1</span> [{<span style="color: #4c83ff;">:keys</span> [data]}]
   [<span style="color: #4c83ff;">:section</span>
-   (reduce (<span style="color: #FBDE2D;">fn</span> [ul title]
-             (conj ul ^{<span style="color: #4c83ff;">:key</span> (gensym)}
-                   [<span style="color: #4c83ff;">:dt</span>  {<span style="color: #4c83ff;">:on-click</span> #(println title)}
+   (<span style="color: #FF6400;">reduce</span> (<span style="color: #FBDE2D;">fn</span> [ul title]
+             (<span style="color: #FF6400;">conj</span> ul ^{<span style="color: #4c83ff;">:key</span> (<span style="color: #FF6400;">gensym</span>)}
+                   [<span style="color: #4c83ff;">:dt</span>  {<span style="color: #4c83ff;">:on-click</span> #(<span style="color: #FF6400;">println</span> title)}
                     [<span style="color: #4c83ff;">:p</span> [<span style="color: #4c83ff;">:strong</span> title]]]))
            [<span style="color: #4c83ff;">:dl</span>] data)])
 
@@ -265,17 +265,17 @@ FirefoxOS? For that we'd use a FirefoxOS feature expression!
   [{<span style="color: #4c83ff;">:keys</span> [data]}]
   (<span style="color: #D8FA3C;">chenex</span>/in-case!
    [<span style="color: #4c83ff;">:firefoxos</span>] [<span style="color: #4c83ff;">:section</span> {<span style="color: #4c83ff;">:data-type</span> <span style="color: #61CE3C;">"list"</span>}
-                 (reduce (<span style="color: #FBDE2D;">fn</span> [ul title]
-                           (conj ul ^{<span style="color: #4c83ff;">:key</span> (gensym)}
-                                 [<span style="color: #4c83ff;">:li</span> [<span style="color: #4c83ff;">:a</span> {<span style="color: #4c83ff;">:on-click</span> #(println title)}
+                 (<span style="color: #FF6400;">reduce</span> (<span style="color: #FBDE2D;">fn</span> [ul title]
+                           (<span style="color: #FF6400;">conj</span> ul ^{<span style="color: #4c83ff;">:key</span> (<span style="color: #FF6400;">gensym</span>)}
+                                 [<span style="color: #4c83ff;">:li</span> [<span style="color: #4c83ff;">:a</span> {<span style="color: #4c83ff;">:on-click</span> #(<span style="color: #FF6400;">println</span> title)}
                                        [<span style="color: #4c83ff;">:aside</span> {<span style="color: #4c83ff;">:class</span> <span style="color: #61CE3C;">"pack-end"</span>
                                                 <span style="color: #4c83ff;">:data-icon</span> <span style="color: #61CE3C;">"forward"</span>}]
                                        [<span style="color: #4c83ff;">:p</span> [<span style="color: #4c83ff;">:strong</span> title]]]]))
                          [<span style="color: #4c83ff;">:ul</span>] data)]
    [<span style="color: #4c83ff;">:else</span>] [<span style="color: #4c83ff;">:section</span>
-            (reduce (<span style="color: #FBDE2D;">fn</span> [ul title]
-                      (conj ul ^{<span style="color: #4c83ff;">:key</span> (gensym)}
-                            [<span style="color: #4c83ff;">:dt</span>  {<span style="color: #4c83ff;">:on-click</span> #(println title)}
+            (<span style="color: #FF6400;">reduce</span> (<span style="color: #FBDE2D;">fn</span> [ul title]
+                      (<span style="color: #FF6400;">conj</span> ul ^{<span style="color: #4c83ff;">:key</span> (<span style="color: #FF6400;">gensym</span>)}
+                            [<span style="color: #4c83ff;">:dt</span>  {<span style="color: #4c83ff;">:on-click</span> #(<span style="color: #FF6400;">println</span> title)}
                              [<span style="color: #4c83ff;">:p</span> [<span style="color: #4c83ff;">:strong</span> title]]]))
                     [<span style="color: #4c83ff;">:dl</span>] data)]))
 
@@ -324,9 +324,9 @@ the <code>dom.webcomponents.enabled</code> flag set to true):
 
 (<span style="color: #FBDE2D;">defn</span> <span style="color: #ff1493;">list-c%3</span> [{<span style="color: #4c83ff;">:keys</span> [data]}]
   [<span style="color: #4c83ff;">:section</span> {<span style="color: #4c83ff;">:data-type</span> <span style="color: #61CE3C;">"list"</span>}
-   (reduce (<span style="color: #FBDE2D;">fn</span> [ul item]
-             (conj ul
-                   [<span style="color: #4c83ff;">:li</span> {<span style="color: #4c83ff;">:key</span> (gensym)}
+   (<span style="color: #FF6400;">reduce</span> (<span style="color: #FBDE2D;">fn</span> [ul item]
+             (<span style="color: #FF6400;">conj</span> ul
+                   [<span style="color: #4c83ff;">:li</span> {<span style="color: #4c83ff;">:key</span> (<span style="color: #FF6400;">gensym</span>)}
                     [<span style="color: #4c83ff;">:a</span> {<span style="color: #4c83ff;">:on-click</span> #(<span style="color: #D8FA3C;">js</span>/console.log item)} <span style="color: #8B8989; font-style: italic;">;events not handled yet</span>
                      [<span style="color: #4c83ff;">:aside</span> {<span style="color: #4c83ff;">:class</span> <span style="color: #61CE3C;">"pack-end"</span>
                               <span style="color: #4c83ff;">:data-icon</span> <span style="color: #61CE3C;">"forward"</span>}]
@@ -618,8 +618,9 @@ Good luck, I hope this was helpful!
 </div>
 </div>
 <div id="postamble" class="status">
-<hr />
-                         <p class='footer'><a href='http://creativecommons.org/licenses/by-nc-sa/3.0/' target='_blank'>©copyright 2015</a>, by <a href='/about.html'>Ed Babcock</a> (^_^)v</p>
+<footer> <hr />
+                         <p><a href='http://creativecommons.org/licenses/by-nc-sa/3.0/' target='_blank'>©copyright 2015</a>, by <a href='/about.html'>Ed Babcock</a> (^_^)v</p>
+                         </footer>
                          <script type='text/javascript' src='js/jquery.min.js'></script>
                          <script type='text/javascript' src='js/bootstrap.min.js'></script>
 </div>

@@ -10,3 +10,11 @@ pom.xml.asc
 .\#*
 dev
 drafts
+/.repl/
+/builds/
+/junk/
+/out/
+/resources/public/js/dapps/dapps.js
+/resources/public/js/dapps/dapps.js.map
+/resources/public/js/dapps/dapps/
+/resources/public/js/dapps/out/

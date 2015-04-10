@@ -3,7 +3,7 @@
 #+HTML: <br><br>
 
 - 3/22/2014 [[file:app-hacking.org][App Hacking]]
-  #+HTML: <br><p>How to use Browserific to build apps.</p>
+  #+HTML: <br><p>A taste of upcoming Browserific features.</p>
 
 
 

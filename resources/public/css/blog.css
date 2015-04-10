@@ -1,16 +1,16 @@
 body {
-  background-color: #1F1f1f;
-  color: #F8F8F8;
+    background-color: #1F1f1f;
+    color: #F8F8F8;
 }
 
 ::selection {
-	background: #7F073F;
-        color: white;
+    background: #7F073F;
+    color: white;
 }
 
 ::-moz-selection {
-	background: #7F073F;
-        color: white;
+    background: #7F073F;
+    color: white;
 }
 
 pre {
@@ -19,8 +19,8 @@ pre {
     white-space: pre-wrap;
 }
 
-.footer a {
-  color: royalblue;
+footer a {
+    color: royalblue;
 }
 
 a {
@@ -28,21 +28,21 @@ a {
 }
 
 #main-navbar a {
-  color: white;
+    color: white;
 }
 
 h1,h2,h3,h4,h5 {
     color: peru;
 }
 
-a:hover, .footer a:hover, #main-navbar a:hover {
-  color: cornflowerblue;
-  text-decoration: none;
-}
+a:hover, footer a:hover, #main-navbar a:hover {
+                              color: cornflowerblue;
+                              text-decoration: none;
+                          }
 
 .navbar {
-  background-color: black;
-  border-color: black;
+    background-color: black;
+    border-color: black;
 }
 
 code {
@@ -60,14 +60,22 @@ code {
 }
 
 blockquote {
-  background-color: #111;
-  color: peru;
+    background-color: #111;
+    color: peru;
 }
 
 /* not using tags but just in-case, looks like code blocks */
 .tag {
-  border-color: black;
-  border-radius: 10em;
-  background-color: darkcyan;
-  color: #F8F8F8;
+    border-color: black;
+    border-radius: 10em;
+    background-color: darkcyan;
+    color: #F8F8F8;
+}
+
+/* useful for larger displays like an iMac */
+@media all and (min-width: 1920px) {
+    #content {
+        padding-left: 30rem;
+        padding-right: 33rem;
+    }
 }

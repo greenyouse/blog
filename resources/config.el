@@ -26,8 +26,9 @@
     </div>
   </nav>"
 
-      org-html-postamble "<hr />
-                         <p class='footer'><a href='http://creativecommons.org/licenses/by-nc-sa/3.0/' target='_blank'>©copyright 2015</a>, by <a href='/about.html'>Ed Babcock</a> (^_^)v</p>
+      org-html-postamble "<footer> <hr />
+                         <p><a href='http://creativecommons.org/licenses/by-nc-sa/3.0/' target='_blank'>©copyright 2015</a>, by <a href='/about.html'>Ed Babcock</a> (^_^)v</p>
+                         </footer>
                          <script type='text/javascript' src='js/jquery.min.js'></script>
                          <script type='text/javascript' src='js/bootstrap.min.js'></script>"
       org-html-head "<link rel='stylesheet' href='/css/bootstrap.min.css' type='text/css'/>
