@@ -4,6 +4,6 @@
 #+HTML: <br><br>
 
 * Browserific
-** 3/22/2014 [[file:app-hacking.org][App Hacking]]
+** 3/22/2015 [[file:app-hacking.org][App Hacking]]
 
 #+HTML: </div></div></div>
