@@ -14,6 +14,16 @@ hooked on Clojure (and other LISPs) ever since.
 When not programming he likes to ski, cook, geek out on video games, and
 go rock climbing.
 
+#+HTML: <br>
+*** ~Hire Me~
+I'm currently searching for a position as a full-time Software
+Developer. If you think I might be a good fit for your company, send me
+over an [[mailto:Ed@EdBabcock.com][email]]. I would love to hear from you!
+
+#+HTML: <br>
+Here's more info on what I've done so far: [[file:resume][Resume]]
+
+
 #+HTML:<br>
 ** Contact Me
 Email: [[mailto:Ed@EdBabcock.com][Ed@EdBabcock.com]]
@@ -21,7 +31,5 @@ Email: [[mailto:Ed@EdBabcock.com][Ed@EdBabcock.com]]
 LinkedIn: [[https://LinkedIn.com/in/EdBabcock][LinkedIn.com/in/EdBabcock]]
 #+ATTR_HTML: :target _blank
 GitHub: [[https://github.com/greenyouse][github.com/greenyouse]]
-
-[[file:resume][Resume]]
 
 #+HTML: </div></div></div>
