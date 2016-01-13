@@ -21,7 +21,7 @@ Developer. If you think I might be a good fit for your company, send me
 over an [[mailto:Ed@EdBabcock.com][email]]. I would love to hear from you!
 
 #+HTML: <br>
-Here's more info on what I've done so far: [[file:resume][Resume]]
+[[file:resume][Resume]]
 
 
 #+HTML:<br>
