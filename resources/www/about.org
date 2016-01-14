@@ -18,7 +18,7 @@ go rock climbing.
 *** ~Hire Me~
 I'm currently searching for a position as a full-time Software
 Developer. If you think I might be a good fit for your company, send me
-over an [[mailto:Ed@EdBabcock.com][email]]. I would love to hear from you!
+an [[mailto:Ed@EdBabcock.com][email]]. I would love to hear from you!
 
 #+HTML: <br>
 [[file:resume][Resume]]

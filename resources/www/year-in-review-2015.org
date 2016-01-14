@@ -1,0 +1,65 @@
+#+HTML: <div class="container-fluid"><div class="row"><div class="col-md-7 col-md-offset-3 col-xs-12 col-sm-10 col-sm-offset-1 col-lg-6 col-lg-offset-3">
+#+TITLE: Year in Review 2015
+#+HTML: <br><br>
+
+Here's a snapshot of what 2015 looked like for me. I wrote it up at the
+end of December so I'm going to call it OK even though it's actually
+being published in 2016.
+
+* Books
+** Number Read
+   12
+
+** Number Published
+   0 (but I helped as a technical editor for [[https://www.packtpub.com/big-data-and-business-intelligence/clojure-finance][Clojure for Finance]])
+
+** Favorite Book of the Year
+   The Book of Shen (3rd Edition)
+
+* Programming
+** Number of Blog Posts
+   1 (ouch, I need to work on this :p)
+
+** Number of New Programming Projects
+   5
+
+** Favorite Programming Language Found
+  Shen
+
+** Languages Used for Work
+  - Clojure
+  - ClojureScript
+  - JavaScript
+  - PHP
+  - Java
+
+** Languages Used for Fun
+  - Erlang
+  - Haskell
+  - Shen
+  - Clojure
+  - ClojureScript
+
+* Favorite Music Album Found
+  Joan As Police Woman - The Deep Field
+
+* Favorite Show
+  (Still) Game of Thrones
+
+* New (non-programming) Languages Tried
+  Mandarin Chinese
+
+* TODOs for next year
+  - Get better at PHP, Java, Shen, Erlang, Haskell, Clojure(Script), and
+    JavaScript.
+  - Understand more of the math behind Category Theory and how to
+    practically apply it to software development.
+  - Write a library on top of cat-theory operations that makes data
+    transformations easy.
+  - Try Writing ElasticSearch and SQL libraries on top of the cat-theory
+    library.
+  - Use Erlang to build a proper implementation of the phantom protocol.
+  - Figure out a decent way to abstract app development across platforms
+    (started this but haven't touched it since last spring and it could
+    use a lot of work).
+  - Have fun in general with some new projects!
