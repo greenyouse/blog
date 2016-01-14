@@ -6,16 +6,19 @@ Here's a snapshot of what 2015 looked like for me. I wrote it up at the
 end of December so I'm going to call it OK even though it's actually
 being published in 2016.
 
+#+HTML: <br>
 * Books
 ** Number Read
    12
 
 ** Number Published
    0 (but I helped as a technical editor for [[https://www.packtpub.com/big-data-and-business-intelligence/clojure-finance][Clojure for Finance]])
+#+ATTR_HTML: :target _blank
 
 ** Favorite Book of the Year
    The Book of Shen (3rd Edition)
 
+#+HTML: <br>
 * Programming
 ** Number of Blog Posts
    1 (ouch, I need to work on this :p)
@@ -40,15 +43,21 @@ being published in 2016.
   - Clojure
   - ClojureScript
 
-* Favorite Music Album Found
-  Joan As Police Woman - The Deep Field
 
+#+HTML: <br>
+* Favorite Music Album Found
+  [[https://www.youtube.com/watch?v=wPlJnJ4uLPY&list=PLyE0IASFARwCq3IOVdRfBVXrQrkihgXwx][Joan As Police Woman - The Deep Field]]
+#+ATTR_HTML: :target _blank
+
+#+HTML: <br>
 * Favorite Show
   (Still) Game of Thrones
 
+#+HTML: <br>
 * New (non-programming) Languages Tried
   Mandarin Chinese
 
+#+HTML: <br>
 * TODOs for next year
   - Get better at PHP, Java, Shen, Erlang, Haskell, Clojure(Script), and
     JavaScript.
