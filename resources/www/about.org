@@ -16,8 +16,8 @@ go rock climbing.
 
 #+HTML: <br>
 *** ~Hire Me~
-I'm currently searching for a position as a full-time Software
-Developer. If you think I might be a good fit for your company, send me
+I'm currently searching for a position as a full-time software
+developer. If you think I might be a good fit for your company, send me
 an [[mailto:Ed@EdBabcock.com][email]]. I would love to hear from you!
 
 #+HTML: <br>
