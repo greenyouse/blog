@@ -3,10 +3,11 @@
   :url "https://github.com/greenyouse/gblog"
   :license "GPL Version 2"
 
-  :dependencies [[org.clojure/clojure "1.6.0"]
+  :dependencies [[org.clojure/clojure "1.8.0"]
                  [org.clojure/clojurescript "0.0-2850"]
-                 [com.greenyouse/chenex "0.1.0"]
                  [org.clojure/core.logic "0.8.8"]
+                 [clj-time "0.11.0"]
+                 [com.greenyouse/chenex "0.1.0"]
                  [reagent "0.5.0"]
                  [rum "0.2.6"]]
 

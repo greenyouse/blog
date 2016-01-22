@@ -1,0 +1,181 @@
+#+HTML: <div class="container-fluid"><div class="row"><div class="col-md-7 col-md-offset-3 col-xs-12 col-sm-10 col-sm-offset-1 col-lg-6 col-lg-offset-3">
+#+TITLE: Deepfns
+#+HTML: <br><br>
+
+
+Over the last week I've been setting up a [[https://github.com/greenyouse/deepfns][library]] for nice data
+transformations in Clojure(Script). I'm absolutely not the first to
+focus on elegant data transformations, but I thought it might be fun to
+lay out some of what I've been thinking about!
+
+I'll start with an explanation of when to use transitives, where they
+fit in the Clojure ecosystem, and wrap up with a little list of TODOs
+for the library.
+
+#+HTML: <br>
+
+* Transitive?
+
+  #+HTML: <br>
+  #+BEGIN_QUOTE
+  “Good design is not about making grand plans, but about taking things
+  apart.” — Rich Hickey
+  #+END_QUOTE
+
+  When working with large datasets it can be easy to program yourself
+  into conditional hell. The end result is often a codebase that's
+  difficult to change because the system's data transformation functions
+  become hardcoded to the current state of the system. If Clojure
+  programming is all about mitigating state, then shouldn't our data
+  pipelines try to do so too?
+
+  This library definitely isn't the complete solution but I think the
+  transtives in it can help avoid one class of stateful
+  transformations. As the name implies, transitives are for [[https://en.wikipedia.org/wiki/Transitive_relation][transitive
+  relations]]. They bridge the gap between two datastructures and allow
+  for function application on the transitive values during
+  transformation.
+
+  This is great for building up a known datastructure with unknown input
+  data. OK, that's a pretty general statement so let's look at a few
+  examples to see how it works.
+
+  Imagine that you're running an analytics service and you'll be
+  receiving data from the field that must be normalized and put into
+  some structure that matches your company's analytics schema. Well,
+  here's a trasitive for a situation like that:
+
+  #+BEGIN_SRC clojure
+    (require '[clj-time.core :as tc]
+             '[deepfns.core :as d :refer [transitive]]
+             '[deepfns.transitive :as t])
+
+    ;; really basic fn for normalizing
+    (defn match-device [device-name]
+      (if (re-find #"(?i)Foo Phone" device-name)
+        "Foo Phone" "Unknown Phone"))
+
+    ;; saves a little memory when called like this
+    (def analytics-event>
+      (transitive
+        ;; will match :session-id and set it as session
+        {:session :session-id
+         ;; looks up a nested device value and normalizes it with
+         ;; the match-device function
+         :device (t/=> :headers :device match-device)
+         :page :url
+         :referral-page :referral-page
+         :event :event-name
+         ;; mark the current time on the server as the time
+         ;; the event was received
+         :timestamp (tc/now)}))
+
+    ;; We could start passing in data like this
+    (analytics-event>
+      {:session-id 100
+       :account-id "1234"
+       :headers {:device "New Foo Phone OS"
+                 :x-custom "fizzbuzz"}
+       :event-name "login"})
+
+    ;; and only the parts we care about are saved when there's
+    ;; data for them
+    {:session 100
+     :device "Foo Phone"
+     :event "login"
+     :timestamp 'clj-time-timestamp}
+
+
+    ;; or event a minimal amount of data like this
+    (analytics-event>
+      {:session-id 2300
+       :event-name "foo"})
+
+    ;; and it returns
+    {:session 2300
+     :event "foo"
+     :timestamp 'clj-time-timestamp}
+  #+END_SRC
+  #+HTML: <br>
+
+  With this we're basically saying "Hey, I only care about these
+  fields. I'll take whatever the request is but just make sure
+  these fields are included."
+
+  Any data that we don't want to record won't get recorded and we have
+  functions for normalizing specific fields.
+
+  Awesome! Now, let's fast-forward and update the schema that we built.
+  .
+  #+BEGIN_SRC clojure
+    (def v2-analytics-events>
+      (transitive
+        {:app-token (t/=> :headers :token)
+         :device (t/=> :headers :device match-device)
+         :customer-id (t/=> :cust-id normalize-customer)
+         :event :event-name
+         :timestamp (tc/now)}))
+  #+END_SRC
+  #+HTML: <br>
+
+  All we had to do was update the map and that was it! No complex chains
+  of functions building up a hardcoded datastructure, just composable
+  data transformations that are easy to grok!
+
+#+HTML: <br>
+
+* What About Normal Data Transformations?
+
+  Although [[https://github.com/greenyouse/deepfns][deepfns]] does have functions for nested data transformations,
+  there are alternative libraries that do much better jobs. I would
+  recommend the excellent [[https://github.com/nathanmarz/specter][specter]] library for when you have to do
+  operations on nested data in the style of functional lenses. The
+  deepfns library isn't completely useless, transitives are still great,
+  but most of this was for me to explore category theory functions from
+  Haskell.
+
+  In general here are two rules for transitives and specter:
+
+  - If you're going to extract or update values in a nested
+    datastructure, use [[https://github.com/nathanmarz/specter][specter]].
+  - When you have a system that converts some variable or unknown input
+    into a known format, use transitives.
+
+  #+HTML: <br>
+
+* Yet to come
+
+  I'm still developing the library and I plan to add a few more things
+  and refactor a bit. I will definitely add more transitive functions to
+  make transformations easier (I would be open to other peoples' ideas
+  on these too). On top of that, I might add a few more Haskell functions
+  like traverse and others.
+
+  The biggest thing I want to pin down for this library long-term is
+  performance costs. I tried benchmarking the core functions using
+  criterium and in general it was about 3x as slow as the specter
+  library. It would be fun if I could use some of the same techniques
+  from that library to get precompilation for functions.
+
+  I also feel like there might be JIT optimizations too. By default JIT
+  can inline functions calls that have 9 levels or less of nesting. All
+  the nested calls that are in the library right now might be slowing
+  things down. Using the [[https://github.com/gtrak/no.disassemble][no.disassemble]] library would be good for
+  picking that apart.
+
+  It also might be good to look at how closures are being used by the
+  JVM to make sure they're getting garbage collected properly.
+
+  #+HTML: <br>
+
+* Recap
+
+  Clojure(Script) has a few tools for data transformation that I didn't
+  touch on (e.g. transducers, reducers, other tree walkers, etc.) but I
+  hope you see how the combination of transitives and specter
+  specifically may help with realizing more generic, declarative
+  systems. Good luck with using the transitives and don't be afraid to
+  write your own implementation too to understand how they work!
+
+  #+HTML: <br>
+  #+HTML: </div></div></div>

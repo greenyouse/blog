@@ -1,0 +1,413 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>Deepfns</title>
+<!-- 2016-01-22 Fri 13:58 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<meta  name="author" content="Ed Babcock (greenyouse)" />
+<meta  name="description" content="Hacks, projects, and general butt-kicking with Ed (greenyouse)"
+ />
+<meta  name="keywords" content="Clojure, ClojureScript, greenyouse, LISP" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.right  { text-align: center;  }
+  th.left   { text-align: center;   }
+  th.center { text-align: center; }
+  td.right  { text-align: right;  }
+  td.left   { text-align: left;   }
+  td.center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara:nth-child(2) { display: inline; }
+  .footpara { display: block; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  /*]]>*/-->
+</style>
+<link rel='stylesheet' href='/css/bootstrap.min.css' type='text/css'/>
+                     <link rel='stylesheet' href='/css/blog.css' type='text/css'/>
+                      <script type='text/javascript' src='MathJax/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="preamble" class="status">
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/index.html">EDBABCOCK</a>
+      </div>
+      <div class="collapse navbar-collapse" id="main-navbar">
+        <ul class="nav navbar-nav">
+          <li><a href="/about.html">About</a></li>
+          <li><a href="categories.html">Categories</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</div>
+<div id="content">
+<h1 class="title">Deepfns</h1>
+<div class="container-fluid"><div class="row"><div class="col-md-7 col-md-offset-3 col-xs-12 col-sm-10 col-sm-offset-1 col-lg-6 col-lg-offset-3">
+<br><br>
+
+
+<p>
+Over the last week I've been setting up a <a href="https://github.com/greenyouse/deepfns">library</a> for nice data
+transformations in Clojure(Script). I'm absolutely not the first to
+focus on elegant data transformations, but I thought it might be fun to
+lay out some of what I've been thinking about!
+</p>
+
+<p>
+I'll start with an explanation of when to use transitives, where they
+fit in the Clojure ecosystem, and wrap up with a little list of TODOs
+for the library.
+</p>
+
+<br>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1">Transitive?</h2>
+<div class="outline-text-2" id="text-1">
+<br>
+<blockquote>
+<p>
+“Good design is not about making grand plans, but about taking things
+apart.” — Rich Hickey
+</p>
+</blockquote>
+
+<p>
+When working with large datasets it can be easy to program yourself
+into conditional hell. The end result is often a codebase that's
+difficult to change because the system's data transformation functions
+become hardcoded to the current state of the system. If Clojure
+programming is all about mitigating state, then shouldn't our data
+pipelines try to do so too?
+</p>
+
+<p>
+This library definitely isn't the complete solution but I think the
+transtives in it can help avoid one class of stateful
+transformations. As the name implies, transitives are for <a href="https://en.wikipedia.org/wiki/Transitive_relation">transitive
+relations</a>. They bridge the gap between two datastructures and allow
+for function application on the transitive values during
+transformation.
+</p>
+
+<p>
+This is great for building up a known datastructure with unknown input
+data. OK, that's a pretty general statement so let's look at a few
+examples to see how it works.
+</p>
+
+<p>
+Imagine that you're running an analytics service and you'll be
+receiving data from the field that must be normalized and put into
+some structure that matches your company's analytics schema. Well,
+here's a trasitive for a situation like that:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-clojure">(<span style="color: #ff1493;">require</span> '[<span style="color: #D8FA3C;">clj-time.core</span> <span style="color: #4c83ff;">:as</span> tc]
+         '[<span style="color: #D8FA3C;">deepfns.core</span> <span style="color: #4c83ff;">:as</span> d <span style="color: #4c83ff;">:refer</span> [transitive]]
+         '[<span style="color: #D8FA3C;">deepfns.transitive</span> <span style="color: #4c83ff;">:as</span> t])
+
+<span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">really basic fn for normalizing</span>
+(<span style="color: #FBDE2D;">defn</span> <span style="color: #ff1493;">match-device</span> [device-name]
+  (<span style="color: #FBDE2D;">if</span> (<span style="color: #ff1493;">re-find</span> #<span style="color: #61CE3C;">"</span><span style="color: #61CE3C;">(</span><span style="color: #61CE3C;">?i</span><span style="color: #61CE3C;">)</span><span style="color: #61CE3C;">Foo Phone"</span> device-name)
+    <span style="color: #61CE3C;">"Foo Phone"</span> <span style="color: #61CE3C;">"Unknown Phone"</span>))
+
+<span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">saves a little memory when called like this</span>
+(<span style="color: #FBDE2D;">def</span> <span style="color: #D8FA3C;">analytics-event&gt;</span>
+  (transitive
+    <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">will match </span><span style="color: #4c83ff; font-style: italic;">:session-id</span><span style="color: #8B8989; font-style: italic;"> and </span><span style="color: #ff1493; font-style: italic;">set</span><span style="color: #8B8989; font-style: italic;"> it as session</span>
+    {<span style="color: #4c83ff;">:session</span> <span style="color: #4c83ff;">:session-id</span>
+     <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">looks up a nested device value and normalizes it with</span>
+     <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">the match-device function</span>
+     <span style="color: #4c83ff;">:device</span> (<span style="color: #D8FA3C;">t</span><span style="color: #EDEDED; background-color: #000000;">/</span>=&gt; <span style="color: #4c83ff;">:headers</span> <span style="color: #4c83ff;">:device</span> match-device)
+     <span style="color: #4c83ff;">:page</span> <span style="color: #4c83ff;">:url</span>
+     <span style="color: #4c83ff;">:referral-page</span> <span style="color: #4c83ff;">:referral-page</span>
+     <span style="color: #4c83ff;">:event</span> <span style="color: #4c83ff;">:event-name</span>
+     <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">mark the current time on the server as the time</span>
+     <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">the event was received</span>
+     <span style="color: #4c83ff;">:timestamp</span> (<span style="color: #D8FA3C;">tc</span><span style="color: #EDEDED; background-color: #000000;">/</span>now)}))
+
+<span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">We could start passing in data like this</span>
+(analytics-event&gt;
+  {<span style="color: #4c83ff;">:session-id</span> 100
+   <span style="color: #4c83ff;">:account-id</span> <span style="color: #61CE3C;">"1234"</span>
+   <span style="color: #4c83ff;">:headers</span> {<span style="color: #4c83ff;">:device</span> <span style="color: #61CE3C;">"New Foo Phone OS"</span>
+             <span style="color: #4c83ff;">:x-custom</span> <span style="color: #61CE3C;">"fizzbuzz"</span>}
+   <span style="color: #4c83ff;">:event-name</span> <span style="color: #61CE3C;">"login"</span>})
+
+<span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">and only the parts we care about are saved when there's</span>
+<span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">data for them</span>
+{<span style="color: #4c83ff;">:session</span> 100
+ <span style="color: #4c83ff;">:device</span> <span style="color: #61CE3C;">"Foo Phone"</span>
+ <span style="color: #4c83ff;">:event</span> <span style="color: #61CE3C;">"login"</span>
+ <span style="color: #4c83ff;">:timestamp</span> 'clj-time-timestamp}
+
+
+<span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">or event a minimal amount of data like this</span>
+(analytics-event&gt;
+  {<span style="color: #4c83ff;">:session-id</span> 2300
+   <span style="color: #4c83ff;">:event-name</span> <span style="color: #61CE3C;">"foo"</span>})
+
+<span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">and it returns</span>
+{<span style="color: #4c83ff;">:session</span> 2300
+ <span style="color: #4c83ff;">:event</span> <span style="color: #61CE3C;">"foo"</span>
+ <span style="color: #4c83ff;">:timestamp</span> 'clj-time-timestamp}
+</pre>
+</div>
+<br>
+
+<p>
+With this we're basically saying "Hey, I only care about these
+fields. I'll take whatever the request is but just make sure
+these fields are included."
+</p>
+
+<p>
+Any data that we don't want to record won't get recorded and we have
+functions for normalizing specific fields.
+</p>
+
+<p>
+Awesome! Now, let's fast-forward and update the schema that we built.
+.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-clojure">(<span style="color: #FBDE2D;">def</span> <span style="color: #D8FA3C;">v2-analytics-events&gt;</span>
+  (transitive
+    {<span style="color: #4c83ff;">:app-token</span> (<span style="color: #D8FA3C;">t</span><span style="color: #EDEDED; background-color: #000000;">/</span>=&gt; <span style="color: #4c83ff;">:headers</span> <span style="color: #4c83ff;">:token</span>)
+     <span style="color: #4c83ff;">:device</span> (<span style="color: #D8FA3C;">t</span><span style="color: #EDEDED; background-color: #000000;">/</span>=&gt; <span style="color: #4c83ff;">:headers</span> <span style="color: #4c83ff;">:device</span> match-device)
+     <span style="color: #4c83ff;">:customer-id</span> (<span style="color: #D8FA3C;">t</span><span style="color: #EDEDED; background-color: #000000;">/</span>=&gt; <span style="color: #4c83ff;">:cust-id</span> normalize-customer)
+     <span style="color: #4c83ff;">:event</span> <span style="color: #4c83ff;">:event-name</span>
+     <span style="color: #4c83ff;">:timestamp</span> (<span style="color: #D8FA3C;">tc</span><span style="color: #EDEDED; background-color: #000000;">/</span>now)}))
+</pre>
+</div>
+<br>
+
+<p>
+All we had to do was update the map and that was it! No complex chains
+of functions building up a hardcoded datastructure, just composable
+data transformations that are easy to grok!
+</p>
+
+<br>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2">What About Normal Data Transformations?</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+Although <a href="https://github.com/greenyouse/deepfns">deepfns</a> does have functions for nested data transformations,
+there are alternative libraries that do much better jobs. I would
+recommend the excellent <a href="https://github.com/nathanmarz/specter">specter</a> library for when you have to do
+operations on nested data in the style of functional lenses. The
+deepfns library isn't completely useless, transitives are still great,
+but most of this was for me to explore category theory functions from
+Haskell.
+</p>
+
+<p>
+In general here are two rules for transitives and specter:
+</p>
+
+<ul class="org-ul">
+<li>If you're going to extract or update values in a nested
+datastructure, use <a href="https://github.com/nathanmarz/specter">specter</a>.
+</li>
+<li>When you have a system that converts some variable or unknown input
+into a known format, use transitives.
+</li>
+</ul>
+
+<br>
+</div>
+</div>
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3">Yet to come</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+I'm still developing the library and I plan to add a few more things
+and refactor a bit. I will definitely add more transitive functions to
+make transformations easier (I would be open to other peoples' ideas
+on these too). On top of that, I might add a few more Haskell functions
+like traverse and others.
+</p>
+
+<p>
+The biggest thing I want to pin down for this library long-term is
+performance costs. I tried benchmarking the core functions using
+criterium and in general it was about 3x as slow as the specter
+library. It would be fun if I could use some of the same techniques
+from that library to get precompilation for functions.
+</p>
+
+<p>
+I also feel like there might be JIT optimizations too. By default JIT
+can inline functions calls that have 9 levels or less of nesting. All
+the nested calls that are in the library right now might be slowing
+things down. Using the <a href="https://github.com/gtrak/no.disassemble">no.disassemble</a> library would be good for
+picking that apart.
+</p>
+
+<p>
+It also might be good to look at how closures are being used by the
+JVM to make sure they're getting garbage collected properly.
+</p>
+
+<br>
+</div>
+</div>
+
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4">Recap</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+Clojure(Script) has a few tools for data transformation that I didn't
+touch on (e.g. transducers, reducers, other tree walkers, etc.) but I
+hope you see how the combination of transitives and specter
+specifically may help with realizing more generic, declarative
+systems. Good luck with using the transitives and don't be afraid to
+write your own implementation too to understand how they work!
+</p>
+
+<br>
+</div></div></div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<footer> <hr />
+                         <p><a href='http://creativecommons.org/licenses/by-nc-sa/3.0/' target='_blank'>©copyright 2015</a>, by <a href='/about.html'>Ed Babcock</a> (^_^)v</p>
+                         </footer>
+                         <script type='text/javascript' src='js/jquery.min.js'></script>
+                         <script type='text/javascript' src='js/bootstrap.min.js'></script>
+</div>
+</body>
+</html>
