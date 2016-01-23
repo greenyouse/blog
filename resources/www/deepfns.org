@@ -14,7 +14,7 @@ for the library.
 
 #+HTML: <br>
 
-* Transitive?
+* Transitives?
 
   #+HTML: <br>
   #+BEGIN_QUOTE
@@ -58,7 +58,7 @@ for the library.
     ;; saves a little memory when called like this
     (def analytics-event>
       (transitive
-        ;; will match :session-id and set it as session
+        ;; will match :session-id and bind it to :session
         {:session :session-id
          ;; looks up a nested device value and normalizes it with
          ;; the match-device function
@@ -86,12 +86,13 @@ for the library.
      :timestamp 'clj-time-timestamp}
 
 
-    ;; or event a minimal amount of data like this
+    ;; here's another event with a minimal amount of data
     (analytics-event>
       {:session-id 2300
+       :headers {:x-foo "useless data"}
        :event-name "foo"})
 
-    ;; and it returns
+    ;; ony those couple things we need are returned
     {:session 2300
      :event "foo"
      :timestamp 'clj-time-timestamp}
@@ -105,8 +106,9 @@ for the library.
   Any data that we don't want to record won't get recorded and we have
   functions for normalizing specific fields.
 
-  Awesome! Now, let's fast-forward and update the schema that we built.
-  .
+  Awesome! Now, let's fast-forward and pretend that the company's schema
+  changed. Here's how we would update the schema that we built:
+
   #+BEGIN_SRC clojure
     (def v2-analytics-events>
       (transitive
@@ -118,9 +120,9 @@ for the library.
   #+END_SRC
   #+HTML: <br>
 
-  All we had to do was update the map and that was it! No complex chains
-  of functions building up a hardcoded datastructure, just composable
-  data transformations that are easy to grok!
+  All we had to do was update the trasitive map and that was it! No
+  complex chains of functions building up a hardcoded datastructure,
+  just composable data transformations that are easy to grok and swap!
 
 #+HTML: <br>
 
@@ -134,7 +136,8 @@ for the library.
   but most of this was for me to explore category theory functions from
   Haskell.
 
-  In general here are two rules for transitives and specter:
+  In general, here are two rules for when to use transitives and
+  specter:
 
   - If you're going to extract or update values in a nested
     datastructure, use [[https://github.com/nathanmarz/specter][specter]].
@@ -172,10 +175,11 @@ for the library.
 
   Clojure(Script) has a few tools for data transformation that I didn't
   touch on (e.g. transducers, reducers, other tree walkers, etc.) but I
-  hope you see how the combination of transitives and specter
-  specifically may help with realizing more generic, declarative
-  systems. Good luck with using the transitives and don't be afraid to
-  write your own implementation too to understand how they work!
+  hope you see how this combination of transitives and specter
+  may help with creating more generic, declarative data
+  transformations. Good luck with using the transitives and don't be
+  afraid to write your own implementation too to understand how they
+  work!
 
   #+HTML: <br>
   #+HTML: </div></div></div>
