@@ -1,0 +1,224 @@
+#+HTML: <div class="container-fluid"><div class="row"><div class="col-md-7 col-md-offset-3 col-xs-12 col-sm-10 col-sm-offset-1 col-lg-6 col-lg-offset-3">
+#+TITLE: Status Update 2/1/2015
+#+HTML: <br><br>
+
+
+A few weeks ago when I started back up on doing open source projects, I
+was a little worried that I might run out of things to work on. However,
+the last couple weeks have shown me that I really have nothing to worry
+about in that department. :)
+
+There are seven different projects that I've put into my queue for the
+next year or so. Judging how to prioritize development for the projects
+will be tricky. A couple of them are open-ended, ever-expanding projects
+that could probably be worked on forever (app development + p2p
+networking) but most are just little one-off libraries.
+
+Anyway, I thought it might be neat to make a public list of what I want
+to work on and a blurb about each one. If any of them sound interesting
+I would encourage you to work on it yourself or send me a message about
+it! Each of the projects are meant to be useful, teach the developer
+about the subject, and be fun to work on.
+
+Here's a list of the projects:
+
+- [[browserific][browserific]]
+- [[deepfns][deepfns]]
+- [[es][elasticsearch library]]
+- [[p2p][erlang p2p network]]
+- [[patterns][pattern matching]]
+- [[rec-link][record linkage]]
+- [[sql][sql library]]
+
+#+HTML: <br>
+
+<<browserific>>
+** Browserific
+
+My old project Browserific was left in a pretty ugly state last
+spring. The features were planned in advance but most of the code was
+banged out quickly without good testing and had weird behaviors (like
+using a ~builds~ folder for configs).
+
+Right now I'm going through Browserific and chenex to clean up the code
+and improve the testing situation. There's been a little bit of a hump
+getting the config file stuff updated but I think it's almost over
+(finally). Both projects need better testing around features too so I
+think that's probably the next thing to get working on.
+
+After catching up and making the projects more stable, the next big TODO
+is adding support for NW.js. This should have happened a long time ago
+but I was in a crunch for time and couldn't get around to it. The
+Cordova support right now feels pretty horrible too...
+
+Further down the pipe, I want to jump into React Native! It sounds like
+there are ClojureScript projects that have successfully interop-ed with
+it already. I can probably take the Borg approach here and just
+assimilate whatever I need from them into Browserific. :p
+
+On top of the actual plugin/library parts it would also be fun to write
+apps for myself with the framework! I'm not sure how well the
+deployment + testing situation is for ClojureScript mobile
+development. I'm sure as I run through it I'll hit every snag possible
+and get saddled with writing tools to automate development. That sounds
+pretty neat though, honestly.
+
+
+#+HTML: <br>
+<<deepfns>>
+** Deepfns
+
+I gave a fast rundown of the deepfns in [[file:deepfns.org][my last blog post]]. Basically this
+needs slightly refined tests, pre-compilation + other speed hacks, and
+some more thought how structure the internals.
+
+Right now it feels OK as a early prototype but I'm sure it could be
+improved. The biggest thing is having the macros that can pre-compile
+for really fast code. If transitives ran as quickly or faster than
+vanilla Clojure, I would feel 100% about using that library for future
+projects.
+
+#+HTML: <br>
+<<es>>
+** ElasticSearch Library
+
+Doing libraries like this, where it has a narrow scope and covers tools
+that are already widely adopted, feels much more practical. Some of the
+other projects are a little out there and I know will probably not get
+very many users to try them out. Even worse, some of the projects don't
+teach me skills that translate easily into actual work I would do (see
+P2P networking).
+
+This would be targeted at easing ES configs, creating composable
+queries, making the ES server easier to manage, and making data
+transactions on indexes easier.
+
+The easiest part is creating composable queries via transitives. One
+nice feature of transatives is that any ~nil~ values don't
+propagate. Here's an example:
+
+#+BEGIN_SRC clojure
+  (def foos
+    (<=> {:foo :woot
+          :bar :other}))
+
+  (def woots
+    (<=> {:woot :something
+          ;; else is nil and won't propagate
+          :other :else}))
+
+  ((comp foos woots)
+   {:something 1
+    :another "thing"})
+
+  ;; => {:foo 1}
+
+#+END_SRC
+
+#+HTML: <br>
+
+See how something passed to ~:woot~ and then to ~:foo~?
+
+Having data defined queries that can compose together nicely (and
+hopefully run fast) is a nice win overall!
+
+The other parts are in the works and I'll have to post when I get around
+to working on them.
+
+#+HTML: <br>
+<<sql>>
+** SQL Library
+
+This is in a very similar vein to the ElasticSearch library. It uses
+data to build queries and focuses on composing and functions over
+building a DSL of macros or other popular techniques that are out
+there.
+
+I'll have to mention more here when I get around to this too.
+
+#+HTML: <br>
+<<patterns>>
+** Pattern Matching
+
+I took a few days to dig into pattern matching last week and I think
+there are some interesting paths that it could take. For me, getting a
+good pattern matching system for Clojure has felt like an unscratchable
+itch. The solutions that are out there are not very good but there might
+be some ways to build it out.
+
+The easiest path to implementing pattern matching is to have runtime
+checks for patterns. This would use something like core.match or a
+custom solution to conditionally pick which clause to select. The
+obvious issue is that checks happen at runtime which makes the code
+slower. There might be better ways to minimize the runtime checking
+although it might no be possible to get rid of it.
+
+Ironically I've been working through The Book of Shen and it has some
+interesting discussion about how pattern matching was built for the
+language. Shen in general has a bunch of compilers that build different
+features and runtimes for the code. For example, the base language gets
+compiled from Shen -> L -> Klambda -> Host Language. More advanced
+features like sequent calculus get compiled from Sequent Calc -> Horn
+Clauses -> Micro Expressions -> AUM Instructions -> Shen -> L -> Klambda
+-> Host Lang. Anyway, there might be some insight into how to lift the
+pattern matching features out of Shen and into a Clojure library.
+
+The Shen system is built on top of lambda calculus and there are other
+languages that also use labmda calculus for their pattern matching
+too. The Erlang compiler uses the techniques from [[http://research.microsoft.com/en-us/um/people/simonpj/papers/slpj-book-1987/][The Implementation of
+Functional Programming Languages]] chapters 4-6. Between these two
+resources I think there must be a good way to connect the dots and get
+pattern matching in Clojure.
+
+Another thing to think about is how logic programming also has pattern
+matching but negates clause order! This is a separate problem
+implementation wise but the goal is similar. David Nolen had a [[https://vimeo.com/23907627][neat talk]]
+about how macros could be used to build something like this (see
+54:30).
+
+#+HTML: <br>
+<<rec-link>>
+** Record Linkage
+
+This is just a neat problem in general. I've already run into this
+problem a few times at work without really knowing much about record
+linkage. If I would have known about it before, it would have been
+incredibly useful for changing our data model!
+
+If you're not familiar, [[https://en.wikipedia.org/wiki/Record_linkage][record linkage]] identifies common items from
+multiple unknown data sources. This could be something like a census
+poll that has to know that someone's last name changed because they got
+married. Another example is tracking inventory in a warehouse where
+incoming items may have varying product descriptions.
+
+I don't know a whole lot about the subject yet but it would be fun to
+dive into it and try building some tooling for it.
+
+#+HTML: <br>
+<<p2p>>
+** Erlang P2P Network
+
+This is a pretty large project and I want to wrap up the Browserific
+tools before getting started on this. I should probably spill the beans
+on it at some point but I really don't want to quite yet. In general,
+it's a combination of [[http://netsukuku.freaknet.org/][Netsukuku]], the [[http://www.magnusbrading.com/phantom/phantom-design-paper.pdf][Phantom Protocol]], and some other
+ideas.
+
+The biggest disadvantage to working on a project like this is that
+there's no technical carry-over into my day job. While I can learn about
+a whole bunch of networking topics, explore cool math models, etc., I'm
+just a web developer at the end of the day.
+
+The benefit to working on this after the Browserific is that the P2P
+network is meant to be app-specific. The goal of the project is to have
+an unhackable, turnkey solution for P2P as a back-end. Hopefully then it
+would be quick to write an app and then the company behind the app would
+not have to invest anything in infrastructure.
+
+This sounds kind of crazy but it might be possible. The biggest thing
+holding it back is the battery drain on mobile devices that network
+requests incur. Anyway, there's a lot of cool stuff that will come up
+with this.
+
+
+OK, now back to work!

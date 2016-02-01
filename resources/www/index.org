@@ -2,6 +2,8 @@
 #+TITLE:
 #+HTML: <br><br>
 
+- 2/1/2015 [[file:status-2015-2-1.org][Status Update]]
+  #+HTML: <br><p>Talking about current + upcoming projects.</p>
 
 - 1/22/2016 [[file:deepfns.org][Deepfns]]
   #+HTML: <br><p>Rundown of the deepnfs library and transitives.</p>
