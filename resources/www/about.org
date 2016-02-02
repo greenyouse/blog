@@ -30,6 +30,8 @@ Email: [[mailto:Ed@EdBabcock.com][Ed@EdBabcock.com]]
 #+ATTR_HTML: :target _blank
 LinkedIn: [[https://LinkedIn.com/in/EdBabcock][LinkedIn.com/in/EdBabcock]]
 #+ATTR_HTML: :target _blank
+Angel List: [[https://angel.co/ed-babcock][Angel.co/Ed-Babcock]]
+#+ATTR_HTML: :target _blank
 GitHub: [[https://github.com/greenyouse][github.com/greenyouse]]
 
 #+HTML: </div></div></div>
