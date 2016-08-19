@@ -31,9 +31,10 @@
                          </footer>
                          <script type='text/javascript' src='js/jquery.min.js'></script>
                          <script type='text/javascript' src='js/bootstrap.min.js'></script>"
-      org-html-head "<link rel='stylesheet' href='/css/bootstrap.min.css' type='text/css'/>
+      org-html-head "<meta name='viewport' content='idth=device-width' initial-scale=1>
+                     <link rel='stylesheet' href='/css/bootstrap.min.css' type='text/css'/>
                      <link rel='stylesheet' href='/css/blog.css' type='text/css'/>
-                      <script type='text/javascript' src='MathJax/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>"
+                     <script type='text/javascript' src='MathJax/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>"
       user-full-name "Ed Babcock (greenyouse)")
 
 (setq org-publish-project-alist

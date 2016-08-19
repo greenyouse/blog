@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 <title>App Hacking</title>
-<!-- 2015-04-10 Fri 14:39 -->
+<!-- 2016-08-19 Fri 06:40 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="generator" content="Org-mode" />
 <meta  name="author" content="Ed Babcock (greenyouse)" />
@@ -91,9 +91,10 @@
     { background-color: #ffff00; color: #000000; font-weight: bold; }
   /*]]>*/-->
 </style>
-<link rel='stylesheet' href='/css/bootstrap.min.css' type='text/css'/>
+<meta name='viewport' content='idth=device-width' initial-scale=1>
+                     <link rel='stylesheet' href='/css/bootstrap.min.css' type='text/css'/>
                      <link rel='stylesheet' href='/css/blog.css' type='text/css'/>
-                      <script type='text/javascript' src='MathJax/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+                     <script type='text/javascript' src='MathJax/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 <script type="text/javascript">
 /*
 @licstart  The following is the entire license notice for the
@@ -263,7 +264,7 @@ FirefoxOS? For that we'd use a FirefoxOS feature expression!
 <pre class="src src-clojure">(<span style="color: #FBDE2D;">defn</span> <span style="color: #ff1493;">list-c%2</span>
   <span style="color: #61CE3C;">"A list of the items"</span>
   [{<span style="color: #4c83ff;">:keys</span> [data]}]
-  (<span style="color: #D8FA3C;">chenex</span>/in-case!
+  (<span style="color: #D8FA3C;">chenex</span><span style="color: #EDEDED; background-color: #000000;">/</span>in-case!
    [<span style="color: #4c83ff;">:firefoxos</span>] [<span style="color: #4c83ff;">:section</span> {<span style="color: #4c83ff;">:data-type</span> <span style="color: #61CE3C;">"list"</span>}
                  (<span style="color: #FF6400;">reduce</span> (<span style="color: #FBDE2D;">fn</span> [ul title]
                            (<span style="color: #FF6400;">conj</span> ul ^{<span style="color: #4c83ff;">:key</span> (<span style="color: #FF6400;">gensym</span>)}
@@ -327,13 +328,13 @@ the <code>dom.webcomponents.enabled</code> flag set to true):
    (<span style="color: #FF6400;">reduce</span> (<span style="color: #FBDE2D;">fn</span> [ul item]
              (<span style="color: #FF6400;">conj</span> ul
                    [<span style="color: #4c83ff;">:li</span> {<span style="color: #4c83ff;">:key</span> (<span style="color: #FF6400;">gensym</span>)}
-                    [<span style="color: #4c83ff;">:a</span> {<span style="color: #4c83ff;">:on-click</span> #(<span style="color: #D8FA3C;">js</span>/console.log item)} <span style="color: #8B8989; font-style: italic;">;events not handled yet</span>
+                    [<span style="color: #4c83ff;">:a</span> {<span style="color: #4c83ff;">:on-click</span> #(<span style="color: #D8FA3C;">js</span><span style="color: #EDEDED; background-color: #000000;">/</span>console.log item)} <span style="color: #8B8989; font-style: italic;">;events not handled yet</span>
                      [<span style="color: #4c83ff;">:aside</span> {<span style="color: #4c83ff;">:class</span> <span style="color: #61CE3C;">"pack-end"</span>
                               <span style="color: #4c83ff;">:data-icon</span> <span style="color: #61CE3C;">"forward"</span>}]
                      [<span style="color: #4c83ff;">:p</span> [<span style="color: #4c83ff;">:strong</span> item]]]]))
            [<span style="color: #4c83ff;">:ul</span>] data)])
 
-(<span style="color: #D8FA3C;">rum</span>/<span style="color: #FBDE2D;">defc</span> <span style="color: #ff1493;">example-list%3</span> &lt; (shadow-dom [<span style="color: #61CE3C;">"css/dapps/index.css"</span>]) []
+(<span style="color: #D8FA3C;">rum</span><span style="color: #EDEDED; background-color: #000000;">/</span><span style="color: #FBDE2D;">defc</span> <span style="color: #ff1493;">example-list%3</span> &lt; (shadow-dom [<span style="color: #61CE3C;">"css/dapps/index.css"</span>]) []
   [<span style="color: #4c83ff;">:div</span>
    (header-c%3 {<span style="color: #4c83ff;">:title</span> <span style="color: #61CE3C;">"Hello Style!"</span>})
    (list-c%3 {<span style="color: #4c83ff;">:data</span> [<span style="color: #61CE3C;">"some"</span> <span style="color: #61CE3C;">"stuff"</span> <span style="color: #61CE3C;">"to"</span> <span style="color: #61CE3C;">"render"</span>]})])

@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 <title>Deepfns</title>
-<!-- 2016-01-22 Fri 21:08 -->
+<!-- 2016-08-19 Fri 06:40 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="generator" content="Org-mode" />
 <meta  name="author" content="Ed Babcock (greenyouse)" />
@@ -91,9 +91,10 @@
     { background-color: #ffff00; color: #000000; font-weight: bold; }
   /*]]>*/-->
 </style>
-<link rel='stylesheet' href='/css/bootstrap.min.css' type='text/css'/>
+<meta name='viewport' content='idth=device-width' initial-scale=1>
+                     <link rel='stylesheet' href='/css/bootstrap.min.css' type='text/css'/>
                      <link rel='stylesheet' href='/css/blog.css' type='text/css'/>
-                      <script type='text/javascript' src='MathJax/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+                     <script type='text/javascript' src='MathJax/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 <script type="text/javascript">
 /*
 @licstart  The following is the entire license notice for the
@@ -228,13 +229,13 @@ here's a trasitive for a situation like that:
 
 <div class="org-src-container">
 
-<pre class="src src-clojure">(<span style="color: #ff1493;">require</span> '[<span style="color: #D8FA3C;">clj-time.core</span> <span style="color: #4c83ff;">:as</span> tc]
+<pre class="src src-clojure">(<span style="color: #FF6400;">require</span> '[<span style="color: #D8FA3C;">clj-time.core</span> <span style="color: #4c83ff;">:as</span> tc]
          '[<span style="color: #D8FA3C;">deepfns.core</span> <span style="color: #4c83ff;">:as</span> d <span style="color: #4c83ff;">:refer</span> [transitive]]
          '[<span style="color: #D8FA3C;">deepfns.transitive</span> <span style="color: #4c83ff;">:as</span> t])
 
 <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">really basic fn for normalizing</span>
 (<span style="color: #FBDE2D;">defn</span> <span style="color: #ff1493;">match-device</span> [device-name]
-  (<span style="color: #FBDE2D;">if</span> (<span style="color: #ff1493;">re-find</span> #<span style="color: #61CE3C;">"</span><span style="color: #61CE3C;">(</span><span style="color: #61CE3C;">?i</span><span style="color: #61CE3C;">)</span><span style="color: #61CE3C;">Foo Phone"</span> device-name)
+  (<span style="color: #FBDE2D;">if</span> (<span style="color: #FF6400;">re-find</span> #<span style="color: #61CE3C;">"</span><span style="color: #61CE3C;">(</span><span style="color: #61CE3C;">?i</span><span style="color: #61CE3C;">)</span><span style="color: #61CE3C;">Foo Phone"</span> device-name)
     <span style="color: #61CE3C;">"Foo Phone"</span> <span style="color: #61CE3C;">"Unknown Phone"</span>))
 
 <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">saves a little memory when called like this</span>
