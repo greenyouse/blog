@@ -31,7 +31,7 @@
                          </footer>
                          <script type='text/javascript' src='js/jquery.min.js'></script>
                          <script type='text/javascript' src='js/bootstrap.min.js'></script>"
-      org-html-head "<meta name='viewport' content='idth=device-width' initial-scale=1>
+      org-html-head "<meta name='viewport' content='width=device-width' initial-scale=1>
                      <link rel='stylesheet' href='/css/bootstrap.min.css' type='text/css'/>
                      <link rel='stylesheet' href='/css/blog.css' type='text/css'/>
                      <script type='text/javascript' src='MathJax/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>"
@@ -39,10 +39,10 @@
 
 (setq org-publish-project-alist
       '(("orgfiles"
-         :base-directory "~/Gits/personal/Blog/resources/www/"
+         :base-directory "./www/"
          :base-extension "org\\|md"
          :recursive t
-         :publishing-directory "~/Gits/personal/Blog/resources/public/"
+         :publishing-directory "./public/"
          :section-numbers nil
          :auto-sitemap nil
          :sitemap-title "Archive"
@@ -56,7 +56,7 @@
          :html-mathjax "path:MathJax/MathJax.js" ; NOTE: you'll need this and the MathJax script tag in head for rendering correctly
          )
         ("org-static"
-         :base-directory ""
+         :base-directory "./www/"
          :base-extension "css\\|js\\|png\\|svg\\|jpg\\|gif\\|pdf"
          :publishing-directory "public/"
          :recursive t
