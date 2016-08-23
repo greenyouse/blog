@@ -33,6 +33,7 @@ body {
 div {
     width: 400px;
     height: 600px;
+    max-width: 100%;
     background-color: white;
     font-family: 'FiraSans';
 }
