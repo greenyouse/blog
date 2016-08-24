@@ -11,7 +11,7 @@
     <style media="print">
      @page {
          size: 1050px;
-         margin: 0;
+         margin: 0.5in 1in 0.5in 1in;
      }
 
      body {
@@ -22,13 +22,9 @@
          list-style: none;
      }
 
-     .text-small {
-         font-size: 0.8em;
-     }
-
      p, li {
          padding-top: 1px;
-         width: 40em;
+         width: 50em;
      }
 
      a {
@@ -40,25 +36,13 @@
          content: " - " attr(href);
      }
 
-     h1, h2 {
-         font-family: Tahoma,Geneva,Kalimati,sans-serif;
-         font-weight: bolder;
-     }
-     h1 {
-         font-size: 2em;
-         font-weight: bolder;
-     }
 
      h2 {
-         font-size: 1.3;
+         font-size: 1.3em;
      }
 
      .web {
          display: none;
-     }
-
-     article:last-of-type {
-         border-bottom: white;
      }
 
      article {
@@ -90,11 +74,12 @@
          font-family: Tahoma,Geneva,Kalimati,sans-serif;
      }
 
-     header > h1 {
+     h1 {
+         font-size: 2.5em;
          order: 2;
      }
 
-     @media (max-width: 600px) {
+     @media all and (max-width: 600px) {
          section:nth-child(1) {
              order: 0;
              width: 45%;
@@ -109,7 +94,7 @@
          }
      }
 
-     @media (min-width: 601px) {
+     @media all and (min-width: 601px) {
          section:nth-child(1) {
              width: 50%
          }
@@ -129,13 +114,13 @@
          list-style: disc;
      }
 
-     @media (max-width: 480px) {
+     @media all and (max-width: 480px) {
          body {
              padding: 0.1em;
          }
      }
 
-     @media (min-width: 481px) {
+     @media all and (min-width: 481px) {
          body {
              padding: 0.5em 1em;
          }
@@ -147,23 +132,21 @@
          margin-right: auto;
      }
 
-     li, p {
-         line-height: 1.2;
+     @media all and (max-width: 600px) {
+         ul {
+             padding-left: 0.8em;
+         }
      }
 
-     @media (min-width: 800px) {
+     @media all and (min-width: 800px) {
          li, p {
-             width: 40em;
+             width: 45em;
              line-height: 1.5;
          }
 
          body: {
              background-color: black;
          }
-     }
-
-     .text-small {
-         font-size: 0.8em;
      }
 
      article {
@@ -176,7 +159,7 @@
          flex: 1 1 auto;
      }
 
-     @media (min-width: 1080px) {
+     @media all and (min-width: 1080px) {
          article {
              flex-flow: row wrap;
          }
@@ -191,6 +174,10 @@
          border-right: 1px solid black;
          padding-right: 5px;
      }
+
+     article:last-of-type {
+         border-bottom: white;
+     }
     </style>
 
   </head>
@@ -198,12 +185,12 @@
   <body>
     <div class="container">
       <header>
-        <section class="text-small">
+        <section>
           Minneapolis, MN<br>
           +1.612-201-8440<br>
           <a href="mailto:ed@edbabcock.com">Ed@EdBabcock.com</a>
         </section>
-        <section class="text-small">
+        <section>
           <a href="https://github.com/greenyouse" target="_blank">GitHub</a><br>
           <a href="https://linkedin.com/in/edbabcock" target="_blank">LinkedIn</a><br>
           <a href="https://edbabcock.com" target="_blank">EdBabcock.com</a>
@@ -214,46 +201,12 @@
       <main>
         <hr>
         <article>
-          <h2>Summary</h2>
-          <ul>
-            <li><strong>Four years'</strong> experience building websites and web applications.</li>
-            <li>Experience writing <strong>Progressive Web Apps</strong> in JavaScript.</li>
-            <li>Expert in <strong>Clojure and ClojureScript</strong> with several open source software libraries.</li>
-            <li>Prior work experience collaborating in <strong>small teams of two to six</strong> to plan and develop
-              software.</li>
-          </ul>
-        </article>
-        <br>
-
-
-        <article>
-          <h2>Work Experience</h2>
-          <ul>
-            <li class="nobullet">
-              <strong>HomeSpotter LLC.</strong>, <i>Minneapolis, MN (May 2015 - January 2016)</i>
-              <ul class="disc-bullet">
-                <li class="nobullet"><strong>Software Developer</strong></li>
-                <li>Developed a chat application and analytics framework in Clojure using ElasticSearch,
-                  <a class="text-link" href="https://github.com/plumatic/schema" target="_blank">Plumatic Schema</a>, and RESTful APIs.</li>
-                <li>Designed and implemented an admin dashboard with ClojureScript to track business analytics and assist with support issues.</li>
-                <li>Helped with various website and server updates using PHP and JavaScript</li>
-                <li>Created software to automate 5% of the workload for the support team.</li>
-              </ul>
-            </li>
-            <br>
-
-            <li class="nobullet">
-              <strong>D.P. Financial Services Inc.</strong>, <i>Elk River, MN (October 2013)</i>
-              <ul class="disc-bullet">
-                <li class="nobullet"><strong>Software Consultant</strong></li>
-                <li>Migrated the company's Act! and proprietary databases using Clojure,
-                  <a class="text-link" href="http://cascalog.org/" target="_blank">Cascalog</a>, and
-                  <a class="text-link" href="http://incanter.org/" target="_blank">Incanter</a>.</li>
-                <li>Cleaned hundreds of database errors.</li>
-                <li>Wrote automation software in Clojure and AppleScript to prepare thousands of
-                  tax documents for their customers.</li>
-              </ul>
-            </li>
+          <h2>Technical Skills</h2>
+          <ul class="nobullet">
+            <li><i>Languages: </i>JavaScript, HTML5, CSS3, ClojureScript, Clojure</li>
+            <li><i>Frameworks/Libraries: </i>Polymer, React, Om, Reagent, Closure Tools, core.async, test.check, Ring, Compojure, Schema, Cascalog, Elastich, Manifold</li>
+            <li><i>Databases: </i>MySQL, Datalog, IndexedDB</li>
+            <li><i>Other: </i>Git, Progressive Web Apps, Responsive Design, Service Workers, Gulp, Bower, ElasticSearch</li>
           </ul>
         </article>
         <br>
@@ -267,6 +220,7 @@
                 <li>Progressive web app built with Polymer and various Google APIs.</li>
                 <li>Used accessibility best practices like WAI-ARIA, color contrasting, landmarks, and focused inputs.</li>
                 <li>Built with IndexedDB for saving user reviews and app caching through service workers.</li>
+                <li>Contributed an accessibility fix back to the Polymer library</li>
               </ul>
             </li>
             <br class="web">
@@ -274,7 +228,7 @@
             <li><a href="https://github.com/greenyouse/transit-app" target="_blank"><strong>Transit App</strong></a><br>
               <ul class="disc-bullet">
                 <li>Single page, progressive web app for navigating trains in the Twin Cities area.</li>
-                <li>Optimized for offline-first use through service workers and IndexedDB.</li>
+                <li>Optimized for offline-first using service workers.</li>
                 <li>Worked with Metro Transit's API to fetch and cache route data.</li>
               </ul>
             </li>
@@ -282,9 +236,18 @@
 
             <li><a href="https://github.com/greenyouse/deepfns" target="_blank"><strong>Deepfns</strong></a><br>
               <ul class="disc-bullet">
-                <li>Library implementing category theory operations in Clojure.</li>
-                <li>Developed a new type of operation to transform data structures.</li>
+                <li>Library implementing category theory operations in Clojure and ClojureScript.</li>
                 <li>Improved upon existing category theory functions by making them more generic.</li>
+                <li>Developed a new type of operation for transforming associative data structures.</li>
+              </ul>
+            </li>
+            <br class="web">
+
+            <li><a href="https://github.com/greenyouse/browserific" target="_blank"><strong>Browserific</strong></a><br>
+              <ul class="disc-bullet">
+                <li>Worked on a cross-browser framework for mobile apps, desktop apps, and browser extensions split between a Leiningen template, Leiningen plugin, and Clojure software library.</li>
+                <li>Wrote a Clojure backend to generate Plist, JSON, and EDN app configuration files.</li>
+                <li>Used Reagent to build an app configuration menu covering all relevant features for each platform.</li>
               </ul>
             </li>
             <br class="web">
@@ -294,21 +257,44 @@
         <br>
 
         <article>
-          <h2>Education</h2>
-          <ul class="nobullet">
-            <li><strong>Udacity</strong> – <i>Senior Web Developer Nanodegree</i>, 2016</li>
-            <li><strong>St. Olaf College</strong> – <i>Chemistry, B.A.</i>, 2011
+          <h2>Work Experience</h2>
+          <ul>
+            <li class="nobullet">
+              <strong>HomeSpotter LLC., Software Developer</strong>, <i>Minneapolis, MN (May 2015 - January 2016)</i>
+              <ul class="disc-bullet">
+                <li>Improved the management team's business planning by designing and building an analytics
+                  dashboard and backend with ClojureScript, Bootstrap, Clojure, and ElasticSearch.</li>
+                <li>Drove new sales and improved experiences for thousands of users
+                  by writing the chat backend for their mobile app using Clojure,
+                  ElasticSearch, data schemas, and RESTful APIs.</li>
+                <li>Helped write the landing page for the company website and other site
+                  features using HTML, CSS, JavaScript, and PHP.</li>
+                <li>Reviewed customer support issues up to 8 times a week, improving customer
+                  experiences and relaying any software bugs found to other members of the
+                  engineering team.</li>
+              </ul>
+            </li>
+            <br>
+
+            <li class="nobullet">
+              <strong>D.P. Financial Services Inc., Software Consultant</strong>, <i>Elk River, MN (October 2013 - November 2013)</i>
+              <ul class="disc-bullet">
+                <li>Streamlined the company's database by converting it from multiple
+                  formats to one standard layout using Clojure, Cascalog, and Incanter.</li>
+                <li>Improved business records by resolving hundreds of database errors.</li>
+                <li>Prepared tax documents for thousands of their customers through software
+                  written in Clojure and AppleScript.</li>
+              </ul>
+            </li>
           </ul>
         </article>
         <br>
 
         <article>
-          <h2>Technical Skills</h2>
-          <ul>
-            <li><i>Languages: </i>Clojure, ClojureScript, JavaScript</li>
-            <li><i>Frameworks/Libraries: </i>Polymer, Om, Reagent, Closure Tools, core.async, test.check, Ring, Compojure, Schema, Cascalog, Elastich, Manifold, CodeIgniter</li>
-            <li><i>Databases: </i>MySQL, Datalog, IndexedDB</li>
-            <li><i>Other: </i>Git, Progressive Web Apps, Responsive Design, ElasticSearch</li>
+          <h2>Education</h2>
+          <ul class="nobullet">
+            <li><strong>Udacity</strong> – <i>Senior Web Developer Nanodegree</i>, 2016 (in progress)</li>
+            <li><strong>St. Olaf College</strong> – <i>Chemistry, B.A.</i>, 2011
           </ul>
         </article>
       </main>
