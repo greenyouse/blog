@@ -12,5 +12,7 @@
 **  2/1/2015 [[file:status-2015-2-1.org][Status Update]]
 * Data Transformations
 ** 1/22/2016 [[file:deepfns.org][Deepfns]]
+* System Design
+** 11/12/2016 [[file:building-a-stack.org][Building a Stack]]
 
 #+HTML: </div></div></div>

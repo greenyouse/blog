@@ -2,6 +2,9 @@
 #+TITLE:
 #+HTML: <br><br>
 
+- 11/12/2016 [[file:building-a-stack.org][Building a Stack]]
+  #+HTML: <br><p>Ideas on designing a software architecture.</p>
+
 - 2/1/2016 [[file:status-2016-2-1.org][Status Update]]
   #+HTML: <br><p>Talking about current + upcoming projects.</p>
 

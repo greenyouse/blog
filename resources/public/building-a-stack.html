@@ -1,0 +1,860 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>Building a Stack</title>
+<!-- 2016-11-12 Sat 23:04 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<meta  name="author" content="Ed Babcock (greenyouse)" />
+<meta  name="description" content="Hacks, projects, and general butt-kicking with Ed (greenyouse)"
+ />
+<meta  name="keywords" content="Clojure, ClojureScript, greenyouse, LISP" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.right  { text-align: center;  }
+  th.left   { text-align: center;   }
+  th.center { text-align: center; }
+  td.right  { text-align: right;  }
+  td.left   { text-align: left;   }
+  td.center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara:nth-child(2) { display: inline; }
+  .footpara { display: block; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  /*]]>*/-->
+</style>
+<meta name='viewport' content='width=device-width' initial-scale=1>
+                     <link rel='stylesheet' href='/css/bootstrap.min.css' type='text/css'/>
+                     <link rel='stylesheet' href='/css/blog.css' type='text/css'/>
+                     <script type='text/javascript' src='MathJax/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="preamble" class="status">
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/index.html">EDBABCOCK</a>
+      </div>
+      <div class="collapse navbar-collapse" id="main-navbar">
+        <ul class="nav navbar-nav">
+          <li><a href="/about.html">About</a></li>
+          <li><a href="categories.html">Categories</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</div>
+<div id="content">
+<h1 class="title">Building a Stack</h1>
+<div class="container-fluid"><div class="row"><div class="col-md-7 col-md-offset-3 col-xs-12 col-sm-10 col-sm-offset-1 col-lg-6 col-lg-offset-3">
+<br><br>
+
+<p>
+Building systems is usually seen as a hard topic for senior people only
+but it's really something that every engineer should take a hard look
+at. By writing programs we are all building some component of a larger
+system. This begs the question, why not take the time to focus on
+engineering the system itself? Are there ways that we can apply program
+level constructs to system design? What would it be like to create
+an entire system?
+</p>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1">Systems 101</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Last month I wrapped up projects for my Senior Web Developer Nanodegree
+from Udacity and had a free month to work on whatever I wanted. OK, I
+could have jumped straight into the job market but I wanted to dig into
+distributed systems while I had the chance. How many times on the job
+does an engineer get to build an entire system? Likely none. There's
+usually already a system in place or, at best, you'll work with other
+people and be left with a subset of the system that you own. That's OK
+but how would someone design a system given the opportunity? What kind
+of stuff could one learn to get ready for it? What kind of tricks
+could you pick up along the way?
+</p>
+
+<br>
+
+<p>
+As you're probably getting the hint, this was way too tempting not to
+investigate. :-)
+</p>
+
+<br>
+
+<p>
+To begin, I tried categorizing common parts of a system. This won't be
+universal since different systems have different objectives but here's a
+basic list:
+</p>
+
+<ul class="org-ul">
+<li>Front-end: Web or App interface to a service
+</li>
+<li>Back-end: App servers, Web servers, Microservices, 3rd Party, etc.
+</li>
+<li>Components: Tools for caching, queuing, load balancing, etc.
+</li>
+<li>Database: How info gets processed and stored long-term and short-term
+</li>
+<li>Analytics: Data Science things
+</li>
+<li>OAM: Operations, Administration, and Management
+</li>
+<li>Computing Platform: Physical servers, OS, Cloud Platform, etc.
+</li>
+</ul>
+
+<br>
+
+<p>
+I've seen some people talk about how putting these parts together is
+like snapping LEGO blocks together and magically ending up with a
+system. While that would probably work for a mental model, that doesn't
+quite carry over to the real world. Much like how programs have errors
+and error handling, systems have errors too (network outages, hardware
+spontaneously busting, cats accidentally pulling cords out) and the
+system has to handle whatever can be thrown at it.
+</p>
+
+<br>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2">Errors</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+The basic trade-off for error handling is described by <a href="https://en.wikipedia.org/wiki/Cap_theorem">CAP
+theorem</a>. The gist is that out of the three options of consistency,
+availability, or partition tolerance, a system can only have two of
+the three. In practice, partition tolerance is always assumed because
+people host out of stable data centers that have good uptimes. That
+leaves a choice between capacity and availability. I think many
+systems end up somewhere in between the two by using eventual
+consistency via CRDTs, <a href="https://en.wikipedia.org/wiki/Quorum_(distributed_computing)">quorums</a>, client-side storage, and other techniques.
+</p>
+
+<br>
+
+<p>
+(Well, people don't always really get partition tolerance because they
+usually don't use redundant services to host their systems. It ends up
+costing more and the SLAs for hosting usually promise one or two
+nines, which is good enough. That said, I've seen major hosting
+providers have multi-day outages for a zone which crashed lots of web
+services. Just a few weeks ago Dyn DNS went out along with all the
+services that used it as a single point of failure: Twitter, GitHub,
+Reddit, Paypal, Spotify, and others. Having redundant DNS or hosting
+providers could have avoided the problems but it's a design decision
+for their system: cost vs fault tolerance.)
+</p>
+
+<br>
+
+<p>
+There's also the case of acute errors like when an HDD breaks. To
+recover from these kinds of problems, the OAM layer should be
+monitoring the server's health and handle the problem
+automatically. The general idea is that the server will be marked as
+down due to hardware failure, the traffic will be distributed to other
+servers, and a notification will go out to a human that's on call
+somewhere. Runtime exceptions and other normal problems should be
+written to a log and possibly ping a team member if it demands attention.
+</p>
+
+<br>
+</div>
+</div>
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3">Scaling</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+Designing for scale is another tricky challenge. There are usually two
+methods of scaling a system: vertically (adding more cores per node)
+or horizontally (adding more nodes to a network). Some programming
+languages definitely scale better than others but pretty much any
+language can be Franken-programmed into scaling both vertically and
+horizontally nowadays. Single threaded servers like Node.js can be
+hosted with IIS so that each computer core is given an instance of the
+server program to run. Load balancers can have different methods to
+partition the network load across nodes for horizontal scaling.
+</p>
+
+<br>
+
+<p>
+<a href="https://www.youtube.com/watch?v=xrIjfIjssLE">Erlang</a>, being the language of distributed systems, is the only
+language I'm aware of that can do both horizontal and vertical
+scaling. Similar to how Java or C has threads, Erlang has sandboxed
+processes. The difference is that a normal computer can support
+millions of concurrent Erlang processes and networks can distribute
+the processes transparently across nodes. There are lots of other
+language features that make <a href="https://www.youtube.com/watch?v=rRbY3TMUcgQ">Erlang</a> great for building systems in
+too. For more, I'd highly suggest reading:
+</p>
+
+<ul class="org-ul">
+<li><a href="http://erlang.org/pipermail/erlang-questions/2014-November/081570.html">this post</a>
+</li>
+<li><a href="http://erlang.org/download/armstrong_thesis_2003.pdf">the original white paper</a>
+</li>
+<li><a href="http://learnyousomeerlang.com/content">Learn You Some Erlang for Great Good</a>
+</li>
+<li><a href="https://www.amazon.com/Designing-Scalability-Erlang-OTP-Fault-Tolerant/dp/1449320732">Designing for Scalability with Erlang/OTP: Implement Robust, Fault-Tolerant Systems</a>
+</li>
+</ul>
+
+<br>
+
+<p>
+Other tools like CDNs, Redis, or Memcache are great for caching static
+content for web servers too.
+</p>
+
+<br>
+</div>
+</div>
+
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4">Database</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+There are also all kinds of database problems that happen when scaling a
+system. There are basic SQL vs NoSQL arguments that have played out
+ad nausem. Then there are complete paradigm shifts like Big Data systems
+which use an immutable database to remember everything that
+happens. Databases need to be partitioned among network clusters once
+they get big enough and they need to take into account CAP theorem
+requirements too (e.g. ACID vs BASE vs trade-offs).
+</p>
+
+<br>
+
+<p>
+The Big Data systems take the approach of an immutable database for a
+variety of reasons that can make systems. Here's a general list of pros
+and cons for using an immutable database.
+</p>
+
+<br>
+
+<p>
+benefits of immutable databases:
+</p>
+<ul class="org-ul">
+<li>temporal analysis of things (time series analysis)
+</li>
+<li>easier to run analysis on data retroactively (everything is open to
+analysis, not just key metrics that we care about right now. Take a
+snapshot and analyze everything. Audits!)
+</li>
+<li>aggregating data
+</li>
+<li>reads can always be done (no read/write synchronization needed since
+all data is immutable)
+</li>
+<li>fast writes
+</li>
+<li>fast reads (especially with in-memory databases)
+</li>
+<li>easier to handle scale + fault tolerance with database replication
+</li>
+<li>choice of underlying database (each has different attributes like
+read/write speed or scalability)
+</li>
+</ul>
+
+<br>
+
+<p>
+disadvantages:
+</p>
+<ul class="org-ul">
+<li>more storage space (but space is so cheap right now, right?)
+</li>
+<li>fewer learning resources
+</li>
+<li>can be hard to set up if you want lots of features (like try writing
+your own Datomic with concurrent transactors that can be tuned for
+consistency/availability on top of Riak clusters that also has no
+datom limit)
+</li>
+</ul>
+
+<br>
+
+<p>
+I'm personally a fan of Nathan Marz's Lambda Architecture for Big Data
+systems. There's a good <a href="https://www.manning.com/books/big-data">book</a> about it from Manning and a nice
+<a href="https://www.youtube.com/watch?v=ucHjyb6jv08">talk here</a> (there are other good talks about this too). The main
+trade-off here would be a larger learning curve but using Clojure
+makes it a little easier at least. In practice, I think a "do things
+that don't scale" solution is usually made to get an MVP off the
+ground. That usually means making painful, in-flight database updates
+to improve the database's latency and throughput as the business
+grows. Finally, somewhere down the line, the database becomes scalable
+and work on it can switch into maintenance mode.
+</p>
+
+<br>
+
+<p>
+In the spirit of Rich Hickey's <a href="https://www.infoq.com/presentations/Simple-Made-Easy">simple made easy talk</a>, it might
+be better to just eat the upfront development time to learn how to
+build Big Data systems (or at least how to engineer a scalable
+solution for the database). This is pretty generic and works for most
+startup ideas you'll want to try banging out. The long-term
+maintenance cost is much lower, which frees up more time to work on
+cool stuff or pressing business problems.
+</p>
+
+<br>
+</div>
+</div>
+
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5">Analytics</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+I'm not much of a data science person but from what I've seen there
+are some tricks that could be used to wring out more info from a
+dataset. A new MIT project called the <a href="http://dai.lids.mit.edu/Pred_eng.pdf">Data Science Machine</a> looks like
+an interesting approach for creating generic predictions. It promises
+to automate much of the work that a data scientist would normally be
+hired for.
+</p>
+
+<br>
+
+<p>
+The general idea is that a dataset will be indexed by time and a
+series of functions will form a pipeline that automates much of the
+data analysis. There's a <a href="https://www.youtube.com/watch?v=d4f1jzhUjjs">nice video set</a> (complete with really
+distracting music) that digs into more detail.
+</p>
+
+<br>
+
+<p>
+This is another place where keeping an immutable, master dataset will
+pay off. In most small startups the analytics system is designed to
+capture some key metrics and stash them in a database for analysis
+later. With a Big Data style system everything can be analyzed with
+time series so nothing is overlooked. That leads to better predictive
+analytics and maybe better ways to monetize data for 3rd parties
+depending on the industry.
+</p>
+
+<br>
+</div>
+</div>
+
+<div id="outline-container-sec-6" class="outline-2">
+<h2 id="sec-6">Components</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+This part of the system varies widely depending on what domain the
+system is for. A good rule might be to treat system components like
+stateless functions. They should be reusable parts to transform
+values, route values, cache values, or move values. This could be
+something like a queue that moves data around and decouples the input
+and output processes. RabbitMQ is an example of queue that does just
+that. A router example might be an event processor like Storm.
+</p>
+
+<br>
+
+<p>
+The point is that each part is abstract, composable, uses messaging
+protocols for its communication (message sequence diagrams help), and
+is reusable.
+</p>
+
+<br>
+
+<p>
+Another example might be a database abstraction layer that can run
+over popular databases. That would allow a team to pick a cheap but
+limited database to start out and easily migrate to an enterprise
+database later. As long as there's an abstract interface over the
+database, the app will never know which database we're actually
+building on top of.
+</p>
+
+<br>
+</div>
+</div>
+
+<div id="outline-container-sec-7" class="outline-2">
+<h2 id="sec-7">Back-end</h2>
+<div class="outline-text-2" id="text-7">
+<p>
+Servers should be low latency, high throughput, handle errors, scale,
+and all that stuff. There's not a lot I can add here that isn't
+already known. Clojure is pretty great since it has relatively
+mature tools and access to many Java libraries. I think people
+should just use whatever they're comfortable with as long as the
+performance is decent. Having a concurrent language is definitely an
+added bonus for performance, though.
+</p>
+
+<br>
+</div>
+</div>
+
+<div id="outline-container-sec-8" class="outline-2">
+<h2 id="sec-8">Front-end</h2>
+<div class="outline-text-2" id="text-8">
+<p>
+The public interface to your system! Generally, this is either a
+website or an app. Some people are driven to stick with one or the
+other ("apps are the future" or "nuh-uh, HTML5 is the best") but it
+might be better to be indifferent and do both as is necessary. For a
+small company starting out, Progressive Web Apps are probably the path
+of least resistance.
+</p>
+
+<br>
+
+<p>
+For the last half a year I've been working on Progressive Web Apps in
+Udacity's Senior Web Developer Nanodegree program. The general idea is
+to make a web app that can be downloaded to the home screen for mobile
+devices and desktop and have as much parity with native apps as
+possible. The app should have native features like a splash screen on
+startup, push notifications, offline usage, and have good performance
+(no jank). The development time for a PWA is not much more than a
+normal web app but the reach is pretty great! It also has other
+advantages like using less bandwidth for installs (an actual problem
+for developing countries), not needing to be vetted by an app store
+review for every update, and, hey, you end up with an app that can
+install to homescreen on desktops too.
+</p>
+
+<br>
+
+<p>
+Eventually, if a business takes off it would make sense to hunker down
+and write native apps. PWAs aren't really a replacement for that. This
+could be a cheaper way to get rolling though and could be a better
+solution for some developing parts of the world.
+</p>
+
+<br>
+</div>
+</div>
+
+<div id="outline-container-sec-9" class="outline-2">
+<h2 id="sec-9">Computing Platform</h2>
+<div class="outline-text-2" id="text-9">
+<p>
+How many options are there for hosting providers? Probably a
+billion. After taking a look at the choices between cloud,
+co-location, and self-hosting, my choice for kicking something off
+would be to just self-host. Minneapolis has 1Gbps or 10Gbps speeds for
+cheap (like my $70/month 6Mpbs connection costs more than
+1Gpbs). It's usually not a good idea to run things
+yourself because power outages and general bad things will probably
+happen.
+</p>
+
+<br>
+
+<p>
+I think Co-location is probably the most reasonable for a longer term
+plan. Once the traffic on a service stabilizes, it is much cheaper to
+get your own hardware and use a co-location centre. Cloud
+hosting can be used to handle traffic spikes but is pretty
+expensive. The obvious exception is if you're in a super disruptive
+startup that does hockey stick growth. Then the cloud hosting option
+would probably be a better fit.
+</p>
+
+<br>
+
+<p>
+I did a little poking around for how to get good server prices and
+eBay seems to be the most reasonable. Buying up used 1U blade servers
+to start with is a pretty good deal. Costs for hardware seem to rise
+exponentially, so the best approach is definitely going with commodity
+hardware.
+</p>
+
+<br>
+
+<p>
+For the OS decision, I think we can make a list of some functional
+requirements:
+</p>
+
+<ul class="org-ul">
+<li>easy to set up
+</li>
+<li>doesn't hog resources
+</li>
+<li>can update well
+</li>
+<li>works with a hosted cloud service (just in case)
+</li>
+<li>can handle ZFS
+</li>
+<li>is mature and has good support
+</li>
+</ul>
+
+<p>
+The easiest I can think of is using <a href="https://www.joyent.com/smartos">SmartOS</a> since it can run docker
+containers directly on bare metal. SmartOS can be dd-ed onto a flash
+drive and loaded directly into RAM. That's nice because it doesn't run
+off the disk and has a small memory footprint. It's been around for a
+while and is a derivative of Illumos (which comes from OpenSolaris) so
+support is good too. There's a nice description <a href="https://www.youtube.com/watch?v=dxZExLeJz2I">here</a>.
+</p>
+
+<br>
+
+<p>
+Basically, getting rid of VM the overhead translates into <a href="https://mattconnolly.wordpress.com/2012/11/18/comparing-amazon-ec2-to-joyent-smartos/">better</a>
+<a href="https://www.joyent.com/blog/joyent-and-hadoop-making-big-data-better">speeds</a>. Joyent also offers a platform for better ops automation
+<a href="https://www.joyent.com/blog/docker-bake-off-aws-vs-joyent">throughout</a>.
+</p>
+
+<br>
+
+<p>
+Being a <a href="https://www.youtube.com/watch?v=mPhjFYXoAD0">cloud native solution</a> is really nice for efficiency and more
+importantly system level automation!
+</p>
+
+<br>
+</div>
+</div>
+
+<div id="outline-container-sec-10" class="outline-2">
+<h2 id="sec-10">OAM</h2>
+<div class="outline-text-2" id="text-10">
+<p>
+In getting the hang of Erlang over the past month, I noticed that it
+has some awesome tools for administration and management. Here's a list
+of most of the things it can do:
+</p>
+
+<ul class="org-ul">
+<li>an OS heartbeat script to monitor nodes
+</li>
+<li>automatically restart processes or full nodes if they become
+unresponsive
+</li>
+<li>live code updates and rollbacks
+</li>
+<li>an Erlang shell that can jack into any remote processes
+</li>
+</ul>
+
+<br>
+
+<p>
+Kubernetes offers something pretty similar:
+</p>
+<ul class="org-ul">
+<li>health monitoring for nodes
+</li>
+<li>automatic restart when a node becomes unresponsive
+</li>
+<li>handles load balancing for health and readiness of nodes
+</li>
+<li>code deploys and rollbacks
+</li>
+<li>command line interface
+</li>
+</ul>
+
+<br>
+
+<p>
+These both work great for managing container deploys but not so great
+for system level operations, administration, and management. Luckily,
+<a href="https://docs.project-fifo.net/">Project FIFo</a> and <a href="https://www.joyent.com/triton">Triton</a> are open source projects for handling just
+that on SmartOS systems.
+</p>
+
+<br>
+
+<p>
+I haven't had enough time to really evaluate whether one is better
+than the other. Both look like interesting solutions for managing a
+private cloud datacenter, though.
+</p>
+
+<br>
+
+<p>
+Cloud providers like AWS offer tools for OAM tasks with the obvious
+problem that they only work with their service. There's no option to
+use them in your own datacenter.
+</p>
+
+<br>
+
+<p>
+There are many other tools that work for OAM but they are more complex
+to integrate with SmartOS. There are already enough services provided
+by ProjectFIFo/Triton, Kubernetes, and Docker. Stitching together five
+or six separate tools to try building the same thing would be a large
+time sync and bring more maintenance overhead.
+</p>
+
+<br>
+</div>
+</div>
+
+<div id="outline-container-sec-11" class="outline-2">
+<h2 id="sec-11">Extra Hardware Hacks</h2>
+<div class="outline-text-2" id="text-11">
+<p>
+I came up with a few other ideas that were much more experimental while
+playing around with how to build the infrastructure. These were mostly
+solutions for rich man's problems (e.g. needing petabytes of storage)
+and not things to worry about in the early stages of a startup.
+</p>
+
+<br>
+
+<p>
+For storage space, I like the BACKBLAZE team's plan to make a
+<a href="https://www.backblaze.com/blog/petabytes-on-a-budget-how-to-build-cheap-cloud-storage/">petabyte scale storage server</a>. They crammed 45 HDDs into a box and
+added some hardware, which in 2009 only added up to 76TB. Now that we
+have 4TB disks it should be 45 * 4 (180TB). Pretty awesome!
+</p>
+
+<br>
+
+<p>
+Since the storage servers would likely hold the master dataset for
+Hadoop, we could compress things since speed is less important for the
+batch processing layer. By default HDFS (Hadoop filesystem) uses gzip
+for compression so there's already some savings. To add to that, we could
+use a ZFS filesystem and get a bit more compression for cheap
+too. Hopefully, that could significantly bump storage for the server!
+</p>
+
+<br>
+
+<p>
+(Having that amount of storage is definitely a rich man's problem. For
+starting a company, it's obviously better to use minimal storage and see
+where things go.)
+</p>
+
+<br>
+
+<p>
+There are other cool looking hardware hacks with FPGAs that could save
+money too. RAM seems to be an important hardware component that
+limits the system because it's so darn expensive. One way to work
+around that might be to have a ram cloud using
+<a href="http://dspace.mit.edu/handle/1721.1/97746">BlueDBM</a>. The project basically promotes using a rack of SSDs with an
+FPGA as a replacement for RAM. The read time on the system is slightly
+slower than normal DRAM but it consumes less power and is an order of
+magnitude cheaper.
+</p>
+
+<br>
+
+<p>
+If the Lambda Architecture was used, maybe it would be reasonable to
+use a RAM cloud for the serving layer. The serving layer holds a view
+that was created from the master dataset. It's an immutable snapshot,
+so maybe it would be conceivable to store the entire database in the
+RAM cloud using something like Voldemort. Doing that might yield low
+latency reads with higher throughput.
+</p>
+
+<br>
+
+<p>
+(OK, this is a super rich man's problem. Mostly just fun to read and
+think about. This part is super experimental anyway and probably
+wouldn't work.)
+</p>
+
+<br>
+</div>
+</div>
+
+<div id="outline-container-sec-12" class="outline-2">
+<h2 id="sec-12">Conclusion</h2>
+<div class="outline-text-2" id="text-12">
+<p>
+This post was a general overview of how to engineer a system
+architecture and some of the design tradeoffs that come with it. I
+tried to keep from talking too much about any one layer to instead lay
+out a rough roadmap of the system. Each part has more detail and lower
+level design decisions that were glossed over. Some topics like
+networking also were skipped to focus on other parts.
+</p>
+
+<br>
+
+<p>
+I didn't talk about other ideas like the <a href="https://12factor.net/">12 factor app model</a> either
+but hopefully you can draw your own parallels between this design and
+that model.
+</p>
+
+<br>
+
+<p>
+Before writing this up I was focusing on Erlang and building a system
+infrastructure for a startup idea. I wanted to write things down
+to see what other people thought. Sorry if parts were more focused on
+my design choices and less on general patterns. My goal was to make a
+generic stack based on the Lambda Architecture that could be reused
+for a few companies.
+</p>
+
+<br>
+
+<p>
+It's fun to try picking which technologies to use and then jumping in
+to work on it. I hope my notes help elucidate some of the process!
+</p>
+
+<br>
+</div></div></div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<footer> <hr />
+                         <p><a href='http://creativecommons.org/licenses/by-nc-sa/3.0/' target='_blank'>©copyright 2015</a>, by <a href='/about.html'>Ed Babcock</a> (^_^)v</p>
+                         </footer>
+                         <script type='text/javascript' src='js/jquery.min.js'></script>
+                         <script type='text/javascript' src='js/bootstrap.min.js'></script>
+</div>
+</body>
+</html>
