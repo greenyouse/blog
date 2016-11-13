@@ -490,5 +490,8 @@ system has to handle whatever can be thrown at it.
   It's fun to try picking which technologies to use and then jumping in
   to work on it. I hope my notes help elucidate some of the process!
 
+#+HTML: <br><br>
+#+HTML: <div id="disqus_thread"></div> <script> var disqus_config = function () { this.page.url = "https://edbabcock.com"; this.page.identifier = "building-a-stack"; }; (function() { var d = document, s = d.createElement('script'); s.src = '//edbabcock-com.disqus.com/embed.js'; s.setAttribute('data-timestamp', +new Date()); (d.head || d.body).appendChild(s); })(); </script> <noscript>It would be better if comments didn't need JS. Turn JavaScript on to see the comments. <a href="https://disqus.com/?ref_noscript">Comments powered by Disqus.</a></noscript>
+
 #+HTML: <br>
 #+HTML: </div></div></div>
