@@ -1,31 +1,38 @@
-#+HTML: <div class="container-fluid"><div class="row"><div class="col-md-7 col-md-offset-3 col-xs-12 col-sm-10 col-sm-offset-1 col-lg-6 col-lg-offset-3">
+#+HTML: <div class="container-fluid"><div class="row"><div class="col-md-6 col-md-offset-3 col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-lg-4 col-lg-offset-4">
 #+TITLE: About
 #+HTML: <br><br>
 
-#+HTML: <h2>About Me <small>(in goofy 3rd person speak)</small></h2>
+#+HTML: <h2>About Me</h2>
 
-Ed is a chemist turned programmer that loves to work on tricky
-problems and hack in LISPs. In late 2011 he started R programming for
-a university course and enjoyed it so much that he dove into learning
-AppleScript, HTML, CSS, and JavaScript in his free time. A few months
-later he happened across some [[http://www.paulgraham.com/avg.html][infamous]] [[http://www.paulgraham.com/iflisp.html][Paul]] [[http://ep.yimg.com/ty/cdn/paulgraham/bbnexcerpts.txt][Graham]] [[http://www.paulgraham.com/rootsoflisp.html][essays]] and has been
-hooked on Clojure (and other LISPs) ever since.
-
-When not programming he likes to ski, cook, geek out on video games, and
-go rock climbing.
+I'm a developer from the Midwest that loves coding, rock climbing,
+cooking, and skiing. My focus is on building web applications and
+learning as much as possible about different tools, techniques, and
+programming paradigms.
 
 #+HTML: <br>
-*** ~Hire Me~
-I'm currently searching for a position as a full-time software
-developer. If you think I might be a good fit for your company, send me
-an [[mailto:Ed@EdBabcock.com][email]]. I would love to hear from you!
+
+Clojure/ClojureScript has been my favorite language to program in so
+far. Clojure has the metaprogramming of LISP, easy access to tools from
+mainstream languages like Java and JavaScript, a smart community, and is
+built for simplicity. This gives me more productivity, language
+constructs as libraries, concurrency (even in JS), robust testing, and
+lots of other fun stuff.
 
 #+HTML: <br>
-[[file:resume][Resume]]
 
+Most recently, I've been working through modern JavaScript features with
+Udacity's Senior Web Developer Nanodegree. Since 2012, I've been using
+JavaScript on and off for projects and took the Nanodegree program to
+get up to speed with the latest front-end features. It taught a great
+curriculum from Google for building Progressive Web Apps that were
+offline-first, responsive, accessible, and built with popular frameworks
+like Node.js and Angular.
 
 #+HTML:<br>
 ** Contact Me
+#+ATTR_HTML: :target _blank
+Resume: [[file:resume][EdBabcock.com/resume]]
+#+HTML:
 Email: [[mailto:Ed@EdBabcock.com][Ed@EdBabcock.com]]
 #+ATTR_HTML: :target _blank
 LinkedIn: [[https://LinkedIn.com/in/EdBabcock][LinkedIn.com/in/EdBabcock]]
