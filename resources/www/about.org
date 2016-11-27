@@ -4,7 +4,7 @@
 
 #+HTML: <h2>About Me</h2>
 
-I'm a developer from the Midwest that loves coding, rock climbing,
+I'm a developer from the Upper Midwest that loves coding, rock climbing,
 cooking, and skiing. My focus is on building web applications and
 learning as much as possible about different tools, techniques, and
 programming paradigms.
