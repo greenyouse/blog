@@ -21,6 +21,7 @@
         <ul class=\"nav navbar-nav\">
           <li><a href=\"/about.html\">About</a></li>
           <li><a href=\"categories.html\">Categories</a></li>
+
         </ul>
       </div>
     </div>
@@ -32,6 +33,7 @@
                          <script type='text/javascript' src='js/jquery.min.js'></script>
                          <script type='text/javascript' src='js/bootstrap.min.js'></script>"
       org-html-head "<meta name='viewport' content='width=device-width' initial-scale=1>
+                     <link rel='shortcut icon' href='/img/favicon.ico' />
                      <link rel='stylesheet' href='/css/bootstrap.min.css' type='text/css'/>
                      <link rel='stylesheet' href='/css/blog.css' type='text/css'/>
                      <script type='text/javascript' src='MathJax/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>"
@@ -64,5 +66,4 @@
         ("pwa" :components ("orgfiles" "org-static"))))
 
 
-;; TODO: do a new hook for the content section to make bootrap stuff easier
-;; TODO: favicon
+;; TODO: remove bootstrap and make better HTML/CSS solution for mobile nav menu
