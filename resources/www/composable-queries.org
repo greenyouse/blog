@@ -1,0 +1,586 @@
+#+HTML: <div class="container-fluid"><div class="row"><div id="post" class="col-md-6 col-md-offset-3 col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-lg-4 col-lg-offset-4">
+#+TITLE: Composable Queries
+#+HTML: <link rel='stylesheet' href='/css/post.css' type='text/css'/>
+#+HTML: <br>
+
+
+This post is going to be a little bit experimental. I'm going to try
+some speculative programming to build a library while I write this
+post. I'll start by proposing an abstraction and then step through how
+to create the parts, in piecemeal. As we go along, I'll supply reasoning
+for my design choices.
+
+#+BEGIN_QUOTE
+"Composition feels like function husbandry. You, breeder of functions,
+select two with traits you'd like to combine and mash them together to
+spawn a brand new one."
+
+— DrBoolean, [[https://drboolean.gitbooks.io/mostly-adequate-guide/content/ch5.html#functional-husbandry][Mostly Adequate Guide, Ch.5]]
+#+END_QUOTE
+
+#+HTML: <br>
+
+Over the last year or so, I've wanted to build a library for composing
+SQL and Elasticsearch queries. I'm more of a generalist web developer
+than a DBA, but I have worked with both SQL and ES in the past. One of
+the things that I've found is that functional programming usefulness
+doesn't need to stop at the database level, it can work for databases
+too! In this post, I'll try to show some of the benefits of composable
+queries and how generic data transformations can enhance them. This will
+focus on SQL but the same pattern applies to ES as well.
+
+Within the Clojure community, there seem to be three major approaches to
+interacting with SQL:
+
+1. Raw SQL
+2. Use Clojure functions as a DSL
+3. Use Clojure's data structures as a DSL
+
+Taking each of these tools as-is, they will be set up as static queries
+against a database. Queries will most likely have their parameters
+passed in to perform the query. That could look something like this:
+
+#+BEGIN_SRC sql
+  SELECT *
+  FROM users
+  WHERE age > min_age
+#+END_SRC
+
+#+BEGIN_SRC clojure
+  (def age_query
+    (read-query "age_query.sql"))
+
+  (defn do-age-query [age]
+    (age_query {:age age
+                :min_age 18}))
+#+END_SRC
+
+The query is wrapped in a function so the program can pass params and
+interact with it. It's also somewhat limited though since it is a
+static block of SQL that exists outside of the rest of the program. This
+"SQL outside our program" style isn't a problem for a toy query like
+this one. Larger queries that use this pattern, however, can be a huge
+pain to maintain.
+
+The benefit of a function or data structure DSL approach is that we can store
+snippets as variables in our program and compose them together. When
+choosing between the two, the function DSL will be more difficult to compose
+since it's not native Clojure. With native data structures, we could
+make our query a Clojure map and merge maps together to build larger
+structures.
+
+Here's an example of just that with a data-oriented DSL:
+
+#+BEGIN_SRC clojure
+  (def age-query
+    {:select [:*]
+     :from [:users]
+     :where [:> :age :min_age]})
+
+  (def location-query
+    {:select [:*]
+     :from [:users]
+     :where [:= :location :target_location]})
+
+  (merge age-query location-query)
+  ;;=> {:select [:*], :from [:users], :where [:= :location :target_location]}
+#+END_SRC
+
+Wait a sec, that didn't compose at all; it overrode "age-query" with
+"location-query"! This example shows that we can't compose whole
+queries, it's much better to compose smaller parts first and then build
+up from there.
+
+If we can focus on the subsections of our query, then I think we'll get
+closer to our goal of composing. The only significant difference between
+the subsections is the where clause. What if we pulled those parts out
+and stored them in variables? With that, we could use a function for
+building up the where part.
+
+Here's pseudo code:
+
+#+BEGIN_SRC clojure
+  (def min-age
+    [:>= :age :min_age])
+
+  (def match-location
+    [:= :location :target_location])
+
+  (def person-query
+    {:select [:*]
+     :from [:users]
+     :where (and min-age
+                 match-location)})
+#+END_SRC
+
+Now, the where clause will be translated and create the query we want.
+
+By focusing on the subsections like this, we can share semantics across
+our codebase. Multiple queries can be built up from a small group of
+subqueries.
+
+OK, let's go further into the where clause. What if we didn't know what
+kind of data might be given to the queries? What if the queries were
+missing ~:min_age~ or ~:target_location~ params?
+
+Well, we know we want to find users. If there's no age or location
+constraint we should be OK to just return all the users. We'll use
+constraints if they're present. Otherwise, the query should still run
+without them.
+
+To get that flexibility we can have [[file:deepfns.org][transitives]] that pull data out of
+inputs, test them, and output subqueries.
+
+#+BEGIN_SRC clojure
+  (require '[deepfns.core :as df]
+           '[deepfns.transitive :as t])
+
+  ;; term> for SQL's boolean terms
+  (def min-age
+    (term> :>= :age :min_age))
+
+  (def match-location
+    (term> := :location :target_location))
+
+  (def person-query
+    (query>
+     {:select [:*]
+      :from [:users]
+      :where (and> min-age
+                   match-location)}))
+#+END_SRC
+
+Here's an example input and what the output would look like:
+
+#+BEGIN_SRC clojure
+  ;; both are present, use both constraints
+  {:min_age 18 :target_location "Antartica"}
+  ;;=> {:select... :where [:and [:>= :age 18] [:= :location "Antarctica"]]}
+
+  ;; only one present, foobar is nonsense
+  {:min_age 18 :foobar "Antarctica"}
+  ;;=> {:select... :where [:>= :age 18]}
+
+  ;; both of these fail their checks, don't even create a where condition
+  {}
+  ;;=> {:select [:*] :from [:users]}
+#+END_SRC
+
+This example handles variable inputs and runs queries that are relevant
+to the data we pass in. Given different inputs, it will run slightly
+different queries.
+
+We could also need to perform normalization on our inputs. Let's say the
+locations we've been using in our examples need to have [[https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2][ISO 3166-1
+alpha-2]] codes for country names. To make it tricky, we'll also require
+that our query handles an older API that took full country names too.
+
+To deal with the variable input formats, there should be a country name
+normalization function to handle new and old API inputs. The function
+can be called from a subquery using a transitive.
+
+#+BEGIN_SRC clojure
+  (require '[clojure.string :as s])
+
+  (def alpha2-codes
+    #{"AC" "AD" "ZW"})
+
+  (def country-mappings
+    {"ascension island" "AC"
+     "andorra" "AD"
+     "zimbabwe" "ZW"})
+
+  (defn normalize-country [country]
+    (if-not (nil? (alpha2-codes country))
+      country
+      ((comp country-mappings s/lower-case) country)))
+
+  (def min-age
+    (clause> :>= :age :min_age))
+
+  (def match-location
+    (clause> := :location (t/=> :target_location normalize-country)))
+
+  (def person-query
+    (query>
+     {:select [:*]
+      :from [:users]
+      :where (and> min-age
+                   match-location)}))
+#+END_SRC
+
+With this, we can start setting normalization functions and other data
+handling directly in our queries.
+
+One place where this technique will pay off is in testing smaller
+snippets. We can break up the subqueries and write specifications for
+them using core.spec. That will make it easy to carry out property based
+testing with clojure.spec and test.check.
+
+Here is one example spec for the min-age query that we've been using:
+
+#+BEGIN_SRC clojure
+  (require '[clojure.spec :as spec]
+           '[clojure.spec.test :as test]
+           '[taoensso.timbre :as log])
+
+  (defn to-int [x]
+    (cond
+      (int? x) x
+      (or (number? x)
+          (symbol? x)) (try
+                         (int x)
+                         (catch Exception ex
+                           (log/error (str "to-int Symbol Error: " ex))))
+      (string? x) (try
+                    (Integer/parseInt x)
+                    (catch Exception ex
+                      (log/error (str "to-int String Error: " ex))))
+      :default
+      nil))
+
+  (def int>
+    (partial to-int))
+
+  (def min-age
+    (term> :>= :age (t/=> ::min_age int>)))
+
+
+  ;;; specs
+  (spec/fdef to-int
+             :args (spec/cat :x any?)
+             :ret (spec/nilable int?))
+
+  (spec/def ::min_age int?)
+  (spec/def ::age_check
+    (spec/keys :req [::min_age]))
+
+  ;; could do :junk any? and optimize testing through test/instrument
+  (spec/fdef min-age
+             :args (spec/alt :junk map?
+                             :match ::age_check)
+             :ret (spec/nilable (spec/tuple keyword? keyword? int?)))
+
+
+  ;; let 'er rip!!
+  (-> (test/check [`to-int `min-age])
+      (test/summarize-results))
+#+END_SRC
+
+See how easy it was to write specs for those?
+
+These tiny specs can be used for property-based testing which makes
+building and maintaining a large test suite much easier.  The computer
+will use our spec to write thousands or millions of randomized test
+cases which cover much more inputs than we could hope to create by
+hand. In the example, the last snippet with ~test/check~ was the part
+that did testing.
+
+(Property-based tests aren't a magic bullet but they do make your test
+suite more robust. Since the goal is to get the most extensive test
+coverage possible, unit tests will likely still be a helpful complement
+to property-based tests. If you're just getting started writing specs,
+unit tests can still catch potential spec bugs too.)
+
+While we're writing code, we can also turn on
+~clojure.spec.test/intrument~ which will try to catch any errors that
+come from spec'ed code. Instead of getting a nasty Java stack trace,
+clojure.spec yields a targeted error message that describes where the
+error took place, why it happened, what the calling function was, etc.
+
+If this seems cool, that's because it is! By writing smaller chunks of
+code with specs we should be able to get work done faster and have an
+easier time debugging any errors that might show up in production.
+
+Beyond what I've mentioned, there are other advantages to using
+clojure.spec too. For more, check out the [[http://blog.cognitect.com/blog/2016/7/26/clojure-spec-screencast-testing][screencasts by Cognitect]] that
+cover how to use clojure.spec.
+
+Getting back to the bigger picture of writing SQL queries, we now have
+some basic building blocks for SQL conditions. To plan the next few
+steps, we'll read through a [[http://savage.net.au/SQL/sql-2003-2.bnf.html][BNF grammar for SQL]] and the [[http://blog.cognitect.com/blog/2016/7/13/screencast-spec-leverage][Honey SQL
+implementation]] (OK maybe we'll skip the BNF). My goal is to
+build this abstraction over Honey SQL's map DSL. By building on top of
+an existing library I should be able to save time not re-inventing the
+SQL DSL wheel and profit from future improvements that Honey SQL makes.
+
+The easiest place to start is by writing a whole function that wraps SQL
+queries. We want the whole query to be a transitive so that any nil
+values from the map are filtered out before running the query. This can
+be done by just interning the ~transitive~ function from the deepfns
+library.
+
+#+BEGIN_SRC clojure
+  (def query>
+    "Takes a transitive `f` and uses that to walk a datastructure.
+    Returns a SQL query formatted for Honey SQL."
+    deep/transitive)
+#+END_SRC
+
+Here is an example SQL query from the Honey SQL README that shows many
+query options.
+
+#+BEGIN_SRC clojure
+  {:select [:f.* :b.baz :c.quux [:b.bla "bla-bla"]
+            (sql/call :now) (sql/raw "@x := 10")]
+   :modifiers [:distinct]
+   :from [[:foo :f] [:baz :b]]
+   :join [:draq [:= :f.b :draq.x]]
+   :left-join [[:clod :c] [:= :f.a :c.d]]
+   :right-join [:bock [:= :bock.z :c.e]]
+   :where [:or
+           [:and [:= :f.a "bort"] [:not= :b.baz (sql/param :param1)]]
+           [:< 1 2 3]
+           [:in :f.e [1 (sql/param :param2) 3]]
+           [:between :f.e 10 20]]
+   :group-by [:f.a]
+   :having [:< 0 :f.e]
+   :order-by [[:b.baz :desc] :c.quux [:f.a :nulls-first]]
+   :limit 50
+   :offset 10}
+#+END_SRC
+
+Let's take the easy parts first. We could change the bottom sections
+where the limit, offset, etc. is hard-coded into the query. Doing this
+gives the query more flexibility.
+
+#+BEGIN_SRC clojure
+    {;; f.a groups by default
+     ;; giving a map with group-by will override f.a
+     :group-by (t/default> :f.a :group-by)
+     ;; 0 by default
+     ;; a map with :having can change it from 0
+     :having (term> :> :f.e (t/default> 0 :having))
+     ;; use this default clause for order-by
+     :order-by (t/default>
+                [[:b.baz :desc] :c.quux [:f.a :nulls-first]]
+                :order-by)
+     ;; default to 50 or 10 unless overriden
+     :limit (t/default> 50 :limit)
+     :offset (t/default> 10 :offset)}
+#+END_SRC
+
+The query now has default values for lots of parameters. If we ever need
+to override them, we could easily change the default value. Compare that
+to if the query was static or required us to have multiple snippets with
+hard coded values.
+
+The select clause is a bit trickier. When we turn this Clojure map into
+a transitive, keywords in Honey SQL's vector's will be deleted. Here's
+an example of the issue:
+
+#+BEGIN_SRC clojure
+  (require '[honeysql.core :as sql])
+
+  ;; our target output, default Honey SQL
+  (sql/format
+   {:select [:f.* :b.baz :c.quux [:b.bla "bla-bla"]
+             (sql/call :now) (sql/raw "@x := 10")]})
+  ;;=> ["SELECT f.*, b.baz, c.quux, b.bla AS bla_bla, now(), @x := 10"]
+
+
+  ;; our output, abstraction disaster!
+  (-> ((query>
+        {:select [:f.* :b.baz :c.quux [:b.bla "bla-bla"]
+                  (sql/call :now) (sql/raw "@x := 10")]})
+       {})
+      sql/format)
+  ;;=> ["SELECT ? AS NULL, ()" "bla-bla"]
+#+END_SRC
+
+The transitives use the keyword filled vectors for lookups. If there's a
+map of keywords in the input, then the keywords will be replaced by the
+value of the map.
+
+#+BEGIN_SRC clojure
+  ;; we want to keep both keywords here
+  ;; they :bar gets deleted though since the input has no :bar
+  ((query> [:foo :bar])
+   {:foo 1})
+  ;;=> [1]
+#+END_SRC
+
+This is a bummer for our SQL DSL since all of those SQL commands get
+removed when the transitive runs. We have a couple options for fixing
+this:
+
+1. Write a new function that saves keywords
+2. Change the transitive abstraction
+3. Pick a new SQL DSL
+4. Add a special SQL fn-handler to Honey SQL
+
+Option one is what I'm going to stick with.
+
+Inside a transitive code can be escaped using ~constantly~. For what
+we're working on we need a way to escape some keywords while
+still evaluating transitives. Ideally, we should do this without making
+developers write ~constantly~ everywhere to escape things too.
+
+The easiest way is to just change the transitive abstraction. If we keep
+it from evaluating keywords then all SQL keywords we stay in our
+output. This new behavior should go in ~query>~. Any nested lookups we
+still want to do can be wrapped in a function like ~=>~ or another
+~query>~.
+
+#+BEGIN_SRC clojure
+  ;; goal
+  ;;=> ["SELECT f.*, b.baz, c.quux, b.bla AS bla_bla, now(), @x := 10"]
+
+  (-> ((query>
+        {:select [:f.* :b.baz :c.quux [:b.bla "bla-bla"]
+                  (sql/call :now) (sql/raw "@x := 10")]})
+       {})
+      sql/format)
+  ;;=> ["SELECT f.*, b.baz, c.quux, b.bla AS bla_bla, (), ()"]
+#+END_SRC
+
+Great! Now there's one major thing left to fix. The calls to
+~honeysql.core~ get evaluated during the transitive's expansion. Normally
+those calls are supposed to be left in the map that we give to
+~honeysql.core/format~.
+
+So we need a way to stash those Honey SQL calls so they can be expanded
+later.
+
+#+BEGIN_SRC clojure
+  (defn call
+    "Represents a SQL function call. Name should be a keyword."
+    ([name]
+     (constantly (sql/call name)))
+    ([name & args]
+     (constantly (apply sql/call name args))))
+
+  (defn raw [s]
+    "Represents a raw SQL string"
+    (constantly (sql/raw s)))
+
+  (defn param [name]
+    "Represents a SQL parameter which can be filled in later"
+    (constantly (sql/param name)))
+#+END_SRC
+
+This works well enough. Now the output should be the same. Let's check:
+
+#+BEGIN_SRC clojure
+  ;; goal
+  ;;=> ["SELECT f.*, b.baz, c.quux, b.bla AS bla_bla, now(), @x := 10"]
+
+  (sql/format
+   ((query> {:select [:f.* :b.baz :c.quux [:b.bla "bla-bla"]
+                      (call :now)
+                      (raw "@x := 10")]})
+    {}))
+  ;;=> ["SELECT f.*, b.baz, c.quux, b.bla AS bla_bla, now(), @x := 10"]
+#+END_SRC
+
+Vundabar! Those Honey SQL calls are finally working. We should now have
+all the pieces in place for translating that large SQL query into our
+transitive abstraction.
+
+#+BEGIN_SRC clojure
+  (query>
+     {:select [:f.* :b.baz :c.quux [:b.bla "bla-bla"]
+               (call :now) (raw "@x := 10")]
+      :modifiers [:distinct]
+      :from [[:foo :f] [:baz :b]]
+      :join [:draq [:= :f.b :draq.x]]
+      :left-join [[:clod :c] [:= :f.a :c.d]]
+      :right-join [:bock [:= :bock.z :c.e]]
+      :where [:or
+              [:and
+               [:= :f.a "bort"]
+               ;; pass in param1 or this will be nil
+               (term> :not= :b.baz (t/=> :param1))]
+              [:< 1 2 3]
+              [:in :f.e [1 (t/=> :param2) 3]]
+              [:between :f.e 10 20]]
+      ;; :f.a groups by default
+      :group-by (t/default> [:f.a] :group-by)
+      ;; 0 by default
+      :having (term> :< :f.e (t/default> 0 :having))
+      ;; use this default clause for order-by
+      :order-by (t/default>
+                 [[:b.baz :desc] :c.quux [:f.a :nulls-first]]
+                 :order-by)
+      ;; default to 50 or 10 unless overriden
+      :limit (t/default> 50 :limit)
+      :offset (t/default> 10 :offset)})
+#+END_SRC
+
+Yup, this outputs the same SQL code as Honey SQL does. Mission
+accomplished.
+
+Now that we have a basic tool working. Let's lay out the pros and cons.
+
+advantages:
+- Developer Friendly: Easier to test small chunks as you develop, giant
+  queries can be a pain to test all at once. It's more effective to test
+  the large query after you know that the smaller queries already work.
+- DRY: Some chunks will be common to many queries, why dump them all
+  over your app? We do this with code, why not with database queries?
+- Easier Maintenance: Update small chunks that you know work and are
+  used by larger queries, don't waste your time digging through giant
+  queries.
+- Functional Pipelining: In each query chunk we can apply functions to
+  the data that we're passed. Normalization details can be embedded as
+  functions in our queries.
+- Functional Queries: Queries can be built up from the data that we're
+  given. We can put declarative control structures into our code that
+  will add or subtract query sections, based on the data they're
+  passed.
+
+disadvantages:
+- learning curve
+- it's an abstraction so it could be harder to optimize the output (not
+  a problem for Elasticsearch)
+- Honey SQL might cover only a subset of SQL that you want to use
+
+Last week Rich Hickey laid out the pattern of immutable code in his
+[[https://www.youtube.com/watch?v=oyLBGkS5ICk][spec-ulation keynote]]. While his focus was on dependencies and web APIs,
+I think the some of the idea carries over to database queries too.
+
+When we change the APIs of our system, there is a good chance that we'll
+need to change the database queries as well. The queries won't have as
+much exposure to the outside world as something like a REST API but they
+may need minor updates. We might also need to have multiple queries
+running to support different versions of an API.
+
+Normally supporting slightly different queries would require... well,
+writing separate queries. There may also be breaking changes between the
+queries and, eventually, a service could be deprecated to make room for
+the new code. Through careful use of transitives, however, we should be
+able to build multiple queries out of one transitive and avoid breaking
+changes.
+
+Instead of worrying about needing to write a new query for feature X,
+we may be able to just tweak the existing query and be done. Old queries
+can be deleted if they're unused but there shouldn't be an impetus to do
+so because we changed versions. If people still consume a stable but
+deprecated version of a service, they should be able to continue doing
+so into the future.
+
+With transitives, you're now free to add new clauses, fields,
+normalization, and transformations to your queries. Without much effort
+you should be able to build queries that support both the current and
+deprecated APIs at the same time.
+
+The first version of this library is now ready to go (it's up [[https://github.com/greenyouse/dorali][here]] on
+GitHub). The end result is a pithy amount of code compared to what
+I thought would be required. One of my goals was to keep the core
+library small but extensible, so I'm glad that this worked out. This is
+more of a general design pattern to follow and extend than a feature
+complete, standard library.
+
+This was a long and fairly dense post. The concept of transitives
+and how to use them, however, is a little mind bending, so I would argue
+that the space was warranted. This still isn't a full display of their
+usefulness but I hope it was interesting enough for you to spin up a
+REPL and try it out.
+
+
+#+HTML: <br>
+
+#+HTML: <div id="disqus_thread"></div> <script> var disqus_config = function () { this.page.url = "https://edbabcock.com"; this.page.identifier = "composable-queries"; }; (function() { var d = document, s = d.createElement('script'); s.src = '//edbabcock-com.disqus.com/embed.js'; s.setAttribute('data-timestamp', +new Date()); (d.head || d.body).appendChild(s); })(); </script> <noscript>It would be better if comments didn't need JS. Turn JavaScript on to see the comments. <a href="https://disqus.com/?ref_noscript">Comments powered by Disqus.</a></noscript>
+
+#+HTML: <br>
+#+HTML: </div></div></div>
