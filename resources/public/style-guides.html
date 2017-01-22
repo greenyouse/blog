@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>Style Guides (the easy way)</title>
+<!-- 2017-01-22 Sun 01:38 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<meta  name="author" content="Ed Babcock (greenyouse)" />
+<meta  name="description" content="Hacks, projects, and general butt-kicking with Ed (greenyouse)"
+ />
+<meta  name="keywords" content="Clojure, ClojureScript, greenyouse, LISP" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.right  { text-align: center;  }
+  th.left   { text-align: center;   }
+  th.center { text-align: center; }
+  td.right  { text-align: right;  }
+  td.left   { text-align: left;   }
+  td.center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara:nth-child(2) { display: inline; }
+  .footpara { display: block; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  /*]]>*/-->
+</style>
+<meta name='viewport' content='width=device-width' initial-scale=1>
+                     <link rel='shortcut icon' href='/img/favicon.ico' />
+                     <link rel='stylesheet' href='/css/bootstrap.min.css' type='text/css'/>
+                     <link rel='stylesheet' href='/css/blog.css' type='text/css'/>
+                     <script type='text/javascript' src='MathJax/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="preamble" class="status">
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/index.html">EDBABCOCK</a>
+      </div>
+      <div class="collapse navbar-collapse" id="main-navbar">
+        <ul class="nav navbar-nav">
+          <li><a href="/about.html">About</a></li>
+          <li><a href="categories.html">Categories</a></li>
+
+        </ul>
+      </div>
+    </div>
+  </nav>
+</div>
+<div id="content">
+<h1 class="title">Style Guides (the easy way)</h1>
+<div class="container-fluid"><div class="row"><div class="col-md-6 col-md-offset-3 col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-lg-4 col-lg-offset-4">
+<br><br>
+<link rel="stylesheet" href="css/sane-spacing.css">
+
+<p>
+A little after Christmas I came up with a startup idea for a problem
+I've had. From around New Year's up to last week I did some rapid fire
+user research and a mini design sprint (hey, I only have a team of one
+person, me) to judge the risk associated with the idea. From my small,
+potentially biased data set I've determined that this idea was good
+enough to work on in my free time (when not applying for jobs or
+studying).
+</p>
+
+<p>
+I'm just sinking my teeth into the front-end engineering part of the app
+and I want to outline some of the approach that I'm taking since I
+think it might be helpful for others. I'd be interested if you have any
+feedback too.
+</p>
+
+<p>
+For the past year I've decided to specialize in Web Components and the
+Polymer framework. The most significant advantage that I've seen to
+doing this approach has been the self-documenting nature of Polymer's
+components. When writing code you can do a simple <code>polymer serve</code> to get
+an auto-generated documentation page for your component and access to
+demo pages (they look like this: <a href="https://greenyouse.github.io/datetime-local-input/components/datetime-local-input/">datetime-local-input</a> or <a href="https://www.webcomponents.org/element/greenyouse/bottom-nav">bottom-nav</a>).
+</p>
+
+<p>
+Taking this approach is somewhat similar to generating a <a href="http://styleguides.io/">living style
+guide</a> (here's a more in-depth article on style guides: <a href="https://www.smashingmagazine.com/2016/05/creating-a-living-style-guide-case-study/">style guide case
+study</a>). Each component is well defined and reused throughout the
+app. Styles can also be encapsulated in their own component and shared
+with the ShadowDOM. Almost anything can be used as a component so it's
+easy to build up a style guide for CSS themes, color palettes, and other
+things, not just UI elements.
+</p>
+
+<p>
+In the past I've jammed all my components into one app repository and
+ended up with a bit of a mess. This is a common practice but I decided
+to break most of my components into their own projects this time. I
+think there's a huge advantage to having each component tracked in GIT
+for versioning. It also simplifies the testing and component demos.
+</p>
+
+<p>
+Generating a style guide for all these repos becomes a little trickier
+by doing this though. The Polymer analyzer that builds documentation
+only works at the project level. Luckily the Polymer team already solved
+this problem with their <a href="https://github.com/Polymer/polymer-element-catalog">Polymer Element Catalog</a>. This pulls in
+collections of web components and generates an easy to navigate site for
+them (here's the now deprecated <a href="https://elements.polymer-project.org/">element catalog site</a>). You'll need to
+tweak it for your own elements but it's not too bad to set up.
+</p>
+
+<p>
+This is very much having your cake and eating it too! I can generate
+documentation for my components, classify them into collections, share
+consistent styling, easily write component demos, and have each
+component tracked nicely in version control.
+</p>
+
+<p>
+Investing the time to develop a robust living style guide at a
+startup from day one would usually be a horrible idea. However, with
+Polymer I can build out a style guide while I code the app. The only
+actual work is writing some demos and doing the element catalog. I've
+never done a full living style guide for an app before but this seems
+like it has to be the path of least resistance.
+</p>
+
+<p>
+If this startup business ever gets made and is popular, I can reap the
+benefits of having a decent style guide without the arduous work that
+usually entails.
+</p>
+
+<p>
+For now I've written out the site map and wireframes, gotten some
+production quality elements coded, and am going to start open sourcing a
+few back to the community. I think it's good to share elements because
+it forces me to care about the quality. Not that I don't usually care,
+it's just I'm in a time crunch trying to kick out an MVP within the next
+couple months in-case I don't find a job. I'm also super appreciative
+for the awesome components that others have shared and the continuing
+maintenance they offer, so I'd like a way to give back a bit.
+</p>
+
+<p>
+There are probably a bunch of things about startup stuff that I could
+post about and Web Components are a cool topic to blog about too. Leave
+a comment if you want me to cover anything in a future post. I'm not
+really in the rhythm of blogging regularly so it could be a while before
+posting again.
+</p>
+
+<p>
+Hope this was fun to read through and makes you try out the Polymer
+framework if you haven't yet!
+</p>
+
+<br><br>
+<div id="disqus_thread"></div> <script> var disqus_config = function () { this.page.url = "https://edbabcock.com"; this.page.identifier = "style-guides"; }; (function() { var d = document, s = d.createElement('script'); s.src = '//edbabcock-com.disqus.com/embed.js'; s.setAttribute('data-timestamp', +new Date()); (d.head || d.body).appendChild(s); })(); </script> <noscript>It would be better if comments didn't need JS. Turn JavaScript on to see the comments. <a href="https://disqus.com/?ref_noscript">Comments powered by Disqus.</a></noscript>
+
+<br>
+</div></div></div>
+</div>
+<div id="postamble" class="status">
+<footer> <hr />
+                         <p><a href='http://creativecommons.org/licenses/by-nc-sa/3.0/' target='_blank'>©copyright 2015</a>, by <a href='/about.html'>Ed Babcock</a> (^_^)v</p>
+                         </footer>
+                         <script type='text/javascript' src='js/jquery.min.js'></script>
+                         <script type='text/javascript' src='js/bootstrap.min.js'></script>
+</div>
+</body>
+</html>

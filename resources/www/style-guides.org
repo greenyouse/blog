@@ -1,0 +1,86 @@
+#+HTML: <div class="container-fluid"><div class="row"><div class="col-md-6 col-md-offset-3 col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-lg-4 col-lg-offset-4">
+#+TITLE: Style Guides (the easy way)
+#+HTML: <br><br>
+#+HTML: <link rel="stylesheet" href="css/sane-spacing.css">
+
+A little after Christmas I came up with a startup idea for a problem
+I've had. From around New Year's up to last week I did some rapid fire
+user research and a mini design sprint (hey, I only have a team of one
+person, me) to judge the risk associated with the idea. From my small,
+potentially biased data set I've determined that this idea was good
+enough to work on in my free time (when not applying for jobs or
+studying).
+
+I'm just sinking my teeth into the front-end engineering part of the app
+and I want to outline some of the approach that I'm taking since I
+think it might be helpful for others. I'd be interested if you have any
+feedback too.
+
+For the past year I've decided to specialize in Web Components and the
+Polymer framework. The most significant advantage that I've seen to
+doing this approach has been the self-documenting nature of Polymer's
+components. When writing code you can do a simple ~polymer serve~ to get
+an auto-generated documentation page for your component and access to
+demo pages (they look like this: [[https://greenyouse.github.io/datetime-local-input/components/datetime-local-input/][datetime-local-input]] or [[https://www.webcomponents.org/element/greenyouse/bottom-nav][bottom-nav]]).
+
+Taking this approach is somewhat similar to generating a [[http://styleguides.io/][living style
+guide]] (here's a more in-depth article on style guides: [[https://www.smashingmagazine.com/2016/05/creating-a-living-style-guide-case-study/][style guide case
+study]]). Each component is well defined and reused throughout the
+app. Styles can also be encapsulated in their own component and shared
+with the ShadowDOM. Almost anything can be used as a component so it's
+easy to build up a style guide for CSS themes, color palettes, and other
+things, not just UI elements.
+
+In the past I've jammed all my components into one app repository and
+ended up with a bit of a mess. This is a common practice but I decided
+to break most of my components into their own projects this time. I
+think there's a huge advantage to having each component tracked in GIT
+for versioning. It also simplifies the testing and component demos.
+
+Generating a style guide for all these repos becomes a little trickier
+by doing this though. The Polymer analyzer that builds documentation
+only works at the project level. Luckily the Polymer team already solved
+this problem with their [[https://github.com/Polymer/polymer-element-catalog][Polymer Element Catalog]]. This pulls in
+collections of web components and generates an easy to navigate site for
+them (here's the now deprecated [[https://elements.polymer-project.org/][element catalog site]]). You'll need to
+tweak it for your own elements but it's not too bad to set up.
+
+This is very much having your cake and eating it too! I can generate
+documentation for my components, classify them into collections, share
+consistent styling, easily write component demos, and have each
+component tracked nicely in version control.
+
+Investing the time to develop a robust living style guide at a
+startup from day one would usually be a horrible idea. However, with
+Polymer I can build out a style guide while I code the app. The only
+actual work is writing some demos and doing the element catalog. I've
+never done a full living style guide for an app before but this seems
+like it has to be the path of least resistance.
+
+If this startup business ever gets made and is popular, I can reap the
+benefits of having a decent style guide without the arduous work that
+usually entails.
+
+For now I've written out the site map and wireframes, gotten some
+production quality elements coded, and am going to start open sourcing a
+few back to the community. I think it's good to share elements because
+it forces me to care about the quality. Not that I don't usually care,
+it's just I'm in a time crunch trying to kick out an MVP within the next
+couple months in-case I don't find a job. I'm also super appreciative
+for the awesome components that others have shared and the continuing
+maintenance they offer, so I'd like a way to give back a bit.
+
+There are probably a bunch of things about startup stuff that I could
+post about and Web Components are a cool topic to blog about too. Leave
+a comment if you want me to cover anything in a future post. I'm not
+really in the rhythm of blogging regularly so it could be a while before
+posting again.
+
+Hope this was fun to read through and makes you try out the Polymer
+framework if you haven't yet!
+
+#+HTML: <br><br>
+#+HTML: <div id="disqus_thread"></div> <script> var disqus_config = function () { this.page.url = "https://edbabcock.com"; this.page.identifier = "style-guides"; }; (function() { var d = document, s = d.createElement('script'); s.src = '//edbabcock-com.disqus.com/embed.js'; s.setAttribute('data-timestamp', +new Date()); (d.head || d.body).appendChild(s); })(); </script> <noscript>It would be better if comments didn't need JS. Turn JavaScript on to see the comments. <a href="https://disqus.com/?ref_noscript">Comments powered by Disqus.</a></noscript>
+
+#+HTML: <br>
+#+HTML: </div></div></div>
