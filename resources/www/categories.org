@@ -10,7 +10,11 @@
 ** 1/15/2016 [[file:year-in-review-2015.org][Year in Review 2015]]
 
 ** 2/1/2016 [[file:status-2016-2-1.org][Status Update]]
+* Frontend
+** 1/22/2017 [[file:style-guides.org][Style Guides (the easy way)]]
+
 * Data Transformations
+** 12/13/2016 [[file:composable-queries.org][Composable Queries]]
 ** 1/22/2016 [[file:deepfns.org][Deepfns]]
 * System Design
 ** 11/12/2016 [[file:building-a-stack.org][Building a Stack]]
