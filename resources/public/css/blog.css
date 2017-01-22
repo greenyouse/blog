@@ -52,7 +52,7 @@ code {
 
 /* blog post text */
 #content p {
-    font: medium Helvetica,Arial,sans-serif
+    font: medium Helvetica,Arial,sans-serif;
 }
 
 #content blockquote p {
