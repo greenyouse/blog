@@ -1,7 +1,0 @@
-p, pre, blockquote {
-    margin-top: 1.5em;
-}
-
-blockquote > p {
-    margin-top: 0;
-}

@@ -19,10 +19,6 @@ pre {
     white-space: pre-wrap;
 }
 
-footer a {
-    color: royalblue;
-}
-
 a {
     color: #FBDE2D;
 }
@@ -35,10 +31,14 @@ h1,h2,h3,h4,h5 {
     color: peru;
 }
 
+h1 {
+    padding-bottom: 1em;
+}
+
 a:hover, footer a:hover, #main-navbar a:hover {
-                              color: cornflowerblue;
-                              text-decoration: none;
-                          }
+    color: cornflowerblue;
+    text-decoration: none;
+}
 
 .navbar {
     background-color: black;
@@ -50,9 +50,24 @@ code {
     color: #F8F8F8;
 }
 
+#content {
+    width: 80%;
+    max-width: 48em;
+    margin: 0 auto;
+}
+
+#index li {
+    font: large Helvetica,Arial,sans-serif;
+}
+
 /* blog post text */
 #content p {
     font: medium Helvetica,Arial,sans-serif;
+    margin: 1em 0;
+}
+
+#content p, pre {
+    margin: 1em 0;
 }
 
 #content blockquote p {
@@ -72,15 +87,15 @@ blockquote {
     color: #F8F8F8;
 }
 
-/* useful for larger displays like an iMac */
-@media all and (min-width: 1920px) {
-    #content {
-        padding-left: 30rem;
-        padding-right: 33rem;
-    }
+footer a {
+    color: royalblue;
 }
 
-/* stick footer code */
+footer p {
+    padding-left: 2em;
+}
+
+/* sticky footer */
 html {
     position: relative;
     min-height: 100%;
@@ -94,4 +109,5 @@ footer {
     bottom: 0;
     height: 100px;
     width: 100%;
+    padding-top: 2em;
 }
