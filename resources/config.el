@@ -1,7 +1,6 @@
 ;;; Anyone following along, evaluate both of these sexprs with C-c md and then
 ;;; call org-publish within THIS FILE.
 
-;;; MathJax config, for install see: http://docs.mathjax.org/en/latest/installation.html
 ;;; For including ClojureScript, add #+HTML: with a <script> pointing to the
 ;;;  output js file for that page
 
@@ -35,8 +34,7 @@
       org-html-head "<meta name='viewport' content='width=device-width' initial-scale=1>
                      <link rel='shortcut icon' href='/img/favicon.ico' />
                      <link rel='stylesheet' href='/css/bootstrap.min.css' type='text/css'/>
-                     <link rel='stylesheet' href='/css/blog.css' type='text/css'/>
-                     <script type='text/javascript' src='MathJax/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>"
+                     <link rel='stylesheet' href='/css/blog.css' type='text/css'/>"
       user-full-name "Ed Babcock (greenyouse)")
 
 (setq org-publish-project-alist
@@ -55,7 +53,6 @@
          :with-toc nil
          :publishing-function org-html-publish-to-html
          :html-html5-fancy t
-         :html-mathjax "path:MathJax/MathJax.js" ; NOTE: you'll need this and the MathJax script tag in head for rendering correctly
          )
         ("org-static"
          :base-directory "./www/"
@@ -64,6 +61,3 @@
          :recursive t
          :publishing-function org-publish-attachment)
         ("pwa" :components ("orgfiles" "org-static"))))
-
-
-;; TODO: remove bootstrap and make better HTML/CSS solution for mobile nav menu
