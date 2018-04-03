@@ -1,6 +1,5 @@
 #+TITLE: Deepfns
 
-
 Over the last week I've been setting up a [[https://github.com/greenyouse/deepfns][library]] for nice data
 transformations in Clojure(Script). I'm absolutely not the first to
 focus on elegant data transformations, but I thought it might be fun to

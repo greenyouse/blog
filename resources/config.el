@@ -16,12 +16,13 @@
           <span class=\"icon-bar\"></span>
           <span class=\"icon-bar\"></span>
         </button>
-        <a class=\"navbar-brand\" href=\"/index.html\">EDBABCOCK</a>
+        <a class=\"navbar-brand\" href=\"/index.html\">Blog - Ed Babcock</a>
       </div>
       <div class=\"collapse navbar-collapse\" id=\"main-navbar\">
         <ul class=\"nav navbar-nav\">
           <li><a href=\"/about.html\">About</a></li>
           <li><a href=\"categories.html\">Categories</a></li>
+          <li><a target=\"_blank\" href=\"https://github.com/greenyouse\">Projects</a></li>
 
         </ul>
       </div>
@@ -41,10 +42,10 @@
 
 (defvar org-publish-project-alist
   '(("orgfiles"
-     :base-directory "./www/"
+     :base-directory "/tmp/blog/resources/www/"
      :base-extension "org\\|md"
      :recursive t
-     :publishing-directory "./public/"
+     :publishing-directory "/tmp/blog/resources/public/"
      :section-numbers nil
      :auto-sitemap nil
      :sitemap-title "Archive"
@@ -57,9 +58,9 @@
      :html-html5-fancy t
      )
     ("org-static"
-     :base-directory "./www/"
+     :base-directory "/tmp/blog/resources/www/"
      :base-extension "css\\|js\\|png\\|svg\\|jpg\\|gif\\|pdf"
-     :publishing-directory "public/"
+     :publishing-directory "/tmp/blog/resources/public/"
      :recursive t
      :publishing-function org-publish-attachment)
     ("pwa" :components ("orgfiles" "org-static"))))

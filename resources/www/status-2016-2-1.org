@@ -1,6 +1,5 @@
 #+TITLE: Status Update 2/1/2016
 
-
 A few weeks ago when I started back up on doing open source projects, I
 was a little worried that I might run out of things to work on. However,
 the last couple weeks have shown me that I really have nothing to worry
