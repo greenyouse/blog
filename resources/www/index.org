@@ -4,15 +4,6 @@
 - 1/22/2017 [[file:style-guides.org][Style Guides (the easy way)]]
   #+HTML: <br><p>Using Polymer to build an app style guide.</p>
 
-- 12/13/2016 [[file:composable-queries.org][Composable Queries]]
-  #+HTML: <br><p>How to compose database queries and more.</p>
-
-- 11/12/2016 [[file:building-a-stack.org][Building a Stack]]
-  #+HTML: <br><p>Ideas on designing a software architecture.</p>
-
-- 2/1/2016 [[file:status-2016-2-1.org][Status Update]]
-  #+HTML: <br><p>Talking about current + upcoming projects.</p>
-
 - 1/22/2016 [[file:deepfns.org][Deepfns]]
   #+HTML: <br><p>Rundown of the deepnfs library and transitives.</p>
 
