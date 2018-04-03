@@ -29,6 +29,7 @@ a {
 
 h1,h2,h3,h4,h5 {
     color: peru;
+    margin-top: 1.5em;
 }
 
 h1 {
@@ -61,9 +62,9 @@ code {
 }
 
 /* blog post text */
-#content p {
-    font: medium Helvetica,Arial,sans-serif;
-    margin: 1em 0;
+#content p, #content li {
+    font-family: Helvetica,Arial,sans-serif;
+    font-size: 14pt;
 }
 
 #content p, pre {
