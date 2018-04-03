@@ -59,6 +59,11 @@ code {
 
 #index li {
     font: large Helvetica,Arial,sans-serif;
+    margin: 1.5em 0;
+}
+
+#index li p {
+    margin: 0;
 }
 
 /* blog post text */
