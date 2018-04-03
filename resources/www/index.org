@@ -1,7 +1,6 @@
-#+HTML: <div id="index" class="container-fluid" style="font-size: 2rem;"><div class="row"><div class="col-md-10 col-md-offset-1 col-xs-12 col-sm-12 col-lg-8 col-lg-offset-2">
 #+TITLE:
-#+HTML: <br><br>
 
+#+HTML: <div id="index">
 - 1/22/2017 [[file:style-guides.org][Style Guides (the easy way)]]
   #+HTML: <br><p>Using Polymer to build an app style guide.</p>
 
@@ -23,5 +22,4 @@
 - 3/22/2015 [[file:app-hacking.org][App Hacking]]
   #+HTML: <br><p>A taste of upcoming Browserific features.</p>
 
-
-   #+HTML: </div></div></div>
+#+HTML: </div>

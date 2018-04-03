@@ -1,8 +1,4 @@
-#+HTML: <div class="container-fluid"><div class="row"><div id="post" class="col-md-6 col-md-offset-3 col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-lg-4 col-lg-offset-4">
 #+TITLE: Composable Queries
-#+HTML: <link rel='stylesheet' href='/css/post.css' type='text/css'/>
-#+HTML: <br>
-
 
 This post is going to be a little bit experimental. I'm going to try
 some speculative programming to build a library while I write this
@@ -17,8 +13,6 @@ spawn a brand new one."
 
 — DrBoolean, [[https://drboolean.gitbooks.io/mostly-adequate-guide/content/ch5.html#functional-husbandry][Mostly Adequate Guide, Ch.5]]
 #+END_QUOTE
-
-#+HTML: <br>
 
 Over the last year or so, I've wanted to build a library for composing
 SQL and Elasticsearch queries. I'm more of a generalist web developer
@@ -578,9 +572,4 @@ usefulness but I hope it was interesting enough for you to spin up a
 REPL and try it out.
 
 
-#+HTML: <br>
-
 #+HTML: <div id="disqus_thread"></div> <script> var disqus_config = function () { this.page.url = "https://edbabcock.com"; this.page.identifier = "composable-queries"; }; (function() { var d = document, s = d.createElement('script'); s.src = '//edbabcock-com.disqus.com/embed.js'; s.setAttribute('data-timestamp', +new Date()); (d.head || d.body).appendChild(s); })(); </script> <noscript>It would be better if comments didn't need JS. Turn JavaScript on to see the comments. <a href="https://disqus.com/?ref_noscript">Comments powered by Disqus.</a></noscript>
-
-#+HTML: <br>
-#+HTML: </div></div></div>

@@ -1,6 +1,4 @@
-#+HTML: <div class="container-fluid"><div class="row"><div class="col-md-6 col-md-offset-3 col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-lg-4 col-lg-offset-4">
 #+TITLE: App Hacking
-#+HTML: <br><br>
 
 There's been a lot of mobile + desktop app development work coming from
 the JavaScript community in the last few years. Projects like [[https://nodejs.org/][NodeJS]] and
@@ -24,8 +22,6 @@ direction that the project is headed.
 
 OK, let's get started!
 
-#+HTML: <br>
-
 * Component UIs
 
   For the last year or so, ClojureScript people have had great success
@@ -33,7 +29,6 @@ OK, let's get started!
   get a couple more advantages: platform-specific feature expressions
   and reusable components.
 
-#+HTML: <br>
 #+HTML: <h4>Basic<small> (what we're currently using)</small></h4>
 
   For an example, take a look at this code for rendering a list:
@@ -50,9 +45,7 @@ OK, let's get started!
     (list-c%1 {:data ["some" "stuff" "to" "render"]})
   #+END_SRC
 
-  #+HTML: <br>
   #+HTML: <div id="list-example1"></div>
-  #+HTML: <br>
 
   This is a basic HTML list without any feature expressions or
   styling. Using this is great for webapps but, as we'll see, it doesn't
@@ -65,7 +58,6 @@ OK, let's get started!
   only part that's really unique to this UI is the last line of code
   that calls the component.
 
-#+HTML: <br>
 #+HTML: <h4>Feature Expressions</h4>
 
   Now what if we want to render this in a mobile platform like
@@ -94,15 +86,12 @@ OK, let's get started!
     (list-c%2 {:data ["some" "stuff" "to" "render"]})
   #+END_SRC
 
-  #+HTML: <br>
   #+HTML: <div id="list-example2"></div>
-  #+HTML: <br>
 
   This used the FirefoxOS markup but we didn't add the FirefoxOS CSS
   so it looks pretty much the same as our last list.
 
 
-#+HTML: <br>
 #+HTML: <h4>Resuable Components<small> (through ShadowDOMs)</small></h4>
 
   Now for the good stuff!
@@ -142,9 +131,7 @@ OK, let's get started!
        (header-c%3 {:title "Hello Style!"})
        (list-c%3 {:data ["some" "stuff" "to" "render"]})])
   #+END_SRC
-  #+HTML: <br>
   #+HTML: <div id="list-example3"></div>
-  #+HTML: <br>
 
   OK, I admit that this is slightly underwhelming because it only half
   works, but hey it's *React + ShadowDOMs*! The idea with this is that you
@@ -159,8 +146,6 @@ OK, let's get started!
   half trying to get ShadowDOMs to cooperate with React and the polyfill
   and this is how far I've gotten so far. If it looks interesting, you
   should [[https://github.com/greenyouse/blog/blob/master/src/dapps/core.cljx#L57][take a peek]] at my work and try giving it a good thumping :D.
-
-  #+HTML: <br>
 
 * Styling
 
@@ -187,8 +172,6 @@ OK, let's get started!
   style too. We can skip most of the CSS writing by coupling styles
   with our components but your app will still look too generic if you
   rely completely on the default styles.
-
-#+HTML: <br>
 
 * Databases
 
@@ -223,9 +206,6 @@ OK, let's get started!
   for the cold storage part instead of YDN-DB. Making the switch to
   localStorage was pretty easy and only took ~1 hour.
 
-#+HTML: <br>
-
-
 #+HTML: <h2>Silly App Schema<small> (optional reading)</small></h2>
 
   If you've been following so far, you may be wondering why the list
@@ -239,8 +219,6 @@ OK, let's get started!
   does (to make code reading a little easier). Check out the
   [[https://github.com/greenyouse/browserific/tree/master/lein-browserific/src/cljs/browserific/config][ClojureScript side]] of lein-browserific or the [[https://github.com/greenyouse/browserific/tree/master/examples/notes][minimal example app]] to
   see this in action.
-
-  #+HTML: <br>
 
 *** Components
 
@@ -323,9 +301,6 @@ OK, let's get started!
   mobile and desktop first.
 
   Good luck, I hope this was helpful!
-
-  #+HTML: <br>
-  #+HTML: </div></div></div>
 
 
 #+HTML: <script type="text/javascript" src="js/dapps/ReactShadow.js"></script>

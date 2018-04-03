@@ -1,6 +1,4 @@
-#+HTML: <div class="container-fluid"><div class="row"><div class="col-md-6 col-md-offset-3 col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-lg-4 col-lg-offset-4">
 #+TITLE: Building a Stack
-#+HTML: <br><br>
 
 Building systems is usually seen as a hard topic for senior people only
 but it's really something that every engineer should take a hard look
@@ -23,12 +21,10 @@ an entire system?
   of stuff could one learn to get ready for it? What kind of tricks
   could you pick up along the way?
 
-#+HTML: <br>
 
   As you're probably getting the hint, this was way too tempting not to
   investigate. :-)
 
-#+HTML: <br>
 
   To begin, I tried categorizing common parts of a system. This won't be
   universal since different systems have different objectives but here's a
@@ -42,7 +38,6 @@ an entire system?
 - OAM: Operations, Administration, and Management
 - Computing Platform: Physical servers, OS, Cloud Platform, etc.
 
-#+HTML: <br>
 
 I've seen some people talk about how putting these parts together is
 like snapping LEGO blocks together and magically ending up with a
@@ -52,7 +47,6 @@ and error handling, systems have errors too (network outages, hardware
 spontaneously busting, cats accidentally pulling cords out) and the
 system has to handle whatever can be thrown at it.
 
-#+HTML: <br>
 
 * Errors
 
@@ -65,7 +59,6 @@ system has to handle whatever can be thrown at it.
   systems end up somewhere in between the two by using eventual
   consistency via CRDTs, [[https://en.wikipedia.org/wiki/Quorum_(distributed_computing)][quorums]], client-side storage, and other techniques.
 
-#+HTML: <br>
 
   (Well, people don't always really get partition tolerance because they
   usually don't use redundant services to host their systems. It ends up
@@ -78,9 +71,7 @@ system has to handle whatever can be thrown at it.
   providers could have avoided the problems but it's a design decision
   for their system: cost vs fault tolerance.)
 
-#+HTML: <br>
 
-  There's also the case of acute errors like when an HDD breaks. To
   recover from these kinds of problems, the OAM layer should be
   monitoring the server's health and handle the problem
   automatically. The general idea is that the server will be marked as
@@ -89,7 +80,6 @@ system has to handle whatever can be thrown at it.
   somewhere. Runtime exceptions and other normal problems should be
   written to a log and possibly ping a team member if it demands attention.
 
-#+HTML: <br>
 
 * Scaling
 
@@ -103,7 +93,6 @@ system has to handle whatever can be thrown at it.
   server program to run. Load balancers can have different methods to
   partition the network load across nodes for horizontal scaling.
 
-#+HTML: <br>
 
   [[https://www.youtube.com/watch?v=xrIjfIjssLE][Erlang]], being the language of distributed systems, is the only
   language I'm aware of that can do both horizontal and vertical
@@ -119,12 +108,10 @@ system has to handle whatever can be thrown at it.
 - [[http://learnyousomeerlang.com/content][Learn You Some Erlang for Great Good]]
 - [[https://www.amazon.com/Designing-Scalability-Erlang-OTP-Fault-Tolerant/dp/1449320732][Designing for Scalability with Erlang/OTP: Implement Robust, Fault-Tolerant Systems]]
 
-#+HTML: <br>
 
   Other tools like CDNs, Redis, or Memcache are great for caching static
   content for web servers too.
 
-#+HTML: <br>
 
 * Database
 
@@ -136,13 +123,11 @@ system has to handle whatever can be thrown at it.
   they get big enough and they need to take into account CAP theorem
   requirements too (e.g. ACID vs BASE vs trade-offs).
 
-#+HTML: <br>
 
   The Big Data systems take the approach of an immutable database for a
   variety of reasons that can make systems. Here's a general list of pros
   and cons for using an immutable database.
 
-#+HTML: <br>
 
   benefits of immutable databases:
   - temporal analysis of things (time series analysis)
@@ -158,7 +143,6 @@ system has to handle whatever can be thrown at it.
   - choice of underlying database (each has different attributes like
     read/write speed or scalability)
 
-#+HTML: <br>
 
   disadvantages:
   - more storage space (but space is so cheap right now, right?)
@@ -168,7 +152,6 @@ system has to handle whatever can be thrown at it.
     consistency/availability on top of Riak clusters that also has no
     datom limit)
 
-#+HTML: <br>
 
   I'm personally a fan of Nathan Marz's Lambda Architecture for Big Data
   systems. There's a good [[https://www.manning.com/books/big-data][book]] about it from Manning and a nice
@@ -181,7 +164,6 @@ system has to handle whatever can be thrown at it.
   grows. Finally, somewhere down the line, the database becomes scalable
   and work on it can switch into maintenance mode.
 
-#+HTML: <br>
 
   In the spirit of Rich Hickey's [[https://www.infoq.com/presentations/Simple-Made-Easy][simple made easy talk]], it might
   be better to just eat the upfront development time to learn how to
@@ -191,7 +173,6 @@ system has to handle whatever can be thrown at it.
   maintenance cost is much lower, which frees up more time to work on
   cool stuff or pressing business problems.
 
-#+HTML: <br>
 
 * Analytics
 
@@ -202,14 +183,12 @@ system has to handle whatever can be thrown at it.
   to automate much of the work that a data scientist would normally be
   hired for.
 
-#+HTML: <br>
 
   The general idea is that a dataset will be indexed by time and a
   series of functions will form a pipeline that automates much of the
   data analysis. There's a [[https://www.youtube.com/watch?v=d4f1jzhUjjs][nice video set]] (complete with really
   distracting music) that digs into more detail.
 
-#+HTML: <br>
 
   This is another place where keeping an immutable, master dataset will
   pay off. In most small startups the analytics system is designed to
@@ -219,7 +198,6 @@ system has to handle whatever can be thrown at it.
   analytics and maybe better ways to monetize data for 3rd parties
   depending on the industry.
 
-#+HTML: <br>
 
 * Components
 
@@ -231,13 +209,11 @@ system has to handle whatever can be thrown at it.
   and output processes. RabbitMQ is an example of queue that does just
   that. A router example might be an event processor like Storm.
 
-#+HTML: <br>
 
   The point is that each part is abstract, composable, uses messaging
   protocols for its communication (message sequence diagrams help), and
   is reusable.
 
-#+HTML: <br>
 
   Another example might be a database abstraction layer that can run
   over popular databases. That would allow a team to pick a cheap but
@@ -246,7 +222,6 @@ system has to handle whatever can be thrown at it.
   database, the app will never know which database we're actually
   building on top of.
 
-#+HTML: <br>
 
 * Back-end
 
@@ -258,7 +233,6 @@ system has to handle whatever can be thrown at it.
   performance is decent. Having a concurrent language is definitely an
   added bonus for performance, though.
 
-#+HTML: <br>
 
 * Front-end
 
@@ -269,7 +243,6 @@ system has to handle whatever can be thrown at it.
   small company starting out, Progressive Web Apps are probably the path
   of least resistance.
 
-#+HTML: <br>
 
   For the last half a year I've been working on Progressive Web Apps in
   Udacity's Senior Web Developer Nanodegree program. The general idea is
@@ -284,14 +257,12 @@ system has to handle whatever can be thrown at it.
   review for every update, and, hey, you end up with an app that can
   install to homescreen on desktops too.
 
-#+HTML: <br>
 
   Eventually, if a business takes off it would make sense to hunker down
   and write native apps. PWAs aren't really a replacement for that. This
   could be a cheaper way to get rolling though and could be a better
   solution for some developing parts of the world.
 
-#+HTML: <br>
 
 * Computing Platform
 
@@ -304,7 +275,6 @@ system has to handle whatever can be thrown at it.
   yourself because power outages and general bad things will probably
   happen.
 
-#+HTML: <br>
 
   I think Co-location is probably the most reasonable for a longer term
   plan. Once the traffic on a service stabilizes, it is much cheaper to
@@ -314,7 +284,6 @@ system has to handle whatever can be thrown at it.
   startup that does hockey stick growth. Then the cloud hosting option
   would probably be a better fit.
 
-#+HTML: <br>
 
   I did a little poking around for how to get good server prices and
   eBay seems to be the most reasonable. Buying up used 1U blade servers
@@ -322,7 +291,6 @@ system has to handle whatever can be thrown at it.
   exponentially, so the best approach is definitely going with commodity
   hardware.
 
-#+HTML: <br>
 
   For the OS decision, I think we can make a list of some functional
   requirements:
@@ -341,18 +309,15 @@ system has to handle whatever can be thrown at it.
   while and is a derivative of Illumos (which comes from OpenSolaris) so
   support is good too. There's a nice description [[https://www.youtube.com/watch?v=dxZExLeJz2I][here]].
 
-#+HTML: <br>
 
   Basically, getting rid of VM the overhead translates into [[https://mattconnolly.wordpress.com/2012/11/18/comparing-amazon-ec2-to-joyent-smartos/][better]]
   [[https://www.joyent.com/blog/joyent-and-hadoop-making-big-data-better][speeds]]. Joyent also offers a platform for better ops automation
   [[https://www.joyent.com/blog/docker-bake-off-aws-vs-joyent][throughout]].
 
-#+HTML: <br>
 
   Being a [[https://www.youtube.com/watch?v=mPhjFYXoAD0][cloud native solution]] is really nice for efficiency and more
   importantly system level automation!
 
-#+HTML: <br>
 
 * OAM
 
@@ -366,7 +331,6 @@ system has to handle whatever can be thrown at it.
   - live code updates and rollbacks
   - an Erlang shell that can jack into any remote processes
 
-#+HTML: <br>
 
   Kubernetes offers something pretty similar:
   - health monitoring for nodes
@@ -375,26 +339,22 @@ system has to handle whatever can be thrown at it.
   - code deploys and rollbacks
   - command line interface
 
-#+HTML: <br>
 
   These both work great for managing container deploys but not so great
   for system level operations, administration, and management. Luckily,
   [[https://docs.project-fifo.net/][Project FIFo]] and [[https://www.joyent.com/triton][Triton]] are open source projects for handling just
   that on SmartOS systems.
 
-#+HTML: <br>
 
   I haven't had enough time to really evaluate whether one is better
   than the other. Both look like interesting solutions for managing a
   private cloud datacenter, though.
 
-#+HTML: <br>
 
   Cloud providers like AWS offer tools for OAM tasks with the obvious
   problem that they only work with their service. There's no option to
   use them in your own datacenter.
 
-#+HTML: <br>
 
   There are many other tools that work for OAM but they are more complex
   to integrate with SmartOS. There are already enough services provided
@@ -402,7 +362,6 @@ system has to handle whatever can be thrown at it.
   or six separate tools to try building the same thing would be a large
   time sync and bring more maintenance overhead.
 
-#+HTML: <br>
 
 * Extra Hardware Hacks
 
@@ -411,14 +370,12 @@ system has to handle whatever can be thrown at it.
   solutions for rich man's problems (e.g. needing petabytes of storage)
   and not things to worry about in the early stages of a startup.
 
-#+HTML: <br>
 
   For storage space, I like the BACKBLAZE team's plan to make a
   [[https://www.backblaze.com/blog/petabytes-on-a-budget-how-to-build-cheap-cloud-storage/][petabyte scale storage server]]. They crammed 45 HDDs into a box and
   added some hardware, which in 2009 only added up to 76TB. Now that we
   have 4TB disks it should be 45 * 4 (180TB). Pretty awesome!
 
-#+HTML: <br>
 
   Since the storage servers would likely hold the master dataset for
   Hadoop, we could compress things since speed is less important for the
@@ -427,13 +384,11 @@ system has to handle whatever can be thrown at it.
   use a ZFS filesystem and get a bit more compression for cheap
   too. Hopefully, that could significantly bump storage for the server!
 
-#+HTML: <br>
 
   (Having that amount of storage is definitely a rich man's problem. For
   starting a company, it's obviously better to use minimal storage and see
   where things go.)
 
-#+HTML: <br>
 
   There are other cool looking hardware hacks with FPGAs that could save
   money too. RAM seems to be an important hardware component that
@@ -444,7 +399,6 @@ system has to handle whatever can be thrown at it.
   slower than normal DRAM but it consumes less power and is an order of
   magnitude cheaper.
 
-#+HTML: <br>
 
   If the Lambda Architecture was used, maybe it would be reasonable to
   use a RAM cloud for the serving layer. The serving layer holds a view
@@ -453,13 +407,11 @@ system has to handle whatever can be thrown at it.
   RAM cloud using something like Voldemort. Doing that might yield low
   latency reads with higher throughput.
 
-#+HTML: <br>
 
   (OK, this is a super rich man's problem. Mostly just fun to read and
   think about. This part is super experimental anyway and probably
   wouldn't work.)
 
-#+HTML: <br>
 
 * Conclusion
 
@@ -470,13 +422,11 @@ system has to handle whatever can be thrown at it.
   level design decisions that were glossed over. Some topics like
   networking also were skipped to focus on other parts.
 
-#+HTML: <br>
 
   I didn't talk about other ideas like the [[https://12factor.net/][12 factor app model]] either
   but hopefully you can draw your own parallels between this design and
   that model.
 
-#+HTML: <br>
 
   Before writing this up I was focusing on Erlang and building a system
   infrastructure for a startup idea. I wanted to write things down
@@ -485,13 +435,8 @@ system has to handle whatever can be thrown at it.
   generic stack based on the Lambda Architecture that could be reused
   for a few companies.
 
-#+HTML: <br>
 
   It's fun to try picking which technologies to use and then jumping in
   to work on it. I hope my notes help elucidate some of the process!
 
-#+HTML: <br><br>
 #+HTML: <div id="disqus_thread"></div> <script> var disqus_config = function () { this.page.url = "https://edbabcock.com"; this.page.identifier = "building-a-stack"; }; (function() { var d = document, s = d.createElement('script'); s.src = '//edbabcock-com.disqus.com/embed.js'; s.setAttribute('data-timestamp', +new Date()); (d.head || d.body).appendChild(s); })(); </script> <noscript>It would be better if comments didn't need JS. Turn JavaScript on to see the comments. <a href="https://disqus.com/?ref_noscript">Comments powered by Disqus.</a></noscript>
-
-#+HTML: <br>
-#+HTML: </div></div></div>

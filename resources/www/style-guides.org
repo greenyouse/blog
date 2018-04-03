@@ -1,7 +1,4 @@
-#+HTML: <div class="container-fluid"><div class="row"><div class="col-md-6 col-md-offset-3 col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-lg-4 col-lg-offset-4">
 #+TITLE: Style Guides (the easy way)
-#+HTML: <br><br>
-#+HTML: <link rel="stylesheet" href="css/sane-spacing.css">
 
 A little after Christmas I came up with a startup idea for a problem
 I've had. From around New Year's up to last week I did some rapid fire
@@ -79,8 +76,4 @@ posting again.
 Hope this was fun to read through and makes you try out the Polymer
 framework if you haven't yet!
 
-#+HTML: <br><br>
 #+HTML: <div id="disqus_thread"></div> <script> var disqus_config = function () { this.page.url = "https://edbabcock.com"; this.page.identifier = "style-guides"; }; (function() { var d = document, s = d.createElement('script'); s.src = '//edbabcock-com.disqus.com/embed.js'; s.setAttribute('data-timestamp', +new Date()); (d.head || d.body).appendChild(s); })(); </script> <noscript>It would be better if comments didn't need JS. Turn JavaScript on to see the comments. <a href="https://disqus.com/?ref_noscript">Comments powered by Disqus.</a></noscript>
-
-#+HTML: <br>
-#+HTML: </div></div></div>

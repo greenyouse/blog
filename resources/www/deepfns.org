@@ -1,6 +1,4 @@
-#+HTML: <div class="container-fluid"><div class="row"><div class="col-md-6 col-md-offset-3 col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-lg-4 col-lg-offset-4">
 #+TITLE: Deepfns
-#+HTML: <br><br>
 
 
 Over the last week I've been setting up a [[https://github.com/greenyouse/deepfns][library]] for nice data
@@ -12,11 +10,9 @@ I'll start with an explanation of when to use transitives, where they
 fit in the Clojure ecosystem, and wrap up with a little list of TODOs
 for the library.
 
-#+HTML: <br>
 
 * Transitives?
 
-  #+HTML: <br>
   #+BEGIN_QUOTE
   “Good design is not about making grand plans, but about taking things
   apart.” — Rich Hickey
@@ -97,7 +93,6 @@ for the library.
      :event "foo"
      :timestamp 'clj-time-timestamp}
   #+END_SRC
-  #+HTML: <br>
 
   With this we're basically saying "Hey, I only care about these
   fields. I'll take whatever the request is but just make sure
@@ -118,13 +113,10 @@ for the library.
          :event :event-name
          :timestamp (tc/now)}))
   #+END_SRC
-  #+HTML: <br>
 
   All we had to do was update the trasitive map and that was it! No
   complex chains of functions building up a hardcoded datastructure,
   just composable data transformations that are easy to grok and swap!
-
-#+HTML: <br>
 
 * What About Normal Data Transformations?
 
@@ -144,7 +136,6 @@ for the library.
   - When you have a system that converts some variable or unknown input
     into a known format, use transitives.
 
-  #+HTML: <br>
 
 * Yet to come
 
@@ -169,8 +160,6 @@ for the library.
   It also might be good to look at how closures are being used by the
   JVM to make sure they're getting garbage collected properly.
 
-  #+HTML: <br>
-
 * Recap
 
   Clojure(Script) has a few tools for data transformation that I didn't
@@ -180,6 +169,3 @@ for the library.
   transformations. Good luck with using the transitives and don't be
   afraid to write your own implementation too to understand how they
   work!
-
-  #+HTML: <br>
-  #+HTML: </div></div></div>

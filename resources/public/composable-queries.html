@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 <title>Composable Queries</title>
-<!-- 2016-12-15 Thu 04:55 -->
+<!-- 2018-04-03 Tue 13:41 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="generator" content="Org-mode" />
 <meta  name="author" content="Ed Babcock (greenyouse)" />
@@ -168,11 +168,6 @@ for the JavaScript code in this tag.
 </div>
 <div id="content">
 <h1 class="title">Composable Queries</h1>
-<div class="container-fluid"><div class="row"><div id="post" class="col-md-6 col-md-offset-3 col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-lg-4 col-lg-offset-4">
-<link rel='stylesheet' href='/css/post.css' type='text/css'/>
-<br>
-
-
 <p>
 This post is going to be a little bit experimental. I'm going to try
 some speculative programming to build a library while I write this
@@ -192,8 +187,6 @@ spawn a brand new one."
 — DrBoolean, <a href="https://drboolean.gitbooks.io/mostly-adequate-guide/content/ch5.html#functional-husbandry">Mostly Adequate Guide, Ch.5</a>
 </p>
 </blockquote>
-
-<br>
 
 <p>
 Over the last year or so, I've wanted to build a library for composing
@@ -237,10 +230,10 @@ passed in to perform the query. That could look something like this:
 <div class="org-src-container">
 
 <pre class="src src-clojure">(<span style="color: #FBDE2D;">def</span> <span style="color: #D8FA3C;">age_query</span>
-  (read-query <span style="color: #61CE3C;">"age_query.sql"</span>))
+  (<span style="color: #EDEDED; background-color: #000000;">read-query</span> <span style="color: #61CE3C;">"age_query.sql"</span>))
 
-(<span style="color: #FBDE2D;">defn</span> <span style="color: #ff1493;">do-age-query</span> [age]
-  (age_query {<span style="color: #4c83ff;">:age</span> age
+(<span style="color: #FBDE2D;">defn</span> <span style="color: #ff1493;">do-age-query</span> [<span style="color: #EDEDED; background-color: #000000;">age</span>]
+  (<span style="color: #EDEDED; background-color: #000000;">age_query</span> {<span style="color: #4c83ff;">:age</span> <span style="color: #EDEDED; background-color: #000000;">age</span>
               <span style="color: #4c83ff;">:min_age</span> 18}))
 </pre>
 </div>
@@ -279,8 +272,8 @@ Here's an example of just that with a data-oriented DSL:
    <span style="color: #4c83ff;">:from</span> [<span style="color: #4c83ff;">:users</span>]
    <span style="color: #4c83ff;">:where</span> [<span style="color: #4c83ff;">:=</span> <span style="color: #4c83ff;">:location</span> <span style="color: #4c83ff;">:target_location</span>]})
 
-(<span style="color: #FF6400;">merge</span> age-query location-query)
-<span style="color: #8B8989; font-style: italic;">;;</span><span style="color: #8B8989; font-style: italic;">=&gt; {</span><span style="color: #4c83ff; font-style: italic;">:select</span><span style="color: #8B8989; font-style: italic;"> [</span><span style="color: #4c83ff; font-style: italic;">:*</span><span style="color: #8B8989; font-style: italic;">], </span><span style="color: #4c83ff; font-style: italic;">:from</span><span style="color: #8B8989; font-style: italic;"> [</span><span style="color: #4c83ff; font-style: italic;">:users</span><span style="color: #8B8989; font-style: italic;">], </span><span style="color: #4c83ff; font-style: italic;">:where</span><span style="color: #8B8989; font-style: italic;"> [</span><span style="color: #4c83ff; font-style: italic;">:=</span><span style="color: #8B8989; font-style: italic;"> </span><span style="color: #4c83ff; font-style: italic;">:location</span><span style="color: #8B8989; font-style: italic;"> </span><span style="color: #4c83ff; font-style: italic;">:target_location</span><span style="color: #8B8989; font-style: italic;">]}</span>
+(<span style="color: #FF6400;">merge</span> <span style="color: #EDEDED; background-color: #000000;">age-query</span> <span style="color: #EDEDED; background-color: #000000;">location-query</span>)
+<span style="color: #8B8989; font-style: italic;">;;</span><span style="color: #8B8989; font-style: italic;">=&gt; {:select [:*], :from [:users], :where [:= :location :target_location]}</span>
 </pre>
 </div>
 
@@ -314,8 +307,8 @@ Here's pseudo code:
 (<span style="color: #FBDE2D;">def</span> <span style="color: #D8FA3C;">person-query</span>
   {<span style="color: #4c83ff;">:select</span> [<span style="color: #4c83ff;">:*</span>]
    <span style="color: #4c83ff;">:from</span> [<span style="color: #4c83ff;">:users</span>]
-   <span style="color: #4c83ff;">:where</span> (<span style="color: #FBDE2D;">and</span> min-age
-               match-location)})
+   <span style="color: #4c83ff;">:where</span> (<span style="color: #FBDE2D;">and</span> <span style="color: #EDEDED; background-color: #000000;">min-age</span>
+               <span style="color: #EDEDED; background-color: #000000;">match-location</span>)})
 </pre>
 </div>
 
@@ -349,22 +342,22 @@ inputs, test them, and output subqueries.
 
 <div class="org-src-container">
 
-<pre class="src src-clojure">(<span style="color: #FF6400;">require</span> '[<span style="color: #D8FA3C;">deepfns.core</span> <span style="color: #4c83ff;">:as</span> df]
-         '[<span style="color: #D8FA3C;">deepfns.transitive</span> <span style="color: #4c83ff;">:as</span> t])
+<pre class="src src-clojure">(<span style="color: #FF6400;">require</span> '[<span style="color: #EDEDED; background-color: #000000;">deepfns.core</span> <span style="color: #4c83ff;">:as</span> <span style="color: #EDEDED; background-color: #000000;">df</span>]
+         '[<span style="color: #EDEDED; background-color: #000000;">deepfns.transitive</span> <span style="color: #4c83ff;">:as</span> <span style="color: #EDEDED; background-color: #000000;">t</span>])
 
 <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">term&gt; for SQL's boolean terms</span>
 (<span style="color: #FBDE2D;">def</span> <span style="color: #D8FA3C;">min-age</span>
-  (term&gt; <span style="color: #4c83ff;">:&gt;=</span> <span style="color: #4c83ff;">:age</span> <span style="color: #4c83ff;">:min_age</span>))
+  (<span style="color: #EDEDED; background-color: #000000;">term&gt;</span> <span style="color: #4c83ff;">:&gt;=</span> <span style="color: #4c83ff;">:age</span> <span style="color: #4c83ff;">:min_age</span>))
 
 (<span style="color: #FBDE2D;">def</span> <span style="color: #D8FA3C;">match-location</span>
-  (term&gt; <span style="color: #4c83ff;">:=</span> <span style="color: #4c83ff;">:location</span> <span style="color: #4c83ff;">:target_location</span>))
+  (<span style="color: #EDEDED; background-color: #000000;">term&gt;</span> <span style="color: #4c83ff;">:=</span> <span style="color: #4c83ff;">:location</span> <span style="color: #4c83ff;">:target_location</span>))
 
 (<span style="color: #FBDE2D;">def</span> <span style="color: #D8FA3C;">person-query</span>
-  (query&gt;
+  (<span style="color: #EDEDED; background-color: #000000;">query&gt;</span>
    {<span style="color: #4c83ff;">:select</span> [<span style="color: #4c83ff;">:*</span>]
     <span style="color: #4c83ff;">:from</span> [<span style="color: #4c83ff;">:users</span>]
-    <span style="color: #4c83ff;">:where</span> (and&gt; min-age
-                 match-location)}))
+    <span style="color: #4c83ff;">:where</span> (<span style="color: #EDEDED; background-color: #000000;">and&gt;</span> <span style="color: #EDEDED; background-color: #000000;">min-age</span>
+                 <span style="color: #EDEDED; background-color: #000000;">match-location</span>)}))
 </pre>
 </div>
 
@@ -376,15 +369,15 @@ Here's an example input and what the output would look like:
 
 <pre class="src src-clojure"><span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">both are present, use both constraints</span>
 {<span style="color: #4c83ff;">:min_age</span> 18 <span style="color: #4c83ff;">:target_location</span> <span style="color: #61CE3C;">"Antartica"</span>}
-<span style="color: #8B8989; font-style: italic;">;;</span><span style="color: #8B8989; font-style: italic;">=&gt; {</span><span style="color: #4c83ff; font-style: italic;">:select...</span><span style="color: #8B8989; font-style: italic;"> </span><span style="color: #4c83ff; font-style: italic;">:where</span><span style="color: #8B8989; font-style: italic;"> [</span><span style="color: #4c83ff; font-style: italic;">:and</span><span style="color: #8B8989; font-style: italic;"> [</span><span style="color: #4c83ff; font-style: italic;">:&gt;=</span><span style="color: #8B8989; font-style: italic;"> </span><span style="color: #4c83ff; font-style: italic;">:age</span><span style="color: #8B8989; font-style: italic;"> 18] [</span><span style="color: #4c83ff; font-style: italic;">:=</span><span style="color: #8B8989; font-style: italic;"> </span><span style="color: #4c83ff; font-style: italic;">:location</span><span style="color: #8B8989; font-style: italic;"> "Antarctica"]]}</span>
+<span style="color: #8B8989; font-style: italic;">;;</span><span style="color: #8B8989; font-style: italic;">=&gt; {:select... :where [:and [:&gt;= :age 18] [:= :location "Antarctica"]]}</span>
 
 <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">only one present, foobar is nonsense</span>
 {<span style="color: #4c83ff;">:min_age</span> 18 <span style="color: #4c83ff;">:foobar</span> <span style="color: #61CE3C;">"Antarctica"</span>}
-<span style="color: #8B8989; font-style: italic;">;;</span><span style="color: #8B8989; font-style: italic;">=&gt; {</span><span style="color: #4c83ff; font-style: italic;">:select...</span><span style="color: #8B8989; font-style: italic;"> </span><span style="color: #4c83ff; font-style: italic;">:where</span><span style="color: #8B8989; font-style: italic;"> [</span><span style="color: #4c83ff; font-style: italic;">:&gt;=</span><span style="color: #8B8989; font-style: italic;"> </span><span style="color: #4c83ff; font-style: italic;">:age</span><span style="color: #8B8989; font-style: italic;"> 18]}</span>
+<span style="color: #8B8989; font-style: italic;">;;</span><span style="color: #8B8989; font-style: italic;">=&gt; {:select... :where [:&gt;= :age 18]}</span>
 
 <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">both of these fail their checks, don't even create a where condition</span>
 {}
-<span style="color: #8B8989; font-style: italic;">;;</span><span style="color: #8B8989; font-style: italic;">=&gt; {</span><span style="color: #4c83ff; font-style: italic;">:select</span><span style="color: #8B8989; font-style: italic;"> [</span><span style="color: #4c83ff; font-style: italic;">:*</span><span style="color: #8B8989; font-style: italic;">] </span><span style="color: #4c83ff; font-style: italic;">:from</span><span style="color: #8B8989; font-style: italic;"> [</span><span style="color: #4c83ff; font-style: italic;">:users</span><span style="color: #8B8989; font-style: italic;">]}</span>
+<span style="color: #8B8989; font-style: italic;">;;</span><span style="color: #8B8989; font-style: italic;">=&gt; {:select [:*] :from [:users]}</span>
 </pre>
 </div>
 
@@ -409,33 +402,33 @@ can be called from a subquery using a transitive.
 
 <div class="org-src-container">
 
-<pre class="src src-clojure">(<span style="color: #FF6400;">require</span> '[<span style="color: #D8FA3C;">clojure.string</span> <span style="color: #4c83ff;">:as</span> s])
+<pre class="src src-clojure">(<span style="color: #FF6400;">require</span> '[<span style="color: #EDEDED; background-color: #000000;">clojure.string</span> <span style="color: #4c83ff;">:as</span> <span style="color: #EDEDED; background-color: #000000;">s</span>])
 
 (<span style="color: #FBDE2D;">def</span> <span style="color: #D8FA3C;">alpha2-codes</span>
-  #{<span style="color: #61CE3C;">"AC"</span> <span style="color: #61CE3C;">"AD"</span> <span style="color: #61CE3C;">"ZW"</span>})
+  <span style="color: #EDEDED; background-color: #000000;">#</span>{<span style="color: #61CE3C;">"AC"</span> <span style="color: #61CE3C;">"AD"</span> <span style="color: #61CE3C;">"ZW"</span>})
 
 (<span style="color: #FBDE2D;">def</span> <span style="color: #D8FA3C;">country-mappings</span>
   {<span style="color: #61CE3C;">"ascension island"</span> <span style="color: #61CE3C;">"AC"</span>
    <span style="color: #61CE3C;">"andorra"</span> <span style="color: #61CE3C;">"AD"</span>
    <span style="color: #61CE3C;">"zimbabwe"</span> <span style="color: #61CE3C;">"ZW"</span>})
 
-(<span style="color: #FBDE2D;">defn</span> <span style="color: #ff1493;">normalize-country</span> [country]
-  (<span style="color: #FBDE2D;">if-not</span> (<span style="color: #FF6400;">nil?</span> (alpha2-codes country))
-    country
-    ((<span style="color: #FF6400;">comp</span> country-mappings <span style="color: #D8FA3C;">s</span><span style="color: #EDEDED; background-color: #000000;">/</span>lower-case) country)))
+(<span style="color: #FBDE2D;">defn</span> <span style="color: #ff1493;">normalize-country</span> [<span style="color: #EDEDED; background-color: #000000;">country</span>]
+  (<span style="color: #FBDE2D;">if-not</span> (<span style="color: #FF6400;">nil?</span> (<span style="color: #EDEDED; background-color: #000000;">alpha2-codes</span> <span style="color: #EDEDED; background-color: #000000;">country</span>))
+    <span style="color: #EDEDED; background-color: #000000;">country</span>
+    ((<span style="color: #FF6400;">comp</span> <span style="color: #EDEDED; background-color: #000000;">country-mappings</span> <span style="color: #D8FA3C;">s</span><span style="color: #EDEDED; background-color: #000000;">/lower-case</span>) <span style="color: #EDEDED; background-color: #000000;">country</span>)))
 
 (<span style="color: #FBDE2D;">def</span> <span style="color: #D8FA3C;">min-age</span>
-  (clause&gt; <span style="color: #4c83ff;">:&gt;=</span> <span style="color: #4c83ff;">:age</span> <span style="color: #4c83ff;">:min_age</span>))
+  (<span style="color: #EDEDED; background-color: #000000;">clause&gt;</span> <span style="color: #4c83ff;">:&gt;=</span> <span style="color: #4c83ff;">:age</span> <span style="color: #4c83ff;">:min_age</span>))
 
 (<span style="color: #FBDE2D;">def</span> <span style="color: #D8FA3C;">match-location</span>
-  (clause&gt; <span style="color: #4c83ff;">:=</span> <span style="color: #4c83ff;">:location</span> (<span style="color: #D8FA3C;">t</span><span style="color: #EDEDED; background-color: #000000;">/</span>=&gt; <span style="color: #4c83ff;">:target_location</span> normalize-country)))
+  (<span style="color: #EDEDED; background-color: #000000;">clause&gt;</span> <span style="color: #4c83ff;">:=</span> <span style="color: #4c83ff;">:location</span> (<span style="color: #D8FA3C;">t</span><span style="color: #EDEDED; background-color: #000000;">/=&gt;</span> <span style="color: #4c83ff;">:target_location</span> <span style="color: #EDEDED; background-color: #000000;">normalize-country</span>)))
 
 (<span style="color: #FBDE2D;">def</span> <span style="color: #D8FA3C;">person-query</span>
-  (query&gt;
+  (<span style="color: #EDEDED; background-color: #000000;">query&gt;</span>
    {<span style="color: #4c83ff;">:select</span> [<span style="color: #4c83ff;">:*</span>]
     <span style="color: #4c83ff;">:from</span> [<span style="color: #4c83ff;">:users</span>]
-    <span style="color: #4c83ff;">:where</span> (and&gt; min-age
-                 match-location)}))
+    <span style="color: #4c83ff;">:where</span> (<span style="color: #EDEDED; background-color: #000000;">and&gt;</span> <span style="color: #EDEDED; background-color: #000000;">min-age</span>
+                 <span style="color: #EDEDED; background-color: #000000;">match-location</span>)}))
 </pre>
 </div>
 
@@ -457,51 +450,51 @@ Here is one example spec for the min-age query that we've been using:
 
 <div class="org-src-container">
 
-<pre class="src src-clojure">(<span style="color: #FF6400;">require</span> '[<span style="color: #D8FA3C;">clojure.spec</span> <span style="color: #4c83ff;">:as</span> spec]
-         '[<span style="color: #D8FA3C;">clojure.spec.test</span> <span style="color: #4c83ff;">:as</span> test]
-         '[<span style="color: #D8FA3C;">taoensso.timbre</span> <span style="color: #4c83ff;">:as</span> log])
+<pre class="src src-clojure">(<span style="color: #FF6400;">require</span> '[<span style="color: #EDEDED; background-color: #000000;">clojure.spec</span> <span style="color: #4c83ff;">:as</span> <span style="color: #EDEDED; background-color: #000000;">spec</span>]
+         '[<span style="color: #EDEDED; background-color: #000000;">clojure.spec.test</span> <span style="color: #4c83ff;">:as</span> <span style="color: #EDEDED; background-color: #000000;">test</span>]
+         '[<span style="color: #EDEDED; background-color: #000000;">taoensso.timbre</span> <span style="color: #4c83ff;">:as</span> <span style="color: #EDEDED; background-color: #000000;">log</span>])
 
-(<span style="color: #FBDE2D;">defn</span> <span style="color: #ff1493;">to-int</span> [x]
+(<span style="color: #FBDE2D;">defn</span> <span style="color: #ff1493;">to-int</span> [<span style="color: #EDEDED; background-color: #000000;">x</span>]
   (<span style="color: #FBDE2D;">cond</span>
-    (int? x) x
-    (<span style="color: #FBDE2D;">or</span> (<span style="color: #FF6400;">number?</span> x)
-        (<span style="color: #FF6400;">symbol?</span> x)) (<span style="color: #FBDE2D;">try</span>
-                       (<span style="color: #FF6400;">int</span> x)
-                       (<span style="color: #FBDE2D;">catch</span> <span style="color: #D8FA3C;">Exception</span> ex
-                         (<span style="color: #D8FA3C;">log</span><span style="color: #EDEDED; background-color: #000000;">/</span>error (<span style="color: #FF6400;">str</span> <span style="color: #61CE3C;">"to-int Symbol Error: "</span> ex))))
-    (<span style="color: #FF6400;">string?</span> x) (<span style="color: #FBDE2D;">try</span>
-                  (<span style="color: #D8FA3C;">Integer</span><span style="color: #EDEDED; background-color: #000000;">/</span><span style="color: #919191;">parseInt</span> x)
-                  (<span style="color: #FBDE2D;">catch</span> <span style="color: #D8FA3C;">Exception</span> ex
-                    (<span style="color: #D8FA3C;">log</span><span style="color: #EDEDED; background-color: #000000;">/</span>error (<span style="color: #FF6400;">str</span> <span style="color: #61CE3C;">"to-int String Error: "</span> ex))))
+    (<span style="color: #FF6400;">int?</span> <span style="color: #EDEDED; background-color: #000000;">x</span>) <span style="color: #EDEDED; background-color: #000000;">x</span>
+    (<span style="color: #FBDE2D;">or</span> (<span style="color: #FF6400;">number?</span> <span style="color: #EDEDED; background-color: #000000;">x</span>)
+        (<span style="color: #FF6400;">symbol?</span> <span style="color: #EDEDED; background-color: #000000;">x</span>)) (<span style="color: #FBDE2D;">try</span>
+                       (<span style="color: #FF6400;">int</span> <span style="color: #EDEDED; background-color: #000000;">x</span>)
+                       (<span style="color: #FBDE2D;">catch</span> <span style="color: #EDEDED; background-color: #000000;">Exception</span> <span style="color: #EDEDED; background-color: #000000;">ex</span>
+                         (<span style="color: #D8FA3C;">log</span><span style="color: #EDEDED; background-color: #000000;">/error</span> (<span style="color: #FF6400;">str</span> <span style="color: #61CE3C;">"to-int Symbol Error: "</span> <span style="color: #EDEDED; background-color: #000000;">ex</span>))))
+    (<span style="color: #FF6400;">string?</span> <span style="color: #EDEDED; background-color: #000000;">x</span>) (<span style="color: #FBDE2D;">try</span>
+                  (<span style="color: #D8FA3C;">Integer</span><span style="color: #EDEDED; background-color: #000000;">/parseInt</span> <span style="color: #EDEDED; background-color: #000000;">x</span>)
+                  (<span style="color: #FBDE2D;">catch</span> <span style="color: #EDEDED; background-color: #000000;">Exception</span> <span style="color: #EDEDED; background-color: #000000;">ex</span>
+                    (<span style="color: #D8FA3C;">log</span><span style="color: #EDEDED; background-color: #000000;">/error</span> (<span style="color: #FF6400;">str</span> <span style="color: #61CE3C;">"to-int String Error: "</span> <span style="color: #EDEDED; background-color: #000000;">ex</span>))))
     <span style="color: #4c83ff;">:default</span>
     <span style="color: #4c83ff;">nil</span>))
 
 (<span style="color: #FBDE2D;">def</span> <span style="color: #D8FA3C;">int&gt;</span>
-  (<span style="color: #FF6400;">partial</span> to-int))
+  (<span style="color: #FF6400;">partial</span> <span style="color: #EDEDED; background-color: #000000;">to-int</span>))
 
 (<span style="color: #FBDE2D;">def</span> <span style="color: #D8FA3C;">min-age</span>
-  (term&gt; <span style="color: #4c83ff;">:&gt;=</span> <span style="color: #4c83ff;">:age</span> (<span style="color: #D8FA3C;">t</span><span style="color: #EDEDED; background-color: #000000;">/</span>=&gt; <span style="color: #4c83ff;">::min_age</span> int&gt;)))
+  (<span style="color: #EDEDED; background-color: #000000;">term&gt;</span> <span style="color: #4c83ff;">:&gt;=</span> <span style="color: #4c83ff;">:age</span> (<span style="color: #D8FA3C;">t</span><span style="color: #EDEDED; background-color: #000000;">/=&gt;</span> :<span style="color: #4c83ff;">:min_age</span> <span style="color: #EDEDED; background-color: #000000;">int&gt;</span>)))
 
 
 <span style="color: #8B8989; font-style: italic;">;;; </span><span style="color: #8B8989; font-style: italic;">specs</span>
-(<span style="color: #D8FA3C;">spec</span><span style="color: #EDEDED; background-color: #000000;">/</span>fdef to-int
-           <span style="color: #4c83ff;">:args</span> (<span style="color: #D8FA3C;">spec</span><span style="color: #EDEDED; background-color: #000000;">/</span>cat <span style="color: #4c83ff;">:x</span> any?)
-           <span style="color: #4c83ff;">:ret</span> (<span style="color: #D8FA3C;">spec</span><span style="color: #EDEDED; background-color: #000000;">/</span>nilable int?))
+(<span style="color: #D8FA3C;">spec</span><span style="color: #EDEDED; background-color: #000000;">/fdef</span> <span style="color: #EDEDED; background-color: #000000;">to-int</span>
+           <span style="color: #4c83ff;">:args</span> (<span style="color: #D8FA3C;">spec</span><span style="color: #EDEDED; background-color: #000000;">/cat</span> <span style="color: #4c83ff;">:x</span> <span style="color: #EDEDED; background-color: #000000;">any?</span>)
+           <span style="color: #4c83ff;">:ret</span> (<span style="color: #D8FA3C;">spec</span><span style="color: #EDEDED; background-color: #000000;">/nilable</span> <span style="color: #EDEDED; background-color: #000000;">int?</span>))
 
-(<span style="color: #D8FA3C;">spec</span><span style="color: #EDEDED; background-color: #000000;">/</span><span style="color: #FBDE2D;">def</span> <span style="color: #4c83ff;">::min_age</span> int?)
-(<span style="color: #D8FA3C;">spec</span><span style="color: #EDEDED; background-color: #000000;">/</span><span style="color: #FBDE2D;">def</span> <span style="color: #4c83ff;">::age_check</span>
-  (<span style="color: #D8FA3C;">spec</span><span style="color: #EDEDED; background-color: #000000;">/</span><span style="color: #FF6400;">keys</span> <span style="color: #4c83ff;">:req</span> [<span style="color: #4c83ff;">::min_age</span>]))
+(<span style="color: #D8FA3C;">spec</span><span style="color: #EDEDED; background-color: #000000;">/</span><span style="color: #FBDE2D;">def</span> <span style="color: #ff1493;">::min_age</span> <span style="color: #EDEDED; background-color: #000000;">int?</span>)
+(<span style="color: #D8FA3C;">spec</span><span style="color: #EDEDED; background-color: #000000;">/</span><span style="color: #FBDE2D;">def</span> <span style="color: #ff1493;">::age_check</span>
+  (<span style="color: #D8FA3C;">spec</span><span style="color: #EDEDED; background-color: #000000;">/</span><span style="color: #FF6400;">keys</span> <span style="color: #4c83ff;">:req</span> [:<span style="color: #4c83ff;">:min_age</span>]))
 
-<span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">could do </span><span style="color: #4c83ff; font-style: italic;">:junk</span><span style="color: #8B8989; font-style: italic;"> any? and optimize testing through test/instrument</span>
-(<span style="color: #D8FA3C;">spec</span><span style="color: #EDEDED; background-color: #000000;">/</span>fdef min-age
-           <span style="color: #4c83ff;">:args</span> (<span style="color: #D8FA3C;">spec</span><span style="color: #EDEDED; background-color: #000000;">/</span>alt <span style="color: #4c83ff;">:junk</span> map?
-                           <span style="color: #4c83ff;">:match</span> <span style="color: #4c83ff;">::age_check</span>)
-           <span style="color: #4c83ff;">:ret</span> (<span style="color: #D8FA3C;">spec</span><span style="color: #EDEDED; background-color: #000000;">/</span>nilable (<span style="color: #D8FA3C;">spec</span><span style="color: #EDEDED; background-color: #000000;">/</span>tuple keyword? keyword? int?)))
+<span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">could do :junk any? and optimize testing through test/instrument</span>
+(<span style="color: #D8FA3C;">spec</span><span style="color: #EDEDED; background-color: #000000;">/fdef</span> <span style="color: #EDEDED; background-color: #000000;">min-age</span>
+           <span style="color: #4c83ff;">:args</span> (<span style="color: #D8FA3C;">spec</span><span style="color: #EDEDED; background-color: #000000;">/alt</span> <span style="color: #4c83ff;">:junk</span> <span style="color: #EDEDED; background-color: #000000;">map?</span>
+                           <span style="color: #4c83ff;">:match</span> :<span style="color: #4c83ff;">:age_check</span>)
+           <span style="color: #4c83ff;">:ret</span> (<span style="color: #D8FA3C;">spec</span><span style="color: #EDEDED; background-color: #000000;">/nilable</span> (<span style="color: #D8FA3C;">spec</span><span style="color: #EDEDED; background-color: #000000;">/tuple</span> <span style="color: #EDEDED; background-color: #000000;">keyword?</span> <span style="color: #EDEDED; background-color: #000000;">keyword?</span> <span style="color: #EDEDED; background-color: #000000;">int?</span>)))
 
 
 <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">let 'er rip!!</span>
-(<span style="color: #FBDE2D;">-&gt;</span> (<span style="color: #D8FA3C;">test</span><span style="color: #EDEDED; background-color: #000000;">/</span>check [`to-int `min-age])
-    (<span style="color: #D8FA3C;">test</span><span style="color: #EDEDED; background-color: #000000;">/</span>summarize-results))
+(<span style="color: #FBDE2D;">-&gt;</span> (<span style="color: #D8FA3C;">test</span><span style="color: #EDEDED; background-color: #000000;">/check</span> [`<span style="color: #EDEDED; background-color: #000000;">to-int</span> `<span style="color: #EDEDED; background-color: #000000;">min-age</span>])
+    (<span style="color: #D8FA3C;">test</span><span style="color: #EDEDED; background-color: #000000;">/summarize-results</span>))
 </pre>
 </div>
 
@@ -569,7 +562,7 @@ library.
 <pre class="src src-clojure">(<span style="color: #FBDE2D;">def</span> <span style="color: #D8FA3C;">query&gt;</span>
   <span style="color: #61CE3C;">"Takes a transitive `</span><span style="color: #61CE3C;">f</span><span style="color: #61CE3C;">` and uses that to walk a datastructure.</span>
 <span style="color: #61CE3C;">  Returns a SQL query formatted for Honey SQL."</span>
-  <span style="color: #D8FA3C;">deep</span><span style="color: #EDEDED; background-color: #000000;">/</span>transitive)
+  <span style="color: #D8FA3C;">deep</span><span style="color: #EDEDED; background-color: #000000;">/transitive</span>)
 </pre>
 </div>
 
@@ -581,16 +574,16 @@ query options.
 <div class="org-src-container">
 
 <pre class="src src-clojure">{<span style="color: #4c83ff;">:select</span> [<span style="color: #4c83ff;">:f.*</span> <span style="color: #4c83ff;">:b.baz</span> <span style="color: #4c83ff;">:c.quux</span> [<span style="color: #4c83ff;">:b.bla</span> <span style="color: #61CE3C;">"bla-bla"</span>]
-          (<span style="color: #D8FA3C;">sql</span><span style="color: #EDEDED; background-color: #000000;">/</span>call <span style="color: #4c83ff;">:now</span>) (<span style="color: #D8FA3C;">sql</span><span style="color: #EDEDED; background-color: #000000;">/</span>raw <span style="color: #61CE3C;">"@x </span><span style="color: #4c83ff;">:=</span><span style="color: #61CE3C;"> 10"</span>)]
+          (<span style="color: #D8FA3C;">sql</span><span style="color: #EDEDED; background-color: #000000;">/call</span> <span style="color: #4c83ff;">:now</span>) (<span style="color: #D8FA3C;">sql</span><span style="color: #EDEDED; background-color: #000000;">/raw</span> <span style="color: #61CE3C;">"@x := 10"</span>)]
  <span style="color: #4c83ff;">:modifiers</span> [<span style="color: #4c83ff;">:distinct</span>]
  <span style="color: #4c83ff;">:from</span> [[<span style="color: #4c83ff;">:foo</span> <span style="color: #4c83ff;">:f</span>] [<span style="color: #4c83ff;">:baz</span> <span style="color: #4c83ff;">:b</span>]]
  <span style="color: #4c83ff;">:join</span> [<span style="color: #4c83ff;">:draq</span> [<span style="color: #4c83ff;">:=</span> <span style="color: #4c83ff;">:f.b</span> <span style="color: #4c83ff;">:draq.x</span>]]
  <span style="color: #4c83ff;">:left-join</span> [[<span style="color: #4c83ff;">:clod</span> <span style="color: #4c83ff;">:c</span>] [<span style="color: #4c83ff;">:=</span> <span style="color: #4c83ff;">:f.a</span> <span style="color: #4c83ff;">:c.d</span>]]
  <span style="color: #4c83ff;">:right-join</span> [<span style="color: #4c83ff;">:bock</span> [<span style="color: #4c83ff;">:=</span> <span style="color: #4c83ff;">:bock.z</span> <span style="color: #4c83ff;">:c.e</span>]]
  <span style="color: #4c83ff;">:where</span> [<span style="color: #4c83ff;">:or</span>
-         [<span style="color: #4c83ff;">:and</span> [<span style="color: #4c83ff;">:=</span> <span style="color: #4c83ff;">:f.a</span> <span style="color: #61CE3C;">"bort"</span>] [<span style="color: #4c83ff;">:not=</span> <span style="color: #4c83ff;">:b.baz</span> (<span style="color: #D8FA3C;">sql</span><span style="color: #EDEDED; background-color: #000000;">/</span>param <span style="color: #4c83ff;">:param1</span>)]]
+         [<span style="color: #4c83ff;">:and</span> [<span style="color: #4c83ff;">:=</span> <span style="color: #4c83ff;">:f.a</span> <span style="color: #61CE3C;">"bort"</span>] [<span style="color: #4c83ff;">:not=</span> <span style="color: #4c83ff;">:b.baz</span> (<span style="color: #D8FA3C;">sql</span><span style="color: #EDEDED; background-color: #000000;">/param</span> <span style="color: #4c83ff;">:param1</span>)]]
          [<span style="color: #4c83ff;">:&lt;</span> 1 2 3]
-         [<span style="color: #4c83ff;">:in</span> <span style="color: #4c83ff;">:f.e</span> [1 (<span style="color: #D8FA3C;">sql</span><span style="color: #EDEDED; background-color: #000000;">/</span>param <span style="color: #4c83ff;">:param2</span>) 3]]
+         [<span style="color: #4c83ff;">:in</span> <span style="color: #4c83ff;">:f.e</span> [1 (<span style="color: #D8FA3C;">sql</span><span style="color: #EDEDED; background-color: #000000;">/param</span> <span style="color: #4c83ff;">:param2</span>) 3]]
          [<span style="color: #4c83ff;">:between</span> <span style="color: #4c83ff;">:f.e</span> 10 20]]
  <span style="color: #4c83ff;">:group-by</span> [<span style="color: #4c83ff;">:f.a</span>]
  <span style="color: #4c83ff;">:having</span> [<span style="color: #4c83ff;">:&lt;</span> 0 <span style="color: #4c83ff;">:f.e</span>]
@@ -610,10 +603,10 @@ gives the query more flexibility.
 
 <pre class="src src-clojure">{<span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">f.a groups by default</span>
  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">giving a map with group-by will override f.a</span>
- <span style="color: #4c83ff;">:group-by</span> (<span style="color: #D8FA3C;">t</span><span style="color: #EDEDED; background-color: #000000;">/</span><span style="color: #FBDE2D;">default&gt;</span> <span style="color: #4c83ff;">:f.a</span> <span style="color: #4c83ff;">:group-by</span>)
+ <span style="color: #4c83ff;">:group-by</span> (<span style="color: #D8FA3C;">t</span><span style="color: #EDEDED; background-color: #000000;">/</span><span style="color: #FBDE2D;">default&gt;</span> <span style="color: #ff1493;">:f.a</span> <span style="color: #4c83ff;">:group-by</span>)
  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">0 by default</span>
- <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">a map with </span><span style="color: #4c83ff; font-style: italic;">:having</span><span style="color: #8B8989; font-style: italic;"> can change it from 0</span>
- <span style="color: #4c83ff;">:having</span> (term&gt; <span style="color: #4c83ff;">:&gt;</span> <span style="color: #4c83ff;">:f.e</span> (<span style="color: #D8FA3C;">t</span><span style="color: #EDEDED; background-color: #000000;">/</span><span style="color: #FBDE2D;">default&gt;</span> <span style="color: #ff1493;">0</span> <span style="color: #4c83ff;">:having</span>))
+ <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">a map with :having can change it from 0</span>
+ <span style="color: #4c83ff;">:having</span> (<span style="color: #EDEDED; background-color: #000000;">term&gt;</span> <span style="color: #4c83ff;">:&gt;</span> <span style="color: #4c83ff;">:f.e</span> (<span style="color: #D8FA3C;">t</span><span style="color: #EDEDED; background-color: #000000;">/</span><span style="color: #FBDE2D;">default&gt;</span> <span style="color: #ff1493;">0</span> <span style="color: #4c83ff;">:having</span>))
  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">use this default clause for order-by</span>
  <span style="color: #4c83ff;">:order-by</span> (<span style="color: #D8FA3C;">t</span><span style="color: #EDEDED; background-color: #000000;">/</span><span style="color: #FBDE2D;">default&gt;</span>
             [[<span style="color: #4c83ff;">:b.baz</span> <span style="color: #4c83ff;">:desc</span>] <span style="color: #4c83ff;">:c.quux</span> [<span style="color: #4c83ff;">:f.a</span> <span style="color: #4c83ff;">:nulls-first</span>]]
@@ -639,21 +632,21 @@ an example of the issue:
 
 <div class="org-src-container">
 
-<pre class="src src-clojure">(<span style="color: #FF6400;">require</span> '[<span style="color: #D8FA3C;">honeysql.core</span> <span style="color: #4c83ff;">:as</span> sql])
+<pre class="src src-clojure">(<span style="color: #FF6400;">require</span> '[<span style="color: #EDEDED; background-color: #000000;">honeysql.core</span> <span style="color: #4c83ff;">:as</span> <span style="color: #EDEDED; background-color: #000000;">sql</span>])
 
 <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">our target output, default Honey SQL</span>
 (<span style="color: #D8FA3C;">sql</span><span style="color: #EDEDED; background-color: #000000;">/</span><span style="color: #FF6400;">format</span>
  {<span style="color: #4c83ff;">:select</span> [<span style="color: #4c83ff;">:f.*</span> <span style="color: #4c83ff;">:b.baz</span> <span style="color: #4c83ff;">:c.quux</span> [<span style="color: #4c83ff;">:b.bla</span> <span style="color: #61CE3C;">"bla-bla"</span>]
-           (<span style="color: #D8FA3C;">sql</span><span style="color: #EDEDED; background-color: #000000;">/</span>call <span style="color: #4c83ff;">:now</span>) (<span style="color: #D8FA3C;">sql</span><span style="color: #EDEDED; background-color: #000000;">/</span>raw <span style="color: #61CE3C;">"@x </span><span style="color: #4c83ff;">:=</span><span style="color: #61CE3C;"> 10"</span>)]})
-<span style="color: #8B8989; font-style: italic;">;;</span><span style="color: #8B8989; font-style: italic;">=&gt; ["SELECT f.*, b.baz, c.quux, b.bla AS bla_bla, now(), @x </span><span style="color: #4c83ff; font-style: italic;">:=</span><span style="color: #8B8989; font-style: italic;"> 10"]</span>
+           (<span style="color: #D8FA3C;">sql</span><span style="color: #EDEDED; background-color: #000000;">/call</span> <span style="color: #4c83ff;">:now</span>) (<span style="color: #D8FA3C;">sql</span><span style="color: #EDEDED; background-color: #000000;">/raw</span> <span style="color: #61CE3C;">"@x := 10"</span>)]})
+<span style="color: #8B8989; font-style: italic;">;;</span><span style="color: #8B8989; font-style: italic;">=&gt; ["SELECT f.*, b.baz, c.quux, b.bla AS bla_bla, now(), @x := 10"]</span>
 
 
 <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">our output, abstraction disaster!</span>
-(<span style="color: #FBDE2D;">-&gt;</span> ((query&gt;
+(<span style="color: #FBDE2D;">-&gt;</span> ((<span style="color: #EDEDED; background-color: #000000;">query&gt;</span>
       {<span style="color: #4c83ff;">:select</span> [<span style="color: #4c83ff;">:f.*</span> <span style="color: #4c83ff;">:b.baz</span> <span style="color: #4c83ff;">:c.quux</span> [<span style="color: #4c83ff;">:b.bla</span> <span style="color: #61CE3C;">"bla-bla"</span>]
-                (<span style="color: #D8FA3C;">sql</span><span style="color: #EDEDED; background-color: #000000;">/</span>call <span style="color: #4c83ff;">:now</span>) (<span style="color: #D8FA3C;">sql</span><span style="color: #EDEDED; background-color: #000000;">/</span>raw <span style="color: #61CE3C;">"@x </span><span style="color: #4c83ff;">:=</span><span style="color: #61CE3C;"> 10"</span>)]})
+                (<span style="color: #D8FA3C;">sql</span><span style="color: #EDEDED; background-color: #000000;">/call</span> <span style="color: #4c83ff;">:now</span>) (<span style="color: #D8FA3C;">sql</span><span style="color: #EDEDED; background-color: #000000;">/raw</span> <span style="color: #61CE3C;">"@x := 10"</span>)]})
      {})
-    <span style="color: #D8FA3C;">sql</span><span style="color: #EDEDED; background-color: #000000;">/</span>format)
+    <span style="color: #D8FA3C;">sql</span><span style="color: #EDEDED; background-color: #000000;">/format</span>)
 <span style="color: #8B8989; font-style: italic;">;;</span><span style="color: #8B8989; font-style: italic;">=&gt; ["SELECT ? AS NULL, ()" "bla-bla"]</span>
 </pre>
 </div>
@@ -667,8 +660,8 @@ value of the map.
 <div class="org-src-container">
 
 <pre class="src src-clojure"><span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">we want to keep both keywords here</span>
-<span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">they </span><span style="color: #4c83ff; font-style: italic;">:bar</span><span style="color: #8B8989; font-style: italic;"> gets deleted though since the input has no </span><span style="color: #4c83ff; font-style: italic;">:bar</span>
-((query&gt; [<span style="color: #4c83ff;">:foo</span> <span style="color: #4c83ff;">:bar</span>])
+<span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">they :bar gets deleted though since the input has no :bar</span>
+((<span style="color: #EDEDED; background-color: #000000;">query&gt;</span> [<span style="color: #4c83ff;">:foo</span> <span style="color: #4c83ff;">:bar</span>])
  {<span style="color: #4c83ff;">:foo</span> 1})
 <span style="color: #8B8989; font-style: italic;">;;</span><span style="color: #8B8989; font-style: italic;">=&gt; [1]</span>
 </pre>
@@ -713,13 +706,13 @@ still want to do can be wrapped in a function like <code>=&gt;</code> or another
 <div class="org-src-container">
 
 <pre class="src src-clojure"><span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">goal</span>
-<span style="color: #8B8989; font-style: italic;">;;</span><span style="color: #8B8989; font-style: italic;">=&gt; ["SELECT f.*, b.baz, c.quux, b.bla AS bla_bla, now(), @x </span><span style="color: #4c83ff; font-style: italic;">:=</span><span style="color: #8B8989; font-style: italic;"> 10"]</span>
+<span style="color: #8B8989; font-style: italic;">;;</span><span style="color: #8B8989; font-style: italic;">=&gt; ["SELECT f.*, b.baz, c.quux, b.bla AS bla_bla, now(), @x := 10"]</span>
 
-(<span style="color: #FBDE2D;">-&gt;</span> ((query&gt;
+(<span style="color: #FBDE2D;">-&gt;</span> ((<span style="color: #EDEDED; background-color: #000000;">query&gt;</span>
       {<span style="color: #4c83ff;">:select</span> [<span style="color: #4c83ff;">:f.*</span> <span style="color: #4c83ff;">:b.baz</span> <span style="color: #4c83ff;">:c.quux</span> [<span style="color: #4c83ff;">:b.bla</span> <span style="color: #61CE3C;">"bla-bla"</span>]
-                (<span style="color: #D8FA3C;">sql</span><span style="color: #EDEDED; background-color: #000000;">/</span>call <span style="color: #4c83ff;">:now</span>) (<span style="color: #D8FA3C;">sql</span><span style="color: #EDEDED; background-color: #000000;">/</span>raw <span style="color: #61CE3C;">"@x </span><span style="color: #4c83ff;">:=</span><span style="color: #61CE3C;"> 10"</span>)]})
+                (<span style="color: #D8FA3C;">sql</span><span style="color: #EDEDED; background-color: #000000;">/call</span> <span style="color: #4c83ff;">:now</span>) (<span style="color: #D8FA3C;">sql</span><span style="color: #EDEDED; background-color: #000000;">/raw</span> <span style="color: #61CE3C;">"@x := 10"</span>)]})
      {})
-    <span style="color: #D8FA3C;">sql</span><span style="color: #EDEDED; background-color: #000000;">/</span>format)
+    <span style="color: #D8FA3C;">sql</span><span style="color: #EDEDED; background-color: #000000;">/format</span>)
 <span style="color: #8B8989; font-style: italic;">;;</span><span style="color: #8B8989; font-style: italic;">=&gt; ["SELECT f.*, b.baz, c.quux, b.bla AS bla_bla, (), ()"]</span>
 </pre>
 </div>
@@ -740,18 +733,18 @@ later.
 
 <pre class="src src-clojure">(<span style="color: #FBDE2D;">defn</span> <span style="color: #ff1493;">call</span>
   <span style="color: #61CE3C;">"Represents a SQL function call. Name should be a keyword."</span>
-  ([name]
-   (<span style="color: #FF6400;">constantly</span> (<span style="color: #D8FA3C;">sql</span><span style="color: #EDEDED; background-color: #000000;">/</span>call name)))
-  ([name &amp; args]
-   (<span style="color: #FF6400;">constantly</span> (<span style="color: #FF6400;">apply</span> <span style="color: #D8FA3C;">sql</span><span style="color: #EDEDED; background-color: #000000;">/</span>call name args))))
+  ([<span style="color: #EDEDED; background-color: #000000;">name</span>]
+   (<span style="color: #FF6400;">constantly</span> (<span style="color: #D8FA3C;">sql</span><span style="color: #EDEDED; background-color: #000000;">/call</span> <span style="color: #EDEDED; background-color: #000000;">name</span>)))
+  ([<span style="color: #EDEDED; background-color: #000000;">name</span> <span style="color: #EDEDED; background-color: #000000;">&amp;</span> <span style="color: #EDEDED; background-color: #000000;">args</span>]
+   (<span style="color: #FF6400;">constantly</span> (<span style="color: #FF6400;">apply</span> <span style="color: #D8FA3C;">sql</span><span style="color: #EDEDED; background-color: #000000;">/call</span> <span style="color: #EDEDED; background-color: #000000;">name</span> <span style="color: #EDEDED; background-color: #000000;">args</span>))))
 
-(<span style="color: #FBDE2D;">defn</span> <span style="color: #ff1493;">raw</span> [s]
+(<span style="color: #FBDE2D;">defn</span> <span style="color: #ff1493;">raw</span> [<span style="color: #EDEDED; background-color: #000000;">s</span>]
   <span style="color: #61CE3C;">"Represents a raw SQL string"</span>
-  (<span style="color: #FF6400;">constantly</span> (<span style="color: #D8FA3C;">sql</span><span style="color: #EDEDED; background-color: #000000;">/</span>raw s)))
+  (<span style="color: #FF6400;">constantly</span> (<span style="color: #D8FA3C;">sql</span><span style="color: #EDEDED; background-color: #000000;">/raw</span> <span style="color: #EDEDED; background-color: #000000;">s</span>)))
 
-(<span style="color: #FBDE2D;">defn</span> <span style="color: #ff1493;">param</span> [name]
+(<span style="color: #FBDE2D;">defn</span> <span style="color: #ff1493;">param</span> [<span style="color: #EDEDED; background-color: #000000;">name</span>]
   <span style="color: #61CE3C;">"Represents a SQL parameter which can be filled in later"</span>
-  (<span style="color: #FF6400;">constantly</span> (<span style="color: #D8FA3C;">sql</span><span style="color: #EDEDED; background-color: #000000;">/</span>param name)))
+  (<span style="color: #FF6400;">constantly</span> (<span style="color: #D8FA3C;">sql</span><span style="color: #EDEDED; background-color: #000000;">/param</span> <span style="color: #EDEDED; background-color: #000000;">name</span>)))
 </pre>
 </div>
 
@@ -762,14 +755,14 @@ This works well enough. Now the output should be the same. Let's check:
 <div class="org-src-container">
 
 <pre class="src src-clojure"><span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">goal</span>
-<span style="color: #8B8989; font-style: italic;">;;</span><span style="color: #8B8989; font-style: italic;">=&gt; ["SELECT f.*, b.baz, c.quux, b.bla AS bla_bla, now(), @x </span><span style="color: #4c83ff; font-style: italic;">:=</span><span style="color: #8B8989; font-style: italic;"> 10"]</span>
+<span style="color: #8B8989; font-style: italic;">;;</span><span style="color: #8B8989; font-style: italic;">=&gt; ["SELECT f.*, b.baz, c.quux, b.bla AS bla_bla, now(), @x := 10"]</span>
 
 (<span style="color: #D8FA3C;">sql</span><span style="color: #EDEDED; background-color: #000000;">/</span><span style="color: #FF6400;">format</span>
- ((query&gt; {<span style="color: #4c83ff;">:select</span> [<span style="color: #4c83ff;">:f.*</span> <span style="color: #4c83ff;">:b.baz</span> <span style="color: #4c83ff;">:c.quux</span> [<span style="color: #4c83ff;">:b.bla</span> <span style="color: #61CE3C;">"bla-bla"</span>]
-                    (call <span style="color: #4c83ff;">:now</span>)
-                    (raw <span style="color: #61CE3C;">"@x </span><span style="color: #4c83ff;">:=</span><span style="color: #61CE3C;"> 10"</span>)]})
+ ((<span style="color: #EDEDED; background-color: #000000;">query&gt;</span> {<span style="color: #4c83ff;">:select</span> [<span style="color: #4c83ff;">:f.*</span> <span style="color: #4c83ff;">:b.baz</span> <span style="color: #4c83ff;">:c.quux</span> [<span style="color: #4c83ff;">:b.bla</span> <span style="color: #61CE3C;">"bla-bla"</span>]
+                    (<span style="color: #EDEDED; background-color: #000000;">call</span> <span style="color: #4c83ff;">:now</span>)
+                    (<span style="color: #EDEDED; background-color: #000000;">raw</span> <span style="color: #61CE3C;">"@x := 10"</span>)]})
   {}))
-<span style="color: #8B8989; font-style: italic;">;;</span><span style="color: #8B8989; font-style: italic;">=&gt; ["SELECT f.*, b.baz, c.quux, b.bla AS bla_bla, now(), @x </span><span style="color: #4c83ff; font-style: italic;">:=</span><span style="color: #8B8989; font-style: italic;"> 10"]</span>
+<span style="color: #8B8989; font-style: italic;">;;</span><span style="color: #8B8989; font-style: italic;">=&gt; ["SELECT f.*, b.baz, c.quux, b.bla AS bla_bla, now(), @x := 10"]</span>
 </pre>
 </div>
 
@@ -781,9 +774,9 @@ transitive abstraction.
 
 <div class="org-src-container">
 
-<pre class="src src-clojure">(query&gt;
+<pre class="src src-clojure">(<span style="color: #EDEDED; background-color: #000000;">query&gt;</span>
    {<span style="color: #4c83ff;">:select</span> [<span style="color: #4c83ff;">:f.*</span> <span style="color: #4c83ff;">:b.baz</span> <span style="color: #4c83ff;">:c.quux</span> [<span style="color: #4c83ff;">:b.bla</span> <span style="color: #61CE3C;">"bla-bla"</span>]
-             (call <span style="color: #4c83ff;">:now</span>) (raw <span style="color: #61CE3C;">"@x </span><span style="color: #4c83ff;">:=</span><span style="color: #61CE3C;"> 10"</span>)]
+             (<span style="color: #EDEDED; background-color: #000000;">call</span> <span style="color: #4c83ff;">:now</span>) (<span style="color: #EDEDED; background-color: #000000;">raw</span> <span style="color: #61CE3C;">"@x := 10"</span>)]
     <span style="color: #4c83ff;">:modifiers</span> [<span style="color: #4c83ff;">:distinct</span>]
     <span style="color: #4c83ff;">:from</span> [[<span style="color: #4c83ff;">:foo</span> <span style="color: #4c83ff;">:f</span>] [<span style="color: #4c83ff;">:baz</span> <span style="color: #4c83ff;">:b</span>]]
     <span style="color: #4c83ff;">:join</span> [<span style="color: #4c83ff;">:draq</span> [<span style="color: #4c83ff;">:=</span> <span style="color: #4c83ff;">:f.b</span> <span style="color: #4c83ff;">:draq.x</span>]]
@@ -793,14 +786,14 @@ transitive abstraction.
             [<span style="color: #4c83ff;">:and</span>
              [<span style="color: #4c83ff;">:=</span> <span style="color: #4c83ff;">:f.a</span> <span style="color: #61CE3C;">"bort"</span>]
              <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">pass in param1 or this will be nil</span>
-             (term&gt; <span style="color: #4c83ff;">:not=</span> <span style="color: #4c83ff;">:b.baz</span> (<span style="color: #D8FA3C;">t</span><span style="color: #EDEDED; background-color: #000000;">/</span>=&gt; <span style="color: #4c83ff;">:param1</span>))]
+             (<span style="color: #EDEDED; background-color: #000000;">term&gt;</span> <span style="color: #4c83ff;">:not=</span> <span style="color: #4c83ff;">:b.baz</span> (<span style="color: #D8FA3C;">t</span><span style="color: #EDEDED; background-color: #000000;">/=&gt;</span> <span style="color: #4c83ff;">:param1</span>))]
             [<span style="color: #4c83ff;">:&lt;</span> 1 2 3]
-            [<span style="color: #4c83ff;">:in</span> <span style="color: #4c83ff;">:f.e</span> [1 (<span style="color: #D8FA3C;">t</span><span style="color: #EDEDED; background-color: #000000;">/</span>=&gt; <span style="color: #4c83ff;">:param2</span>) 3]]
+            [<span style="color: #4c83ff;">:in</span> <span style="color: #4c83ff;">:f.e</span> [1 (<span style="color: #D8FA3C;">t</span><span style="color: #EDEDED; background-color: #000000;">/=&gt;</span> <span style="color: #4c83ff;">:param2</span>) 3]]
             [<span style="color: #4c83ff;">:between</span> <span style="color: #4c83ff;">:f.e</span> 10 20]]
-    <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #4c83ff; font-style: italic;">:f.a</span><span style="color: #8B8989; font-style: italic;"> groups by default</span>
+    <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">:f.a groups by default</span>
     <span style="color: #4c83ff;">:group-by</span> (<span style="color: #D8FA3C;">t</span><span style="color: #EDEDED; background-color: #000000;">/</span><span style="color: #FBDE2D;">default&gt;</span> [<span style="color: #4c83ff;">:f.a</span>] <span style="color: #4c83ff;">:group-by</span>)
     <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">0 by default</span>
-    <span style="color: #4c83ff;">:having</span> (term&gt; <span style="color: #4c83ff;">:&lt;</span> <span style="color: #4c83ff;">:f.e</span> (<span style="color: #D8FA3C;">t</span><span style="color: #EDEDED; background-color: #000000;">/</span><span style="color: #FBDE2D;">default&gt;</span> <span style="color: #ff1493;">0</span> <span style="color: #4c83ff;">:having</span>))
+    <span style="color: #4c83ff;">:having</span> (<span style="color: #EDEDED; background-color: #000000;">term&gt;</span> <span style="color: #4c83ff;">:&lt;</span> <span style="color: #4c83ff;">:f.e</span> (<span style="color: #D8FA3C;">t</span><span style="color: #EDEDED; background-color: #000000;">/</span><span style="color: #FBDE2D;">default&gt;</span> <span style="color: #ff1493;">0</span> <span style="color: #4c83ff;">:having</span>))
     <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">use this default clause for order-by</span>
     <span style="color: #4c83ff;">:order-by</span> (<span style="color: #D8FA3C;">t</span><span style="color: #EDEDED; background-color: #000000;">/</span><span style="color: #FBDE2D;">default&gt;</span>
                [[<span style="color: #4c83ff;">:b.baz</span> <span style="color: #4c83ff;">:desc</span>] <span style="color: #4c83ff;">:c.quux</span> [<span style="color: #4c83ff;">:f.a</span> <span style="color: #4c83ff;">:nulls-first</span>]]
@@ -916,12 +909,7 @@ REPL and try it out.
 </p>
 
 
-<br>
-
 <div id="disqus_thread"></div> <script> var disqus_config = function () { this.page.url = "https://edbabcock.com"; this.page.identifier = "composable-queries"; }; (function() { var d = document, s = d.createElement('script'); s.src = '//edbabcock-com.disqus.com/embed.js'; s.setAttribute('data-timestamp', +new Date()); (d.head || d.body).appendChild(s); })(); </script> <noscript>It would be better if comments didn't need JS. Turn JavaScript on to see the comments. <a href="https://disqus.com/?ref_noscript">Comments powered by Disqus.</a></noscript>
-
-<br>
-</div></div></div>
 </div>
 <div id="postamble" class="status">
 <footer> <hr />

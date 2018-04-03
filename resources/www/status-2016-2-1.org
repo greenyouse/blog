@@ -1,6 +1,4 @@
-#+HTML: <div class="container-fluid"><div class="row"><div class="col-md-6 col-md-offset-3 col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-lg-4 col-lg-offset-4">
 #+TITLE: Status Update 2/1/2016
-#+HTML: <br><br>
 
 
 A few weeks ago when I started back up on doing open source projects, I
@@ -29,8 +27,6 @@ Here's a list of the projects:
 - [[patterns][pattern matching]]
 - [[rec-link][record linkage]]
 - [[sql][sql library]]
-
-#+HTML: <br>
 
 <<browserific>>
 ** Browserific
@@ -64,7 +60,6 @@ and get saddled with writing tools to automate development. That sounds
 pretty neat though, honestly.
 
 
-#+HTML: <br>
 <<deepfns>>
 ** Deepfns
 
@@ -78,7 +73,6 @@ for really fast code. If transitives ran as quickly or faster than
 vanilla Clojure, I would feel 100% about using that library for future
 projects.
 
-#+HTML: <br>
 <<es>>
 ** ElasticSearch Library
 
@@ -115,8 +109,6 @@ propagate. Here's an example:
 
 #+END_SRC
 
-#+HTML: <br>
-
 See how something passed to ~:woot~ and then to ~:foo~?
 
 Having data defined queries that can compose together nicely (and
@@ -125,7 +117,6 @@ hopefully run fast) is a nice win overall!
 The other parts are in the works and I'll have to post when I get around
 to working on them.
 
-#+HTML: <br>
 <<sql>>
 ** SQL Library
 
@@ -136,7 +127,6 @@ there.
 
 I'll have to mention more here when I get around to this too.
 
-#+HTML: <br>
 <<patterns>>
 ** Pattern Matching
 
@@ -176,7 +166,6 @@ implementation wise but the goal is similar. David Nolen had a [[https://vimeo.c
 about how macros could be used to build something like this (see
 54:30).
 
-#+HTML: <br>
 <<rec-link>>
 ** Record Linkage
 
@@ -194,7 +183,6 @@ incoming items may have varying product descriptions.
 I don't know a whole lot about the subject yet but it would be fun to
 dive into it and try building some tooling for it.
 
-#+HTML: <br>
 <<p2p>>
 ** Erlang P2P Network
 
@@ -222,6 +210,3 @@ with this.
 
 
 OK, now back to work!
-
-#+HTML: <br>
-#+HTML: </div></div></div>

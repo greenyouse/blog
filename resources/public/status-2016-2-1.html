@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 <title>Status Update 2/1/2016</title>
-<!-- 2016-11-26 Sat 18:55 -->
+<!-- 2018-04-03 Tue 13:41 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="generator" content="Org-mode" />
 <meta  name="author" content="Ed Babcock (greenyouse)" />
@@ -160,6 +160,7 @@ for the JavaScript code in this tag.
         <ul class="nav navbar-nav">
           <li><a href="/about.html">About</a></li>
           <li><a href="categories.html">Categories</a></li>
+
         </ul>
       </div>
     </div>
@@ -167,10 +168,6 @@ for the JavaScript code in this tag.
 </div>
 <div id="content">
 <h1 class="title">Status Update 2/1/2016</h1>
-<div class="container-fluid"><div class="row"><div class="col-md-6 col-md-offset-3 col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-lg-4 col-lg-offset-4">
-<br><br>
-
-
 <p>
 A few weeks ago when I started back up on doing open source projects, I
 was a little worried that I might run out of things to work on. However,
@@ -214,8 +211,6 @@ Here's a list of the projects:
 <li><a href="#sql">sql library</a>
 </li>
 </ul>
-
-<br>
 
 <p>
 <a id="browserific" name="browserific"></a>
@@ -262,7 +257,6 @@ pretty neat though, honestly.
 </p>
 
 
-<br>
 <p>
 <a id="deepfns" name="deepfns"></a>
 </p>
@@ -285,7 +279,6 @@ vanilla Clojure, I would feel 100% about using that library for future
 projects.
 </p>
 
-<br>
 <p>
 <a id="es" name="es"></a>
 </p>
@@ -318,23 +311,21 @@ propagate. Here's an example:
 <div class="org-src-container">
 
 <pre class="src src-clojure">(<span style="color: #FBDE2D;">def</span> <span style="color: #D8FA3C;">foos</span>
-  (&lt;=&gt; {<span style="color: #4c83ff;">:foo</span> <span style="color: #4c83ff;">:woot</span>
+  (<span style="color: #EDEDED; background-color: #000000;">&lt;=&gt;</span> {<span style="color: #4c83ff;">:foo</span> <span style="color: #4c83ff;">:woot</span>
         <span style="color: #4c83ff;">:bar</span> <span style="color: #4c83ff;">:other</span>}))
 
 (<span style="color: #FBDE2D;">def</span> <span style="color: #D8FA3C;">woots</span>
-  (&lt;=&gt; {<span style="color: #4c83ff;">:woot</span> <span style="color: #4c83ff;">:something</span>
+  (<span style="color: #EDEDED; background-color: #000000;">&lt;=&gt;</span> {<span style="color: #4c83ff;">:woot</span> <span style="color: #4c83ff;">:something</span>
         <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">else is nil and won't propagate</span>
         <span style="color: #4c83ff;">:other</span> <span style="color: #4c83ff;">:else</span>}))
 
-((<span style="color: #FF6400;">comp</span> foos woots)
+((<span style="color: #FF6400;">comp</span> <span style="color: #EDEDED; background-color: #000000;">foos</span> <span style="color: #EDEDED; background-color: #000000;">woots</span>)
  {<span style="color: #4c83ff;">:something</span> 1
   <span style="color: #4c83ff;">:another</span> <span style="color: #61CE3C;">"thing"</span>})
 
-<span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">=&gt; {</span><span style="color: #4c83ff; font-style: italic;">:foo</span><span style="color: #8B8989; font-style: italic;"> 1}</span>
+<span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">=&gt; {:foo 1}</span>
 </pre>
 </div>
-
-<br>
 
 <p>
 See how something passed to <code>:woot</code> and then to <code>:foo</code>?
@@ -350,7 +341,6 @@ The other parts are in the works and I'll have to post when I get around
 to working on them.
 </p>
 
-<br>
 <p>
 <a id="sql" name="sql"></a>
 </p>
@@ -370,7 +360,6 @@ there.
 I'll have to mention more here when I get around to this too.
 </p>
 
-<br>
 <p>
 <a id="patterns" name="patterns"></a>
 </p>
@@ -425,7 +414,6 @@ about how macros could be used to build something like this (see
 54:30).
 </p>
 
-<br>
 <p>
 <a id="rec-link" name="rec-link"></a>
 </p>
@@ -454,7 +442,6 @@ I don't know a whole lot about the subject yet but it would be fun to
 dive into it and try building some tooling for it.
 </p>
 
-<br>
 <p>
 <a id="p2p" name="p2p"></a>
 </p>
@@ -497,9 +484,6 @@ with this.
 <p>
 OK, now back to work!
 </p>
-
-<br>
-</div></div></div>
 </div>
 </div>
 </div>
