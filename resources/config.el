@@ -32,7 +32,6 @@
 (defvar org-html-postamble "<footer> <hr />
                          <p><a href='http://creativecommons.org/licenses/by-nc-sa/3.0/' target='_blank'>©copyright 2015</a>, by <a href='/about.html'>Ed Babcock</a> (^_^)v</p>
                          </footer>
-                         <script type='text/javascript' src='js/jquery.min.js'></script>
                          <script type='text/javascript' src='js/bootstrap.min.js'></script>")
 (defvar org-html-head "<meta name='viewport' content='width=device-width' initial-scale=1>
                      <link rel='shortcut icon' href='/img/favicon.ico' />
