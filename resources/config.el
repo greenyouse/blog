@@ -42,10 +42,10 @@
 
 (defvar org-publish-project-alist
   '(("orgfiles"
-     :base-directory "/tmp/blog/resources/www/"
+     :base-directory "~/Gits/personal/blog/resources/www/"
      :base-extension "org\\|md"
      :recursive t
-     :publishing-directory "/tmp/blog/resources/public/"
+     :publishing-directory "~/Gits/personal/blog/resources/public/"
      :section-numbers nil
      :auto-sitemap nil
      :sitemap-title "Archive"
@@ -58,9 +58,9 @@
      :html-html5-fancy t
      )
     ("org-static"
-     :base-directory "/tmp/blog/resources/www/"
+     :base-directory "~/Gits/blog/resources/www/"
      :base-extension "css\\|js\\|png\\|svg\\|jpg\\|gif\\|pdf"
-     :publishing-directory "/tmp/blog/resources/public/"
+     :publishing-directory "~/Gits/personal/blog/resources/public/"
      :recursive t
      :publishing-function org-publish-attachment)
     ("pwa" :components ("orgfiles" "org-static"))))
