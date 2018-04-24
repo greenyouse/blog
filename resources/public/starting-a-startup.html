@@ -1,0 +1,515 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>Starting a Startup</title>
+<!-- 2018-04-25 Wed 11:56 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<meta  name="author" content="Ed Babcock (greenyouse)" />
+<meta  name="description" content="Hacks, projects, and general butt-kicking with Ed (greenyouse)"
+ />
+<meta  name="keywords" content="Clojure, ClojureScript, greenyouse, LISP" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.right  { text-align: center;  }
+  th.left   { text-align: center;   }
+  th.center { text-align: center; }
+  td.right  { text-align: right;  }
+  td.left   { text-align: left;   }
+  td.center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara:nth-child(2) { display: inline; }
+  .footpara { display: block; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  /*]]>*/-->
+</style>
+<meta name='viewport' content='width=device-width' initial-scale=1>
+                     <link rel='shortcut icon' href='/img/favicon.ico' />
+                     <link rel='stylesheet' href='/css/bootstrap.min.css' type='text/css'/>
+                     <link rel='stylesheet' href='/css/blog.css' type='text/css'/>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="preamble" class="status">
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/index.html">Blog - Ed Babcock</a>
+      </div>
+      <div class="collapse navbar-collapse" id="main-navbar">
+        <ul class="nav navbar-nav">
+          <li><a href="/about.html">About</a></li>
+          <li><a href="categories.html">Categories</a></li>
+          <li><a target="_blank" href="https://github.com/greenyouse">Projects</a></li>
+
+        </ul>
+      </div>
+    </div>
+  </nav>
+</div>
+<div id="content">
+<h1 class="title">Starting a Startup</h1>
+<p>
+There were some things that I didn't know going into my startup
+venture so this is more of a 101 for how to get things started. These
+are things that are probably just helpful for starting out but weren't
+obvious to me. If you're in a startup hub like Silicon Valley, then you
+could probably find a mentor and just stick with that. I didn't have
+anything since I live in a non-startup place.
+</p>
+
+<p>
+My education is from YC's online startup school, a bunch of books, and
+going out and doing it.
+</p>
+
+<p>
+Everything but the iffy advice on the bottom is good and should apply
+to all startups. Just a 101 for how to start a business with details I
+really wish I would've known when I started.
+</p>
+
+<div id="outline-container-sec-0-1" class="outline-3">
+<h3 id="sec-0-1">LLC or C-Corp?</h3>
+<div class="outline-text-3" id="text-0-1">
+<p>
+Startups are usually filed legally as either LLCs or C-Corps. The
+basic rule for which to do is this:
+</p>
+
+<p>
+Choose C-Corp when taking funding.
+</p>
+
+<p>
+Choose LLC when bootstrapping.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-0-2" class="outline-3">
+<h3 id="sec-0-2">Which State to File In?</h3>
+<div class="outline-text-3" id="text-0-2">
+<p>
+Unless you're already a lawyer and know what you're doing, just stick
+to the basics. Delaware is the state that people usually use because
+they have a special court system that expedites business cases. VCs
+will usually want you to be in Delaware before giving you
+money. Moving states after you're already established can be a pain
+too, so just keep it simple.
+</p>
+
+<p>
+The only exception to this would be if you want to start an anonymous
+company for a more taboo industry. In that case Nevada has and
+anonymous LLC where your name isn't publicly listed as owner.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-0-3" class="outline-3">
+<h3 id="sec-0-3">How to File?</h3>
+<div class="outline-text-3" id="text-0-3">
+<p>
+Legal companies automate the process of incorporating your
+business. They'll charge a bit for the work but it's not much and if
+you're successful it'll be much cheaper than having to redo it with a
+$300/hr lawyer because you fudged details when filing.
+</p>
+
+<p>
+There are lots of companies but I'm just going to recommend what I
+know works:
+</p>
+
+<p>
+Choose Clerky for a C-Corp.
+</p>
+
+<p>
+Choose Incorporate.com for an LLC.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-0-4" class="outline-3">
+<h3 id="sec-0-4">Find a Co-Founder</h3>
+<div class="outline-text-3" id="text-0-4">
+<p>
+Co-Founder problems are the #1 killer of startups so pick
+carefully. Identify your strengths and weaknesses as a founder. Try
+to find someone that fills in your weak spots so together your
+founding team doesn't have skill gaps.
+</p>
+
+<p>
+You should have history with the person you're teaming with so you
+know if you'll work well together.
+</p>
+
+<p>
+Co-Founder sources (ranked best to worst):
+</p>
+<ul class="org-ul">
+<li>best friend
+</li>
+<li>co-worker
+</li>
+<li>acquaintance
+</li>
+<li>stranger
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-0-5" class="outline-3">
+<h3 id="sec-0-5">What Does Your Company Do?</h3>
+<div class="outline-text-3" id="text-0-5">
+<p>
+Make a 1-2 sentence explanation for what your company does. It should
+be straight to the point. Memorize it so you can answer the chronic
+company question for friends, family, VCs, peers, and everybody
+else.
+</p>
+
+<p>
+example:
+"BonNochi is a hotel booking service for travelers with
+disabilities. We book accessible hotel rooms and guarantee in-room
+accessibility features for your trip!"
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-0-6" class="outline-3">
+<h3 id="sec-0-6">Make Money</h3>
+<div class="outline-text-3" id="text-0-6">
+<p>
+Bootstrapping helps here but your company has to make money. Maybe
+you can raise rounds for a bit but eventually you'll need to be in
+the black.
+</p>
+
+<p>
+Pick something with good margins and reasonable overhead costs.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-0-7" class="outline-3">
+<h3 id="sec-0-7">Validate First</h3>
+<div class="outline-text-3" id="text-0-7">
+<p>
+Do UX research to understand what you'll need to build before doing
+development. It's easy to change ideas or designs when you haven't
+spent the last two months writing code.
+</p>
+
+<p>
+You also want to solve actual problems that lots of people have. If
+you're not solving a problem nobody should use your app. If your
+target demographic is too small, you're not going to grow much.
+</p>
+
+<p>
+Potential customers need to be sold on the idea when they're giving
+you feedback. Look for things like:
+</p>
+
+<p>
+"When will your product be released?"
+</p>
+
+<p>
+"Can we sign up for updates on your release?"
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-0-8" class="outline-3">
+<h3 id="sec-0-8">Test designs</h3>
+<div class="outline-text-3" id="text-0-8">
+<p>
+Once you know what to build you'll probably want to test the app
+designs. You could do user testing after months of development or you
+could hack together some design mockups in a few days. One is cheap
+and easy to change, the other not so much.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-0-9" class="outline-3">
+<h3 id="sec-0-9">Product Development Pipeline</h3>
+<div class="outline-text-3" id="text-0-9">
+<p>
+figure out what to build -&gt; design it -&gt; spec it -&gt; build it
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-0-10" class="outline-3">
+<h3 id="sec-0-10">Focus on One Thing</h3>
+<div class="outline-text-3" id="text-0-10">
+<p>
+Starting out is hard. You'll probably start by dreaming big but you
+have to be as quick to market as possible. Take the most critical
+feature of your service and just build that. Good targets are the
+things that make the most profit, have the most social impact, or
+are the most requested during UX research.
+</p>
+
+<p>
+Make this one thing 10x better than anybody else can do it.
+</p>
+
+<p>
+Punt on the hard stuff.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-0-11" class="outline-3">
+<h3 id="sec-0-11">Figure Out HATED Things</h3>
+<div class="outline-text-3" id="text-0-11">
+<p>
+Still stuck on what to build? Try to figure out what people HATE.
+</p>
+
+<p>
+During UX research did people have one thing that was horrible to
+deal with? Build that.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-0-12" class="outline-3">
+<h3 id="sec-0-12">KPI == Business Health</h3>
+<div class="outline-text-3" id="text-0-12">
+<p>
+KPI is startup speak for "Key Performance Indicator" which is mumbo
+jumbo speak for "a key metric that tracks your company health
+well". Pick an important metric and use it as a proxy for your
+company's health.
+</p>
+
+<p>
+SAAS should do growth metrics.
+</p>
+
+<p>
+B2C should do sales based metrics.
+</p>
+
+<p>
+If you get big use multiple metrics.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-0-13" class="outline-3">
+<h3 id="sec-0-13">Don't Overwork</h3>
+<div class="outline-text-3" id="text-0-13">
+<p>
+What's better than doing caffeine-fueled, round the clock overtime
+work to kick out your killer startup?
+</p>
+
+<p>
+Doing moderated amounts of work with a clear focus. Give yourself a
+9-5 with occasional crunch times and keep your social life. If you
+can't blow off steam and enjoy yourself, you're going to burn out.
+</p>
+</div>
+</div>
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1">Personal Opinions (iffy advice):</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Here's some other advice that I personally think is good but I can't
+say if it's 100% the right thing to do. I can expand on anything if
+anybody wants more (just email me).
+</p>
+
+<ul class="org-ul">
+<li>customers are the best investors, they give you money without taking
+equity. Start there
+</li>
+<li>saliency bias is real. if you can contract a designer to beautify
+your website before showing to VCs, do it (big money at stake).
+</li>
+<li>work full-time on the startup, way too many things to do, really an
+all-or-nothing proposition for a major product
+</li>
+<li>worry about product development not competition, it's not a zero-sum
+game for a scrappy startup
+</li>
+<li>log what happened each week to identify trends and self-correct
+</li>
+<li>random contracting is rough because developer skills vary
+considerably and they don't share your product vision
+</li>
+<li>get an adviser 3-4 years ahead of you (their wounds are still fresh
+and they're probably still doing startup work)
+</li>
+<li>build a community that provides value to people, ask for help from
+the people there for testing or UX interviews (warm intro, product
+evangelists, satisfying to solve their problems, fun people to meet
+too!, weak network effect)
+</li>
+<li>know thy customer (where do they hang out?, why do they like you?,
+demographic trends, personality trends, etc.)
+</li>
+<li>never make deals that feel fishy (hires, funding, business partners)
+</li>
+<li>set company values up front, short-term goals as needed
+</li>
+<li>set a long-term revenue/customer/funding target on day one and kill
+the startup if it doesn't perform (avoid being a zombie startup even
+if you're making some money)
+</li>
+<li>plan growth by orders of magnitude, 0-&gt;1-&gt;10-&gt;100-&gt;1,000-&gt;10,000&#x2026;,
+short-term goals change at each milestone
+</li>
+<li>internally pick one large, incumbent company in your industry and make
+them your target (creates a false equivalency that you're doing good
+because you're beating company X on Y thing, morale booster). Find
+their weak spots and try to beat them there
+</li>
+<li>think about the future and try to guess how your industry will have
+changed in 30-50 years, build that
+</li>
+<li>bootstrapped businesses should start niche and grow from there
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<footer> <hr />
+                         <p><a href='http://creativecommons.org/licenses/by-nc-sa/3.0/' target='_blank'>©copyright 2015</a>, by <a href='/about.html'>Ed Babcock</a> (^_^)v</p>
+                         </footer>
+                         <script type='text/javascript' src='js/jquery.min.js'></script>
+                         <script type='text/javascript' src='js/bootstrap.min.js'></script>
+</div>
+</body>
+</html>

@@ -1,0 +1,188 @@
+#+TITLE: Starting a Startup
+
+When you start something new you don't know what you don't know. If it's
+your first time building a startup there are some basic things that go
+against common knowledge or might be the opposite of what you'd usually
+do at a regular job. If you're already in a startup hub like Silicon
+Valley or New York City, then you can probably find a mentor and
+leverage the startup culture there. If you're in a city where software
+engineers are IT and tech startups are rare, having advice on how to
+start might help.
+
+My education is from YC's online startup school, a bunch of books, and
+going out and doing it. I got through most of the initial development
+stage and stopped short of launching. Most of the advice below is for
+early phase development since that's what I worked through.
+
+Everything but the iffy advice on the bottom is good and should apply
+to all startups. This is a 101 for how to start a business with
+details I wish I would've known when I started.
+
+** LLC or C-Corp?
+   Startups are usually filed legally as either LLCs or C-Corps. The
+   basic rule for which to do is this:
+
+   Choose C-Corp when taking funding.
+
+   Choose LLC when bootstrapping.
+
+** Which State to File In?
+   Unless you're already a lawyer and know what you're doing, just stick
+   to the basics. Delaware is the state that people usually use because
+   they have a special court system that expedites business cases. VCs
+   will usually want you to be in Delaware before giving you
+   money. Moving states after you're already established can be a pain
+   too, so just keep it simple.
+
+   The only exception to this would be if you want to start an anonymous
+   company for a more taboo industry. In that case Nevada has and
+   anonymous LLC where your name isn't publicly listed as owner.
+
+** How to File?
+   Legal companies automate the process of incorporating your
+   business. They'll charge a bit for the work but it's not much and if
+   you're successful it'll be much cheaper than having to redo it with a
+   $300/hr lawyer because you fudged details when filing.
+
+   There are lots of companies but I'm just going to recommend what I
+   know works:
+
+   Choose Clerky for a C-Corp.
+
+   Choose Incorporate.com for an LLC.
+
+** Find a Co-Founder
+   Co-Founder problems are the #1 killer of startups so pick
+   carefully. Identify your strengths and weaknesses as a founder. Try
+   to find someone that fills in your weak spots so together your
+   founding team doesn't have skill gaps.
+
+   You should have history with the person you're teaming with so you
+   know if you'll work well together.
+
+   Co-Founder sources (ranked best to worst):
+   - best friend
+   - co-worker
+   - acquaintance
+   - stranger
+
+** What Does Your Company Do?
+   Make a 1-2 sentence explanation for what your company does. It should
+   be straight to the point. Memorize it so you can answer the chronic
+   company question for friends, family, VCs, peers, and everybody
+   else.
+
+   example:
+   "BonNochi is a hotel booking service for travelers with
+   disabilities. We book accessible hotel rooms and guarantee in-room
+   accessibility features for your trip!"
+
+** Make Money
+   Bootstrapping helps here but your company has to make money. Maybe
+   you can raise rounds for a bit but eventually you'll need to be in
+   the black.
+
+   Pick something with good margins and reasonable overhead costs.
+
+** Validate First
+   Do UX research to understand what you'll need to build before doing
+   development. It's easy to change ideas or designs when you haven't
+   spent the last two months writing code.
+
+   You also want to solve actual problems that lots of people have. If
+   you're not solving a problem nobody should use your app. If your
+   target demographic is too small, you're not going to grow much.
+
+   Potential customers need to be sold on the idea when they're giving
+   you feedback. Look for things like:
+
+   "When will your product be released?"
+
+   "Can we sign up for updates on your release?"
+
+** Test designs
+   Once you know what to build you'll probably want to test the app
+   designs. You could do user testing after months of development or you
+   could hack together some design mockups in a few days. One is cheap
+   and easy to change, the other not so much.
+
+** Product Development Pipeline
+   figure out what to build -> design it -> spec it -> build it
+
+** Focus on One Thing
+   Starting out is hard. You'll probably start by dreaming big but you
+   have to be as quick to market as possible. Take the most critical
+   feature of your service and just build that. Good targets are the
+   things that make the most profit, have the most social impact, or
+   are the most requested during UX research.
+
+   Make this one thing 10x better than anybody else can do it.
+
+   Punt on the hard stuff.
+
+** Figure Out HATED Things
+   Still stuck on what to build? Try to figure out what people HATE.
+
+   During UX research did people have one thing that was horrible to
+   deal with? Build that.
+
+** KPI == Business Health
+   KPI is startup speak for "Key Performance Indicator" which is mumbo
+   jumbo speak for "a key metric that tracks your company health
+   well". Pick an important metric and use it as a proxy for your
+   company's health.
+
+   SAAS should do growth metrics.
+
+   B2C should do sales based metrics.
+
+   If you get big use multiple metrics.
+
+** Don't Overwork
+   What's better than doing caffeine-fueled, round the clock overtime
+   work to kick out your killer startup?
+
+   Doing moderated amounts of work with a clear focus. Give yourself a
+   9-5 with occasional crunch times and keep your social life. If you
+   can't blow off steam and enjoy yourself, you're going to burn out.
+* Personal Opinions (iffy advice):
+  Here's some other advice that I personally think is good but I can't
+  say if it's 100% the right thing to do. I can expand on anything if
+  anybody wants more (email me).
+
+  - customers are the best investors, they give you money without taking
+    equity. Start there
+  - saliency bias is real. if you can contract a designer to beautify
+    your website before showing to VCs, do it (big money at stake).
+  - work full-time on the startup, there are way too many things to do,
+    it's really an all-or-nothing proposition for a major product
+  - worry about product development not competition, it's not a zero-sum
+    game for a scrappy startup
+  - log what happened each week to identify trends and self-correct
+  - random contracting is rough because developer skills vary
+    considerably and they don't share your product vision
+  - get an adviser 3-4 years ahead of you (their wounds are still fresh
+    and they're probably still doing startup work)
+  - build a community that provides value to people, ask for help from
+    the people there for testing or UX interviews (warm intro, product
+    evangelists, satisfying to solve their problems, fun people to meet
+    too!, weak network effect)
+  - know thy customer (where do they hang out?, why do they like you?,
+    demographic trends, personality trends, etc.)
+  - never make deals that feel fishy (hires, funding, business partners)
+  - set company values up front, short-term goals as needed
+  - set a long-term revenue/customer/funding target on day one and kill
+    the startup if it doesn't perform (avoid being a zombie startup even
+    if you're making some money)
+  - plan growth by orders of magnitude, 0->1->10->100->1,000->10,000...,
+    short-term goals change at each milestone, number of customers is a
+    good metric for this
+  - internally pick one large, incumbent company in your industry and make
+    them your target (creates a false equivalency that you're doing good
+    because you're beating company X on Y thing, morale booster). Find
+    their weak spots and try to beat them there
+  - think about the future and try to guess how your industry will have
+    changed in 30-50 years, build that
+  - bootstrapped businesses should start niche and grow from there
+
+Best of luck if you're going after something on your own!

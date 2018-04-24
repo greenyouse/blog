@@ -1,6 +1,9 @@
 #+TITLE:
 
 #+HTML: <div id="index">
+- 4/24/2018 [[file:starting-a-startup.org][Starting a Startup]]
+  #+HTML: <br><p>Basic startup advice I wish I'd known on day one.</p>
+
 - 1/22/2017 [[file:style-guides.org][Style Guides (the easy way)]]
   #+HTML: <br><p>Using Polymer to build an app style guide.</p>
 
