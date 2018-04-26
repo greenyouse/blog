@@ -3,3 +3,4 @@ Disallow: /mail/
 Disallow: /iRedMail/
 Disallow: /phpldapadmin/
 Disallow: /awstats/
+Disallow: /junk/
