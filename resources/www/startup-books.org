@@ -1,0 +1,68 @@
+#+TITLE: Startup Books
+
+Most startup books aren't helpful. There isn't a repeatable solution
+to how to succeed at a startup. While I worked for my startup I read
+~30 general startup books to see if I could tease out applicable
+nuggets of wisdom. Most of what I found was too general.
+
+Startup books are like the self-help book industry. They aren't
+helpful because the problem at hand is difficult. It requires a
+solution that's very localized to your problem and can't just be
+generalized into a silver bullet solution.
+
+They feel like consultants trying to push some overly-complex "system"
+for developing a successful business. The "solutions" are complicated
+enough that you'll need to buy multiple books and subscribe to their
+talks just to understand what they're trying to push. It's great for
+the authors since they make more money and get consulting gigs, but
+not so great for yourself...
+
+Here are the books that I found actually helpful. It's geared toward
+initial product development because that's what I did.
+
+startup founder books:
+- UX Strategy: How to Devise Innovative Digital Products
+- The Founder's Dilemma
+
+Yup, it's a tiny list but out of all the books those are the only ones
+that I would recommend without reservation.
+
+UX Strategy teaches you how to apply UX research so you can build the
+right product. You'll learn how to do basic things like validating
+prototypes, cooking up a business model, and running a competitive
+analysis.
+
+As a software engineer with no previous background doing this sort of
+thing, I found it invaluable. It shaped how I approached coming up
+with ideas and testing them throughout the early part of the startup.
+
+The second book, The Founder's Dilemma, is a reference book of the
+major problems that the majority of startups go through. Each startup
+may be building unique stuff but the process of building a startup
+is 99% similar across companies. The book is detailed and dry so it's
+not one to read through in one sitting.
+
+It starts at the beginning problems you'll face pre-founding and goes
+through later issues that span the life of a startup. The author
+measured the choices that many real life startups made for each
+problem and plots their results, so you get to see real-life data
+about this. Having something grounded in statistics instead of just
+talk was refreshing.
+
+Every few months I'd have to re-open this book because I'd hit one of
+the problems and things would go haywire. This made it a perfect
+reference book for deciding what to do for hard problems.
+
+** Book Summary
+   I have a habit of taking extensive notes on books and tech
+   talks as I'm going through them. There's a big file on my computer
+   with tens of thousands of lines from years of material.
+
+   To help other people going through (or about to go through) a similar
+   startup venture, I've put up my notes for the book.
+
+   [[file:books/ux-strategy.txt][Here are my notes for UX Strategy (org file format)]]
+
+   This summary is like a lossy compression of the book
+   contents. Hopefully it pushes you to buy the actual book if you've
+   been thinking about doing a startup.

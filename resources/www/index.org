@@ -1,6 +1,9 @@
 #+TITLE:
 
 #+HTML: <div id="index">
+- 4/25/2018 [[file:startup-books.org][Startup Books]]
+  #+HTML: <br><p>Startup books that were helpful to read.</p>
+
 - 4/24/2018 [[file:starting-a-startup.org][Starting a Startup]]
   #+HTML: <br><p>Basic startup advice I wish I'd known on day one.</p>
 

@@ -1,0 +1,535 @@
+* UX Strategy
+** What is it?
+   It's a high-level plan to achieve one or more business goals under
+   conditions of uncertainty. The strategy decided upon should be shared
+   throughout the team so that everyone can work under the same vision
+   (better team chemistry, unity).
+
+   Plans may start out naive but as new information and experiences are
+   accumulated, plans will update and be iterated upon.
+
+** UX Strategy
+   The final strategy should be grounded in empirical user research
+   data. How well the UX strategy is executed is a critical deciding
+   factor in the ultimate success of the service.
+
+   There are four key tenants of UX Strategy:
+
+*** Business Strategy
+    This identifies the company's guiding principles for how it will
+    position itself and still achieve its objectives. The business must
+    continually identify and utilize a competitive advantage.
+
+    The two most common ways to establish an advantage are:
+    1. cost differential (you're cheaper than competitors)
+    2. differential technology (disruptive) that sets your company apart
+       from others (people will pay for the added benefits). This can
+       even be shifting UX technology to make the app easier to use.
+
+    Business model generation is based on empirical user data. Here are
+    major parts of a business model:
+    - customer segments: Who are the customers? What are their goals?
+      What are their behaviors?
+    - Value Proposition: What value (qualitative & quantitative) do we
+      offer?
+    - Channels: How will we reach our customer segment? Is it offline or online?
+    - Customer Relationships: How are we going to acquire and retain our
+      customers?
+    - Revenue Streams: How does the business earn revenue from the value
+      proposition? Are the customers going to pay for it? Do they have
+      other options?
+    - Key Resources: What unique strategic assets must the business have
+      to make the product work? Is it content, capital, or patents? Is
+      this something we must develop?
+    - Key Activities: What uniquely strategic things does the business
+      do to deliver its proposition? Are we optimizing an outdated
+      business process? Are we creating a platform to bring customers
+      together to transact?
+    - Key Partnerships: What partnerships and suppliers do we need in
+      order to deliver our value proposition?
+    - Cost Structure: What are the major costs that will be incurred to
+      make our business model work? Are we trying to cut costs by
+      throwing out the thrills? Are there fixed costs that won't go
+      away?
+
+    We need product/market fit and enough of a user base to establish a
+    competitive advantage early in the product's life cycle.
+
+*** Value Innovation
+    There is a significant advantage to getting into a fresh market that
+    doesn't have competitors. Either way, you should make a product that
+    make people's lives easier, bring customers together, and create new
+    mental models for the business domain.
+
+*** Validated User Research
+    Users have to find value in your startup and you need to make sure
+    they're interested using validated user research. Do it often to
+    make sure you're on track. It serves as a reality check on your
+    ideas!
+
+    Get customer buy in as early as possible through an MVP and pivot if
+    customers aren't interested. The feedback loop is
+    build-measure-learn.
+
+    The whole team should be involved in the user research process
+    because it helps build the product vision and team consensus. Do it
+    off hours if your company won't allow for user research.
+
+*** Killer UX
+    Dope UX practices:
+    - They work with the team early on to develop validation
+      experiments for how well the landing page conveys the company's
+      value proposition
+    - Explore new value in innovations for the product based on
+      techniques like storyboarding and cherry-picking
+    - Learn everything about the market to identify UX opportunities
+      that can be exploited. This provides a leap in value by offering
+      something that makes people's lives more efficient.
+    - They talk directly to potential users or existing power users to
+      discover and validate the product's primary utility.
+    - Use UX in all touch points, online and offline, to create a
+      frictionless experience.
+
+** Validating the Value Proposition
+   You need to ground your product in validated user research. Only the
+   customers can tell you what they want.
+
+   Make a one to two sentence value proposition for your business.
+
+   Steps for validation:
+   1. Define your primary customer segment
+   2. Identify your customer segment's (biggest) problem
+   3. Create provisional personas based on your assumptions
+   4. Conduct customer discovery to validate your solution's initial
+      value proposition
+   5. Reassess your value proposition based on what you learned!
+
+   Repeat until you get a product/market fit.
+
+*** Identify the problem
+    Write out the customer and problem hypothesis in a
+    statement. Example:
+
+    "People with disabilities have a hard time traveling and dealing with
+    travel arrangements."
+
+    Then test it with validated user research. Knowing that the market
+    likes your product idea de-risks the investment you'll making doing
+    product development.
+
+    Don't build your product's UX around a value proposition unless you
+    have tangible evidence that people will want the product!
+
+*** Provisional Persona
+    Personas are a great way to understand your users and empathize with
+    their needs, goals, and motivations. This leads to awesome,
+    "user-friendly" user interfaces.
+
+    Provisional personas are like quick mock ups of your customer
+    segments. Each persona has four parts:
+
+    1. Name + Snapshot: what's their name? What do they look like? What
+       age demographic are they? Sketch them or grab a random Google
+       Image photo.
+    2. Description: What motivates the customer? Create an
+       archetypical user based on preferences that relate to your
+       product.
+    3. Behaviors: How are they solving the problem now? Is it via a
+       workaround on the Internet, offline, or both? Is the customer
+       tech savvy enough to use the Internet to solve their problem? Do
+       they use social networks to solve it? Are there general behaviors
+       for customers who are using similar types of digital products
+       that are relevant to your solution? What is their personality
+       like (trusting vs skeptical, good at problem solving, etc.)?
+    4. Needs and Goals: What motivates the customer to act how they do?
+       What are they missing from the current solution? What specific
+       needs or goals aren't being satisfied by the customer's current
+       behaviors? What deal-breaker issues are they facing? What can
+       they compromise on?
+
+*** Customer Validation
+    Get over your fear of talking to users and just DO IT!! Go out with
+    your team and meet with customers one on one.
+
+    idea -> build -> product -> measure -> data -> learn ->
+
+    Pick users that match your provisional personas. Use a script like:
+
+    "Hi, I'm Ed. I'm conducting research on a product idea for an
+    Internet startup. Can you spare a few moments to answer questions
+    related to booking your travels?"
+
+    Ask screening questions to make sure the person you picked matches
+    your persona. Examples:
+
+    - "Have you traveled in the last few years?"
+    - "Have you made any special handicapped accommodations while on
+      your trips?"
+
+    Next ask interview questions to learn about their habits:
+
+    - "How do you currently arrange a trip? Do you use any online
+      services or call hotels directly?"
+    - "Did you face any challenges when making accommodations for your
+      trip?"
+    - "How did you overcome these challenges? Were there some parts of
+      your trip that you had to compromise on?"
+    - "How did you arrange your handicapped accommodations?"
+    - "Have you had to rent medical equipment while traveling before?"
+    - "Have you ever heard of travel websites like Expedia, Priceline, or
+      Hotels.com?" (if no explain what they are)
+    - "If there were a travel website, like Expedia, that gave you
+      numerous choices of handicap accessible hotel rooms, vehicle
+      rentals, and medical device rentals, would that be useful?"
+
+    Try to nail down at least 10 interviews!
+
+*** Reassess the Value Proposition
+    Did people do what you thought? Do people try to get something but
+    have to compromise with a Band-Aid solution?
+
+    Three outcomes:
+    - You didn't validate the customer hypothesis, go back to step 1
+    - You didn't validate the pain point customers experiences, go back
+      to step 2
+    - You validated both your customer and pain points. Good to move on!
+
+** Conducting Competitive Research
+   - Study up on your market before opening a business.
+   - Investigate the competition. What do they do right? What are they
+     doing wrong? Why should customers come to you?
+   - Admit defeat when you can't make it work (or pivot).
+
+*** Competitive Analysis Matrix
+    This is a tool for keeping track of competitor and market
+    details. It gives you a clear understanding of numerous qualitative
+    and quantitative insights. Google docs or another spreadsheet tool
+    works great for this.
+
+    Look for gaps or inconsistencies in how competitors deliver their
+    services. Value Innovation can come out of details that competitors
+    are missing.
+
+*** Understanding Competition
+    Direct competition offers the exact same value proposition to
+    customers and competes for the same customer segment. The indirect
+    competitors offer a different value proposition to your customers or
+    the same value proposition to different customers.
+
+    People often use your service or a combination of competing services
+    in complex, unintended ways. Make sure you know the competition!
+
+    record:
+    - website/app store page
+    - username + password: try their service and understand what it
+      offers
+    - purpose of site
+    - year founded
+    - funding rounds (cruchbase)
+    - revenue streams
+    - monthly traffic (Comscore, Quantcase, Alexa)
+    - primary product categories
+    - social media: do they use it?
+    - content types: Is their content text, videos, or photos? How
+      descriptive is it? Is it well organized?
+    - personalization: Are there user profiles, wish lists, custom
+      interfaces, custom content, saved shopping carts, etc.
+    - user generated content: Are the things like hotels reviews
+      submitted by users or message boards?
+    - distinct advantages: Are there unique features that give a
+      competitor an advantage? List the top three.
+    - Heuristic: What do you think? Was it intuitive? Are the design
+      components of the site consistent? Do they have a support system?
+    - customer reviews: What do customers say about the service on 3rd
+      party websites?
+    - team questions
+    - analysis
+
+** Competitive Analysis
+   Competitive Intelligence: the process of breaking down big problems
+   into sub problems that can be acted upon (during the analysis
+   phase).
+
+   gathering -> analyzing -> execution (strategy) -> planning
+
+   Don't just do a feature war by comparing your features to a
+   competitor's. Focus on cherry-picking only the best features from
+   competitors that also fit with your service's UX.
+
+   competitive intelligence steps:
+   1. Skim and color code each column for highs and lows (green for
+      good, yellow for bad)
+   2. create logical groupings for comparison
+   3. Benchmark product attributes and best practices
+   4. Write the competitive analysis findings (in the last column of the
+      spreadsheet)
+
+   quantitative: numbers, can be measured, objective structured
+
+   qualitative: descriptive, observed but not measured, subjective
+   (opinions, reactions, personal tastes, appearance), unstructured
+** Storyboarding Value Innovation
+   - timing is everything, being first to market on a product can mean
+     that people don't yet understand how to use the product.
+   - context is key, know how your product's value proposition fits with
+     the market's needs
+   - inventing stuff is step one, closely followed by user adoption,
+     scaling, wider distribution, revenue streams, and a larger
+     team. You'll need an innovative business model.
+
+   To have a successful product you must offer these things:
+   1. a significant bump in efficiency
+   2. solving pain points customers didn't know they had
+   3. it creates a desire where one didn't exist before
+
+   Here are some great "secret sauce" recipes for value innovation:
+   1. The product offers a mash-up of features from competitors and UX
+      influencers. The hybrid must have a much better method for
+      solving a problem than existing alternatives. (Meetup + payment =
+      Eventbrite)
+
+   2. The product provides an innovative spin on a value proposition of
+      a larger existing platform. (Google Maps + Crowds Sourcing = Waze)
+
+   3. The product combines disparate user experiences into one simple
+      and crucial solution. It becomes a one-stop shop for a user
+      task. (Instagram makes photos + sharing easy)
+
+   4. The product brings two separate user segments to the table to
+      negotiate a deal that wasn't possible before. (subletters +
+      travelers = aribnb)
+
+*** Key Experiences
+    These are the feature set to your product that defines your value
+    innovation. It's what gives you a competitive advantage!
+
+    key questions:
+    1. What will make your provisional personas love this product?
+    2. What moment or part of the user's journey makes this product
+       unique?
+    3. Based on your competitive research and analysis, what scenario or
+       feature resolves a big shortfall?
+    4. What kind of workarounds are your potential customers currently
+       doing to accomplish their goals?
+
+    example:
+    "Fast and easy trip booking that covers all accessibility needs."
+
+*** Using UX Influencers
+    Try checking out non-competitive services to see how they do UX. Are
+    there any parts that could be adapted to your problem?
+
+*** Do Feature Comparison
+    List similar features in competing services and compare the
+    features. Deconstruct their approaches and try to think of how it
+    can be simplified.
+
+    The comparison can help you:
+    - See common user flows through the app (helps for the site map)
+    - Understand user expectations based on the products they're currently
+      using. With this we can try making UI that blows users' minds!
+    - Avoids creating overly complex UI that makes users learn things
+    - Backs up your claims with industry expertise and evidence
+
+*** Storyboarding Value Innovation
+    The storyboard visually lays out your product's key
+    experiences. Focus on the most important components of the
+    experience.
+
+    Start by mapping out the most "valuable" moments for your customer's
+    journey through your system.
+
+    Put some images together that visualize your storyboard. Grab images
+    from competitor's UIs and tweak them or draw your own (but don't get
+    all detailed). Add a sentence or two to each image.
+
+*** Business Model + Value Innovation
+    Value innovation and feature poaching should align with your
+    business model as well as UX. Having a killer UX with value
+    innovation gives your product differentiation and cost leadership.
+
+** Creating Prototypes for Experiments
+   "Theory guides, experiment decides"
+
+   You don't need an MBA to do a business, just hunker down and use some
+   elbow grease. Start small. Figure out ways to trial a big idea and
+   manage risk by taking action. Place small bets fast.
+
+   Your research should drive the product development. Good markets will
+   pull product out of a startup. Make something people love. Tests
+   will show what people love and hate.
+
+   Online MVPs should track key metrics like: how many people landed,
+   what was the bounce rate, conversion rate, how much traffic came from
+   where, how many people purchased, how many people made it down the
+   whole sales funnel?
+
+   Try using an explainer video on YouTube or a Kickstarter campaign.
+
+   A concierge MVP will be half-built (usually without a back-end) and
+   any logistical work will be done by hand. Fake it till you make it!
+   Get something off the ground and then build it out to be powerful.
+
+*** Solution Prototypes
+    It avoids coding and designing until you have validation that users
+    like your product. Make the minimum amount of screens necessary to
+    demonstrate the key experience of the interface, the value
+    proposition, and a sneak peek of the potential business model. It's
+    not a pixel perfect design yet!
+
+    pages:
+    1. Setup - typically the landing page or user dashboard
+    2. Key UX 1 - In 1-3 screens show the crucial interactions that show
+       value innovation.
+    3. Key UX 2 - In 1-3 screens show the crucial interactions that show
+       value innovation.
+    4. Value Proposition - This is the final result of a successful
+       transaction
+    5. Pricing Strategy - Shows the cost of the app, monthly fees,
+       package costs, etc.
+
+
+    Build it with some prototyping tool. Google presentations works fine
+    and exports to PDF. Present that to users and see what they think.
+
+    Look at your prototype and list what resources, partnerships, and
+    revenue you'll need to create what's in the prototype.
+
+** Guerrilla User Research
+   Test your business model, value proposition, and UI in front of real
+   users!
+
+   Usability testing is where you observe the user trying out your
+   app. How many clicks does it take them to perform a task? How long do
+   they take to understand your product? Do they use the product
+   correctly?
+
+   usertesting.com works for doing this online.
+
+*** Guerrilla Research
+   Guerrilla research is doing user research while competing against
+   time, money, and resources. Move fast and get it done.
+
+   Are you targeting the correct customer segment? Are you solving a
+   common pain point the customer has? Is the solution you are proposing
+   something they would use? Would they pay for the product and if not
+   are there other revenue streams? Does the business model work?
+
+   There are three major phases: planning, interview, and analysis.
+
+   plan by:
+   1. determine the objectives of the study
+   2. Prepare questions for user validation
+   3. Scout out a local venue for interviews and figure out logistics
+   4. Advertise for participants
+   5. Screen participants and give them time slots
+
+   Focus on the parts you're not sure about that NEED validation. Try
+   fishing around with open ended questions too. What does the user
+   think about the space in general? Are there new opportunities in
+   light of their comments?
+
+** Designing for Conversion
+   You must design an efficient funnel for your product that engage
+   first-time visitors and turn them into repeat customers. As people
+   begin entering from the top of the funnel, you must immediately track
+   and measure all the crucial data points along the way so that you can
+   validate your product's success.
+
+   Growth hacking ties your viral and ad campaigns to user engagement so
+   you can identify the most valuable marketing channels. This is a
+   constant process of tweaks using things like A/B testing and social
+   media integration.
+
+   The funnel matrix is a tool for cloud based analytics. It informs the
+   user flow, feature list, and a short list of wireframes to be designed
+   or redesigned for better user actions. It gives insight into customer
+   actions that can help drive future product development. The matrix
+   shows how a user goes from internet Googler to satisfied user.
+
+   All parties must think through the required actions of potential
+   users with the funnel matrix. It also performs validation,
+   measurement, and learning ways to optimize user experience and
+   conversion rates.
+
+   When wireframming your project, speculate on the key metrics you
+   might use.
+
+   What stages will a hypothetical user take to become a "repeat user"
+   or basic customer. If someone sees your ad on Facebook, how many steps
+   do they go through before being a customer? They must be funneled
+   through your system to get a deeper interaction. Each row of the
+   matrix shows a snapshot of the user story as they moves through the stages
+   from first-time exposure to a dedicated user who eventually helps
+   you to market your product.
+
+   Give yourself a time limit to making the conversions happen. If it
+   fails to convert by the end, pivot or give up.
+
+   Here are 3 common analytic tools:
+   - enterprise analytics systems (google anlaytics)
+   - dashboard, funnel conversion, a/b testing (mixpanel, kissmetrics)
+   - email delivery/tracking (mailchimp)
+
+   Landing page experiments are a quick and dirty way to be exposed to
+   users without having a full service up and running. Here's how to set
+   one up:
+   1. Define the experiment and determine which customers from the
+      funnel matrix you'll be testing. Are you testing the value
+      proposition or doing a quick user acquisition push?
+   2. Design/build the landing page. Do a quick 30 second video to pitch
+      your value proposition. Say thanks to users.
+   3. Design/build secondary pages. Run variations of the page with
+      different UI patterns and features (with a/b testing).
+   4. Run the campaign for a set amount of time (usually around a
+      week).
+   5. Measure the metrics for validated learning. How does this relate
+      back to you funnel? Does it prove or disprove a desired action in
+      the funnel?
+
+   A simple ecosystem map can help lay out competition too. It lists the
+   competitors in your space, what's good and bad about each one, and
+   how close each are to your value proposition.
+
+** Bonus (how to prototype)
+   Sketches are great when outlining initial ideas about layout, page
+   structure, and app structure. After you have a rough layout idea you
+   can move on to adding colored images and UI elements like buttons.
+
+   Paper is fast so start there!
+
+*** Paper prototyping
+   paper uses:
+   - map key user interactions
+   - purposeful use of color
+   - explore elevation and shadows
+
+   Simulate interactions with paper prototypes by cutting out pieces of
+   paper and moving them to emulate the CSS animations. For example,
+   click a button and have a slide in from the right on mobile to
+   simulate a nested page transition. Record these animations with your
+   phone so you know what things look like later (gifs work too).
+
+   Print out existing screens to save effort. Google's material design
+   can be used for color, elevation, shadow, layout, etc (it's inspired
+   by plain paper and ink).
+
+*** Digital prototypes
+    This is all about creating an interactive digital prototype so other
+    people can check out what you're thinking about. It's still much faster
+    than writing out code for the app.
+
+    Build UIs that run on a phone and have interactive gestures like
+    tap targets and swiping. The prototype should transition between
+    pages and modals just like the real app.
+
+*** Native prototype
+    We'll use real code for an actual product in this stage! Build and
+    test your design ideas on real devices.
+
+    Use the "hacker mentality" here. Just get it done! Do shortcuts and
+    quick hacks to get the code pushed into a real product.
+
+    Ask users for specific, actionable assessments for the features in
+    your app. The native prototype is great for pitching your product to
+    stakeholders and investors.
