@@ -11,8 +11,8 @@ start might help.
 
 My education is from YC's online startup school, a bunch of books, and
 going out and doing it. I got through most of the initial development
-stage and stopped short of launching. Most of the advice below is for
-early phase development since that's what I worked through.
+stage and stopped short of launching. The advice below is for early
+phase development since that's what I worked through.
 
 Everything but the iffy advice on the bottom is good and should apply
 to all startups. This is a 101 for how to start a business with
@@ -132,10 +132,6 @@ details I wish I would've known when I started.
    well". Pick an important metric and use it as a proxy for your
    company's health.
 
-   SAAS should do growth metrics.
-
-   B2C should do sales based metrics.
-
    If you get big use multiple metrics.
 
 ** Don't Overwork
@@ -145,6 +141,7 @@ details I wish I would've known when I started.
    Doing moderated amounts of work with a clear focus. Give yourself a
    9-5 with occasional crunch times and keep your social life. If you
    can't blow off steam and enjoy yourself, you're going to burn out.
+
 * Personal Opinions (iffy advice):
   Here's some other advice that I personally think is good but I can't
   say if it's 100% the right thing to do. I can expand on anything if
